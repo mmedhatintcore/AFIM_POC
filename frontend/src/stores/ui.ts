@@ -6,8 +6,7 @@ import { createJSONStorage, persist } from "zustand/middleware";
 export type Theme = "light" | "dark";
 
 type UIState = {
-  /** null = follow system preference (until the user toggles) */
-  theme: Theme | null;
+  theme: Theme;
   finderOpen: boolean;
 };
 
@@ -20,7 +19,7 @@ type UIActions = {
 export const useUIStore = create<UIState & UIActions>()(
   persist(
     (set) => ({
-      theme: null,
+      theme: "light",
       finderOpen: false,
       setTheme: (theme) => set({ theme }),
       openFinder: () => set({ finderOpen: true }),

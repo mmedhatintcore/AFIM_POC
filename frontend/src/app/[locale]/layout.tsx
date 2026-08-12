@@ -25,8 +25,8 @@ const cairo = Cairo({
   display: "swap",
 });
 
-/** Applies the persisted/system theme before first paint (no flash). */
-const THEME_SCRIPT = `(function(){try{var s=localStorage.getItem('afim-ui');var t=s?JSON.parse(s).state.theme:null;if(t!=='dark'&&t!=='light'){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}if(t==='dark'){document.documentElement.classList.add('dark');}}catch(e){}})();`;
+/** Applies the persisted theme before first paint (no flash). Defaults to light; only dark if the user explicitly opted in. */
+const THEME_SCRIPT = `(function(){try{var s=localStorage.getItem('afim-ui');var t=s?JSON.parse(s).state.theme:null;if(t==='dark'){document.documentElement.classList.add('dark');}}catch(e){}})();`;
 
 export async function generateMetadata({
   params,
