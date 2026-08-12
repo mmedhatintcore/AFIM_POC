@@ -3,7 +3,7 @@
 import { Menu, X } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
-import { LogoMark } from "@/components/icons/LogoMark";
+import { BrandLogo } from "@/components/icons/BrandLogo";
 import { buttonVariants } from "@/components/ui/Button";
 import { Link, usePathname } from "@/i18n/navigation";
 import { cn } from "@/lib/utils/cn";
@@ -38,15 +38,11 @@ export function Header() {
           data-testid="nav-brand"
           onClick={() => setMenuOpen(false)}
         >
-          <LogoMark />
-          <span className="leading-tight">
-            <b className="block text-[0.95rem] tracking-wide text-foreground">
-              {t("Common.brandShort")}
-            </b>
-            <span className="block max-w-44 text-[0.62rem] uppercase tracking-widest text-muted sm:max-w-none">
-              {t("Common.brandFull")}
-            </span>
-          </span>
+          <BrandLogo
+            alt={t("Common.brandFull")}
+            priority
+            className="h-8 sm:h-9"
+          />
         </Link>
 
         <nav className="ms-auto hidden items-center gap-0.5 lg:flex">

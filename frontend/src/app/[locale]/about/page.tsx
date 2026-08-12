@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { AboutTabs } from "@/components/features/about/AboutTabs";
 import { PersonCard } from "@/components/features/about/PersonCard";
+import Image from "next/image";
 import { IconKey } from "@/components/icons/IconKey";
-import { LogoMark } from "@/components/icons/LogoMark";
 import { Container } from "@/components/ui/Container";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { SectionHeader } from "@/components/ui/SectionHeader";
@@ -66,7 +66,15 @@ export default async function AboutPage({ params }: Props) {
     <div>
       <div className="grid items-center gap-10 lg:grid-cols-[0.8fr_1.2fr]">
         <div className="grid place-items-center rounded-card-xl bg-linear-150 from-navy to-navy-2 p-12 shadow-elev-2 transition-all duration-500 ease-out-soft hover:-rotate-1 hover:scale-[1.02]">
-          <LogoMark className="size-40 drop-shadow-xl" />
+          <Image
+            src="/logo-white.png"
+            alt=""
+            aria-hidden="true"
+            width={2616}
+            height={506}
+            sizes="384px"
+            className="w-full max-w-sm drop-shadow-xl"
+          />
         </div>
         <div className="space-y-4">
           {briefParagraphs.map((paragraph, index) => (
