@@ -1,0 +1,337 @@
+{
+  "Common": {
+    "brandShort": "AFIM",
+    "brandFull": "Al Ahly Financial Investments Management",
+    "readMore": "Read more",
+    "back": "Back",
+    "close": "Close",
+    "loading": "Loading…",
+    "retry": "Try again",
+    "viewAll": "View all",
+    "learnMore": "Learn more",
+    "dismiss": "Dismiss",
+    "previous": "Previous",
+    "next": "Next",
+    "emptyTitle": "Nothing here yet",
+    "emptyBody": "Content couldn't be loaded. Please try again later.",
+    "skipToContent": "Skip to content"
+  },
+  "Nav": {
+    "home": "Home",
+    "funds": "Funds",
+    "services": "Services",
+    "about": "About",
+    "news": "News",
+    "faqs": "FAQs",
+    "contact": "Contact",
+    "findService": "Find your service"
+  },
+  "Header": {
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "toggleTheme": "Toggle theme",
+    "switchLocale": "العربية",
+    "switchLocaleAria": "التبديل إلى العربية"
+  },
+  "Footer": {
+    "officeTitle": "Head office",
+    "servicesTitle": "Services",
+    "followTitle": "Follow AFIM",
+    "contactLink": "Contact us",
+    "copyright": "© {year} Al Ahly Financial Investments Management. All rights reserved."
+  },
+  "Home": {
+    "heroEyebrow": "Asset Management • Egypt • Since 1994",
+    "heroTitle1": "Egypt's first asset manager.",
+    "heroTitle2": "Three decades of trust.",
+    "heroLead": "AFIM manages institutional and individual wealth across a full range of investment solutions — from money-market and fixed-income strategies to equities, Sharia-compliant and gold.",
+    "heroPrimaryCta": "Find your service",
+    "heroSecondaryCta": "Our services",
+    "liveNav": "Live NAV",
+    "heroChartUnit": "EGP bn under management",
+    "tickerAria": "Highlights ticker",
+    "announcementAria": "Announcement",
+    "advisorPrimaryCta": "Find my fund",
+    "advisorSecondaryCta": "Browse all funds",
+    "advisorPreview": {
+      "step": "Question 5 · Your goals",
+      "question": "What's your primary investment objective?",
+      "opt1": "Keep my money safe & liquid",
+      "opt2": "Grow it over the years",
+      "opt3": "Regular monthly income",
+      "match": "Your match:",
+      "matchName": "Money Market Fund",
+      "rail1": "Answer",
+      "rail2": "Get matched",
+      "rail3": "Subscribe"
+    },
+    "pricesCarouselAria": "Fund prices",
+    "pricesPrev": "Previous funds",
+    "pricesNext": "Next funds",
+    "servicesEmpty": "Our services are being updated — check back soon.",
+    "fundsEmpty": "Fund prices are being updated — check back soon.",
+    "stepsCta": "Find your service",
+    "isThisForMe": "Is this for me?"
+  },
+  "FundCard": {
+    "yield1y": "1-year yield",
+    "today": "today",
+    "currency": "EGP",
+    "view": "View fund",
+    "noPricing": "Pricing published soon",
+    "riskAria": "Risk level"
+  },
+  "Funds": {
+    "title": "Prices & yields",
+    "subtitle": "Compare AFIM's fund products at a glance — price, daily move and one-year yield.",
+    "all": "All",
+    "filterAria": "Filter by category",
+    "howToSubscribe": "How to subscribe",
+    "platformsToggle": "{count, plural, one {Also available on # platform} other {Also available on # platforms}}",
+    "empty": "Funds are being updated — please check back soon.",
+    "disclaimer": "Net asset values are published on a regular cycle. This information is indicative and educational — it is not investment advice. Fund terms and conditions apply.",
+    "related": "Related funds",
+    "backToFunds": "All funds",
+    "aboutFund": "About the fund",
+    "dailyChange": "Daily change",
+    "navPerCertificate": "NAV per certificate"
+  },
+  "News": {
+    "title": "News Feed",
+    "subtitle": "Press releases, Egyptian media coverage and the firm's social channels — one stream.",
+    "tabs": {
+      "all": "All",
+      "press": "Press releases",
+      "media": "Media coverage",
+      "social": "Social media"
+    },
+    "tabsAria": "Filter news by type",
+    "readMore": "Read more",
+    "related": "Related news",
+    "backToNews": "All news",
+    "empty": "No news to show right now — please check back soon.",
+    "pageOf": "Page {page} of {total}",
+    "paginationAria": "News pagination",
+    "breadcrumbHome": "Home"
+  },
+  "Faqs": {
+    "title": "Frequently asked questions",
+    "subtitle": "Quick answers — each one points you to the right product or service.",
+    "empty": "FAQs are being updated — please check back soon."
+  },
+  "About": {
+    "title": "About AFIM",
+    "tabs": {
+      "brief": "Brief",
+      "timeline": "Timeline",
+      "board": "Board",
+      "committees": "Committees",
+      "leadership": "Leadership"
+    },
+    "tabsAria": "About sections",
+    "boardIntro": "The Board of Directors sets strategy and oversees governance.",
+    "committeesIntro": "Standing committees support the Board's oversight role.",
+    "leadershipIntro": "The executive team running day-to-day investment and operations.",
+    "empty": "This section is being updated — please check back soon."
+  },
+  "Services": {
+    "title": "Our services",
+    "subtitle": "Our licensed lines of business, built on integrated risk management and a collaborative investment team.",
+    "empty": "Our services are being updated — please check back soon.",
+    "backToServices": "All services",
+    "findService": "Find your service",
+    "contactUs": "Talk to our team",
+    "notSure": "Not sure this is the right fit?"
+  },
+  "Contact": {
+    "title": "Contact us",
+    "subtitle": "Questions about a fund, a mandate or anything else — we reply within 24 hours.",
+    "officeTitle": "Head office",
+    "phoneLabel": "Phone",
+    "emailLabel": "Email",
+    "form": {
+      "name": "Full name",
+      "email": "Email address",
+      "phone": "Phone",
+      "subject": "Subject",
+      "message": "Message",
+      "optional": "optional",
+      "namePlaceholder": "Your name",
+      "emailPlaceholder": "you@example.com",
+      "phonePlaceholder": "+20…",
+      "subjectPlaceholder": "How can we help?",
+      "messagePlaceholder": "Write your message…",
+      "submit": "Send message",
+      "sending": "Sending…"
+    },
+    "successTitle": "Message sent",
+    "successBody": "We received your message and will reply within 24 hours.",
+    "sendAnother": "Send another message",
+    "errors": {
+      "nameRequired": "Please enter your name.",
+      "nameMax": "Name must be 120 characters or fewer.",
+      "emailRequired": "Please enter your email address.",
+      "emailInvalid": "Please enter a valid email address.",
+      "emailMax": "Email must be 190 characters or fewer.",
+      "phoneMax": "Phone must be 30 characters or fewer.",
+      "subjectMax": "Subject must be 190 characters or fewer.",
+      "messageRequired": "Please write a message.",
+      "messageMax": "Message must be 5000 characters or fewer.",
+      "throttled": "Too many messages — please wait a minute and try again.",
+      "generic": "Something went wrong. Please try again."
+    }
+  },
+  "Survey": {
+    "title": "Need help in investment?",
+    "intro": "Answer a few quick questions about your goals, horizon and comfort with risk — we'll match you with the right AFIM fund and show you exactly how and where to subscribe.",
+    "note": "Free, no account needed. Indicative guidance — not investment advice.",
+    "start": "Start",
+    "progress": "Question {current} / {total}",
+    "firstHint": "{total} quick taps — about two minutes to your match.",
+    "pickClosest": "Pick the closest match.",
+    "back": "Back",
+    "submitting": "Calculating your match…",
+    "resultKicker": "Your recommended path",
+    "matchingFunds": "Matching funds & how to subscribe",
+    "platformsToggle": "{count, plural, one {Also available on # platform} other {Also available on # platforms}}",
+    "alsoWorth": "Also worth a look:",
+    "corporateNote": "Investing corporate cash? Our Liquidity Management team tailors this to your cash-flow cycle.",
+    "corporateCta": "See services",
+    "retake": "Retake survey",
+    "seeFunds": "See funds & prices",
+    "islamicChip": "Sharia-compliant ✓",
+    "disclaimer": "This guidance is indicative and educational — it is not investment advice. Fund terms and conditions apply.",
+    "error": "We couldn't submit your answers. Please try again.",
+    "empty": "The survey is unavailable right now — please try again later."
+  },
+  "Finder": {
+    "title": "Find your service",
+    "step": "Step {current} / {total}",
+    "pickClosest": "Pick the closest match.",
+    "back": "Back",
+    "resultKicker": "Recommended for you",
+    "seeService": "See this service",
+    "seeFunds": "See prices & yields",
+    "startOver": "Start over",
+    "closeAria": "Close finder",
+    "q1": {
+      "title": "What best describes you?",
+      "options": {
+        "ind": {
+          "label": "An individual investor",
+          "desc": "Saving or growing personal wealth"
+        },
+        "inst": {
+          "label": "A company / institution",
+          "desc": "Managing corporate funds"
+        },
+        "raise": {
+          "label": "A growing business seeking capital",
+          "desc": "Raising funds or going to market"
+        }
+      }
+    },
+    "q2": {
+      "title": "What's your main goal?",
+      "options": {
+        "preserve": {
+          "label": "Preserve capital & stay liquid",
+          "desc": "Low risk, easy access"
+        },
+        "grow": {
+          "label": "Grow wealth over time",
+          "desc": "Accept some risk for return"
+        },
+        "islamic": {
+          "label": "Sharia-compliant investing",
+          "desc": "Faith-aligned options"
+        },
+        "capital": {
+          "label": "Raise capital for my company",
+          "desc": "Market access & underwriting"
+        }
+      }
+    },
+    "q3": {
+      "title": "How hands-on do you want to be?",
+      "options": {
+        "managed": {
+          "label": "Let AFIM manage it fully",
+          "desc": "Discretionary management"
+        },
+        "pooled": {
+          "label": "Pooled fund with others",
+          "desc": "Diversified, accessible"
+        },
+        "exec": {
+          "label": "Just need transactions executed",
+          "desc": "Subscribe / redeem orders"
+        }
+      }
+    },
+    "results": {
+      "funds": {
+        "name": "AFIM Mutual Funds",
+        "desc": "A diversified family of funds — money market, fixed income, balanced, equity, Sharia-compliant and gold — with subscription through NBE branches nationwide. Compare live prices and yields."
+      },
+      "portfolio": {
+        "name": "Portfolio Management",
+        "desc": "Tailored discretionary mandates for institutions and high-net-worth clients, spanning asset classes and bespoke investment strategies."
+      },
+      "liquidity": {
+        "name": "Liquidity Management",
+        "desc": "Optimal deployment of corporate cash: analysing financial statements, mapping cash-flow cycles, and selecting the right instruments for return and access."
+      },
+      "underwriting": {
+        "name": "Promotion & Underwriting",
+        "desc": "Helping companies — especially SMEs — reach economic scale and access capital through primary and secondary market offerings."
+      },
+      "subscription": {
+        "name": "Subscription & Redemption",
+        "desc": "Receiving and executing purchase and redemption orders for mutual fund certificates, with clear settlement and reporting."
+      }
+    }
+  },
+  "NotFound": {
+    "title": "Page not found",
+    "body": "The page you're looking for doesn't exist or has moved.",
+    "cta": "Back to home"
+  },
+  "Meta": {
+    "home": {
+      "title": "AFIM — Al Ahly Financial Investments Management",
+      "description": "Egypt's first asset manager, founded 1994. Money-market, fixed income, balanced, equity, Sharia-compliant and gold funds, plus institutional portfolio and liquidity management."
+    },
+    "funds": {
+      "title": "Funds, prices & yields — AFIM",
+      "description": "Compare AFIM fund products at a glance — NAV price, daily move, one-year yield and how to subscribe via NBE branches or directly through AFIM."
+    },
+    "services": {
+      "title": "Our services — AFIM",
+      "description": "Portfolio management, liquidity management, promotion & underwriting, and subscription & redemption — AFIM's licensed lines of business."
+    },
+    "about": {
+      "title": "About AFIM — Egypt's first asset manager",
+      "description": "Founded in 1994 under Capital Market Law 95/1992, AFIM manages a diversified family of mutual funds and institutional portfolios. Meet the board, committees and leadership."
+    },
+    "news": {
+      "title": "News feed — AFIM",
+      "description": "Press releases, media coverage and social updates from Al Ahly Financial Investments Management."
+    },
+    "faqs": {
+      "title": "FAQs — AFIM",
+      "description": "Answers to common questions about AFIM funds, prices, subscriptions and services — each pointing you to the right next step."
+    },
+    "contact": {
+      "title": "Contact us — AFIM",
+      "description": "Get in touch with Al Ahly Financial Investments Management — we reply within 24 hours."
+    },
+    "survey": {
+      "title": "Find your fund — AFIM investment survey",
+      "description": "Answer a few quick questions about your goals, horizon and risk comfort, and get matched with the right AFIM fund — with clear steps to subscribe."
+    },
+    "notFound": {
+      "title": "Page not found — AFIM"
+    }
+  }
+}

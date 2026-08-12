@@ -1,0 +1,19 @@
+/** Typed endpoint map — one endpoint per resource, filters via query params. */
+export const endpoints = {
+  sections: "/v1/sections",
+  section: (key: string) => `/v1/sections/${key}`,
+  services: "/v1/services",
+  service: (slug: string) => `/v1/services/${slug}`,
+  funds: "/v1/funds",
+  fund: (slug: string) => `/v1/funds/${slug}`,
+  fundCategories: "/v1/fund-categories",
+  news: "/v1/news",
+  newsArticle: (slug: string) => `/v1/news/${slug}`,
+  faqs: "/v1/faqs",
+  timelineMilestones: "/v1/timeline-milestones",
+  teamMembers: "/v1/team-members",
+  committees: "/v1/committees",
+  surveyQuestions: "/v1/survey/questions",
+  surveySubmissions: "/v1/survey/submissions",
+  contactMessages: "/v1/contact-messages",
+} as const;

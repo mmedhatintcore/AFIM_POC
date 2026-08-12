@@ -1,0 +1,68 @@
+/* ============================================================
+   AFIM design tokens — ported from the approved landing page.
+   Brand: navy #00053e · orange #f67d30 (hover #c75a14) · gray #8e9191
+   Light + dark themes via the `.dark` class on <html>.
+   ============================================================ */
+
+:root {
+  /* brand */
+  --navy: #00053e;
+  --navy-2: oklch(0.24 0.14 272);
+  --orange: #f67d30;
+  --orange-d: #c75a14;
+  --grey: #8e9191;
+  --pos: #1f9d57;
+  --neg: #e0533d;
+  --warn: oklch(0.74 0.14 75);
+  --accent-on: oklch(0.2 0.05 50);
+
+  /* radius */
+  --r-sm: 10px;
+  --r: 16px;
+  --r-lg: 22px;
+  --r-xl: 30px;
+
+  /* motion */
+  --e-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --e-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* fonts (variables injected by next/font in the locale layout) */
+  --font-app: var(--font-sora), system-ui, sans-serif;
+
+  /* light theme (default) */
+  --bg: oklch(0.972 0.007 270);
+  --bg2: oklch(0.99 0.004 270);
+  --surface: oklch(0.995 0.003 270);
+  --surface2: oklch(0.955 0.009 270);
+  --text: oklch(0.24 0.05 270);
+  --text-soft: oklch(0.46 0.035 270);
+  --muted: oklch(0.6 0.025 270);
+  --border: oklch(0.4 0.05 270 / 0.14);
+  --hairline: oklch(0.4 0.05 270 / 0.09);
+  --header-bg: oklch(0.98 0.006 270 / 0.8);
+  --hero-grid: oklch(0.4 0.05 270 / 0.06);
+  --elev-1: 0 1px 2px oklch(0.2 0.06 270 / 0.05), 0 3px 10px oklch(0.2 0.06 270 / 0.07);
+  --elev-2: 0 2px 6px oklch(0.2 0.06 270 / 0.07), 0 16px 40px oklch(0.2 0.06 270 / 0.13);
+  --elev-3: 0 6px 16px oklch(0.2 0.06 270 / 0.1), 0 34px 80px oklch(0.2 0.06 270 / 0.2);
+}
+
+.dark {
+  --bg: oklch(0.18 0.095 272);
+  --bg2: oklch(0.14 0.075 272);
+  --surface: oklch(0.98 0.02 272 / 0.055);
+  --surface2: oklch(0.24 0.1 272);
+  --text: oklch(0.97 0.012 272);
+  --text-soft: oklch(0.81 0.03 272);
+  --muted: oklch(0.65 0.03 272);
+  --border: oklch(0.97 0.012 272 / 0.13);
+  --hairline: oklch(0.97 0.012 272 / 0.08);
+  --header-bg: oklch(0.15 0.085 272 / 0.82);
+  --hero-grid: oklch(0.97 0.012 272 / 0.045);
+  --elev-1: 0 1px 2px oklch(0.03 0.03 272 / 0.4), 0 3px 12px oklch(0.03 0.03 272 / 0.4);
+  --elev-2: 0 2px 8px oklch(0.03 0.03 272 / 0.45), 0 18px 44px oklch(0.03 0.03 272 / 0.55);
+  --elev-3: 0 6px 18px oklch(0.03 0.03 272 / 0.5), 0 38px 86px oklch(0.03 0.03 272 / 0.62);
+}
+
+[dir="rtl"] {
+  --font-app: var(--font-cairo), var(--font-sora), system-ui, sans-serif;
+}

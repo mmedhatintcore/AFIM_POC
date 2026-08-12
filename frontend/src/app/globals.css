@@ -1,0 +1,406 @@
+@import "tailwindcss";
+@import "../styles/tokens.css";
+
+/* Dark mode via class strategy (toggle in the header, persisted in Zustand). */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme inline {
+  /* semantic surfaces */
+  --color-background: var(--bg);
+  --color-background-2: var(--bg2);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface2);
+  --color-foreground: var(--text);
+  --color-soft: var(--text-soft);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-hairline: var(--hairline);
+
+  /* brand */
+  --color-navy: var(--navy);
+  --color-navy-2: var(--navy-2);
+  --color-accent: var(--orange);
+  --color-accent-dark: var(--orange-d);
+  --color-accent-on: var(--accent-on);
+  --color-grey: var(--grey);
+
+  /* market signals */
+  --color-up: var(--pos);
+  --color-down: var(--neg);
+  --color-warn: var(--warn);
+
+  /* type */
+  --font-sans: var(--font-app);
+
+  /* radii */
+  --radius-card-sm: var(--r-sm);
+  --radius-card: var(--r);
+  --radius-card-lg: var(--r-lg);
+  --radius-card-xl: var(--r-xl);
+
+  /* elevation */
+  --shadow-elev-1: var(--elev-1);
+  --shadow-elev-2: var(--elev-2);
+  --shadow-elev-3: var(--elev-3);
+
+  /* motion */
+  --ease-out-soft: var(--e-out);
+  --ease-expo: var(--e-expo);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-app);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  transition:
+    background 0.5s var(--e-out),
+    color 0.5s var(--e-out);
+}
+
+/* Arabic typographic craft: never letter-space Arabic, give it air. */
+html[dir="rtl"] * {
+  letter-spacing: 0 !important;
+}
+html[dir="rtl"] body {
+  line-height: 1.8;
+}
+
+:focus-visible {
+  outline: 2px solid var(--orange);
+  outline-offset: 3px;
+  border-radius: 5px;
+}
+
+/* CMS-controlled rich strings may carry <span class="accent"> */
+.accent {
+  color: var(--orange);
+}
+
+/* Latin numerals everywhere, tabular where it matters */
+.tnum {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ===== keyframes ===== */
+@keyframes pulse-dot {
+  0% {
+    box-shadow: 0 0 0 0 oklch(0.71 0.175 48 / 0.6);
+  }
+  70% {
+    box-shadow: 0 0 0 8px oklch(0.71 0.175 48 / 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 oklch(0.71 0.175 48 / 0);
+  }
+}
+
+@keyframes ticker-ltr {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+@keyframes ticker-rtl {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(50%);
+  }
+}
+
+@keyframes pop-in {
+  from {
+    transform: scale(0.4);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes fade-view {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes adv-float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-0.6deg);
+  }
+  50% {
+    transform: translateY(-9px) rotate(0.4deg);
+  }
+}
+@keyframes adv-float-2 {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes hc-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes hc-fade {
+  to {
+    opacity: 1;
+  }
+}
+@keyframes hc-pop {
+  from {
+    opacity: 0;
+    transform: scale(0);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes hc-halo {
+  0% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(3.4);
+  }
+}
+
+/* ===== component-level CSS that utilities can't express cleanly ===== */
+@layer components {
+  /* live pulse dot */
+  .pulse-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--orange);
+    animation: pulse-dot 2s infinite;
+  }
+
+  /* highlights ticker (marquee) */
+  .ticker-track {
+    display: inline-block;
+    white-space: nowrap;
+    animation: ticker-ltr 48s linear infinite;
+  }
+  html[dir="rtl"] .ticker-track {
+    animation-name: ticker-rtl;
+  }
+
+  /* section header 3-bar motif */
+  .sec-bars {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 0.9rem;
+  }
+  .sec-bars i {
+    width: 9px;
+    height: 26px;
+    background: var(--orange);
+    border-radius: 2px 2px 6px 6px;
+    display: block;
+  }
+  .sec-bars i:nth-child(2) {
+    height: 34px;
+    background: var(--navy-2);
+  }
+  .dark .sec-bars i:nth-child(2) {
+    background: var(--grey);
+  }
+
+  /* eyebrow with leading rule */
+  .eyebrow-rule::before {
+    content: "";
+    width: 34px;
+    height: 2px;
+    background: var(--orange);
+    display: inline-block;
+  }
+
+  /* hero decorative layers */
+  .hero-glow::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background:
+      radial-gradient(1200px 600px at 75% 18%, oklch(0.71 0.175 48 / 0.12), transparent 60%),
+      radial-gradient(900px 700px at 8% 92%, oklch(0.3 0.14 272 / 0.16), transparent 65%);
+  }
+  .hero-glow::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background-image:
+      linear-gradient(var(--hero-grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--hero-grid) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(720px at 60% 40%, #000, transparent);
+  }
+
+  /* navy band grid overlay */
+  .navy-grid::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(oklch(1 0 0 / 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, oklch(1 0 0 / 0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(700px at 82% 8%, #000, transparent);
+  }
+
+  /* closing CTA band glow */
+  .cta-band-glow::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(620px 320px at 50% -10%, oklch(0.71 0.175 48 / 0.24), transparent 70%);
+  }
+
+  /* hero growth chart */
+  .hc-line {
+    stroke: var(--orange);
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: hc-draw 2.2s var(--e-out) 0.3s forwards;
+    filter: drop-shadow(0 8px 16px oklch(0.71 0.175 48 / 0.4));
+  }
+  .hc-area {
+    opacity: 0;
+    animation: hc-fade 1.1s ease 1s forwards;
+  }
+  .hc-dot {
+    fill: var(--orange);
+    opacity: 0;
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: hc-pop 0.55s var(--e-out) forwards;
+  }
+  .hc-dot.now {
+    fill: var(--bg2);
+    stroke: var(--orange);
+    stroke-width: 3;
+  }
+  .hc-halo {
+    fill: none;
+    stroke: var(--orange);
+    stroke-width: 2;
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: hc-halo 2.4s ease-out 2.6s infinite;
+  }
+  .hc-hline {
+    stroke: var(--hero-grid);
+    stroke-width: 1;
+  }
+  .hc-vline {
+    stroke: var(--hero-grid);
+    stroke-width: 1;
+    stroke-dasharray: 2 5;
+  }
+  .hc-yr {
+    fill: var(--muted);
+    font-size: 14px;
+    font-variant-numeric: tabular-nums;
+  }
+  .hc-chip {
+    animation: hc-fade 0.8s ease 1.7s forwards;
+    opacity: 0;
+  }
+
+  /* advisor floating preview */
+  .adv-float {
+    animation: adv-float 6s ease-in-out infinite;
+  }
+  .adv-float-2 {
+    animation: adv-float-2 6s ease-in-out infinite;
+    animation-delay: 0.9s;
+  }
+
+  /* reveal on scroll (class added/removed by the Reveal client component) */
+  .reveal-hidden {
+    opacity: 0;
+    transform: translateY(30px);
+    transition:
+      opacity 0.8s var(--e-out),
+      transform 0.8s var(--e-out);
+  }
+  .reveal-in {
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity 0.8s var(--e-out),
+      transform 0.8s var(--e-out);
+  }
+
+  .fade-view {
+    animation: fade-view 0.5s var(--e-out);
+  }
+  .pop-in {
+    animation: pop-in 0.5s var(--e-out);
+  }
+
+  /* horizontal scroll rail (prices carousel) */
+  .carousel-track {
+    display: flex;
+    gap: 1.5rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding: 1rem 0.2rem 2rem;
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: var(--orange) var(--hairline);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+  .hc-line {
+    stroke-dashoffset: 0;
+  }
+  .hc-area,
+  .hc-dot,
+  .hc-chip {
+    opacity: 1;
+  }
+  .reveal-hidden {
+    opacity: 1;
+    transform: none;
+  }
+}
