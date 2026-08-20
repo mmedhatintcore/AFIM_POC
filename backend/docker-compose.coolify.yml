@@ -4,6 +4,8 @@ services:
       context: .
       dockerfile: ./docker/php/Dockerfile
     restart: unless-stopped
+    mem_limit: 1g
+    mem_reservation: 256m
     working_dir: /var/www
     environment:
       APP_NAME: "${APP_NAME}"
@@ -68,15 +70,19 @@ services:
         condition: service_healthy
     healthcheck:
       test: ["CMD-SHELL", "nc -z localhost 9000 || exit 1"]
-      interval: 10s
+      interval: 30s
       retries: 5
       start_period: 90s
+      timeout: 5s
+      start_interval: 2s
 
   webserver:
     build:
       context: .
       dockerfile: ./docker/nginx/Dockerfile
     restart: unless-stopped
+    mem_limit: 128m
+    mem_reservation: 32m
     volumes:
       - app-storage:/var/www/storage
       - public-uploads:/var/www/public/uploads
@@ -90,6 +96,9 @@ services:
   mysql:
     image: mysql:8.0
     restart: unless-stopped
+    command: ["mysqld", "--innodb-buffer-pool-size=256M", "--performance-schema=OFF", "--max-connections=100"]
+    mem_limit: 1g
+    mem_reservation: 256m
     environment:
       MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
       MYSQL_ROOT_HOST: "%"
@@ -98,24 +107,33 @@ services:
       - mysql-data:/var/lib/mysql
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p$$MYSQL_ROOT_PASSWORD"]
-      interval: 5s
+      interval: 30s
       retries: 10
       start_period: 60s
+      timeout: 5s
+      start_interval: 2s
 
   redis:
     image: redis:7-alpine
     restart: unless-stopped
+    mem_limit: 256m
+    mem_reservation: 64m
     command: ["redis-server", "--appendonly", "yes"]
     volumes:
       - redis-data:/data
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
-      interval: 5s
+      interval: 30s
       retries: 10
+      timeout: 5s
+      start_period: 30s
+      start_interval: 2s
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     restart: unless-stopped
+    mem_limit: 256m
+    mem_reservation: 64m
     environment:
       PMA_HOST: mysql
       PMA_PORT: 3306

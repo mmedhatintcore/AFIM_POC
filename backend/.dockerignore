@@ -1,0 +1,49 @@
+# VCS / CI
+.git
+.gitattributes
+.github
+.gitignore
+.editorconfig
+.styleci.yml
+
+# Dependencies (installed inside the image)
+vendor
+node_modules
+
+# Local env / secrets
+.env
+.env.*
+!.env.example
+
+# Runtime state.
+# NOTE: only specific files are dropped here. Do not glob out bootstrap/cache or
+# storage/framework/* wholesale — COPY does not create empty directories and
+# Laravel needs them to exist inside the image.
+storage/logs/*.log
+public/build
+public/hot
+public/uploads
+public/storage-backup.bin
+
+# Compose / local tooling (not needed inside the image)
+docker-compose.yml
+docker-compose.*.yml
+docker_setup.sh
+import_db.sh
+
+# Tests & scratch
+tests
+phpunit.xml
+test_*.php
+examples
+
+# Docs
+*.md
+!README.md
+*.postman_collection.json
+
+# Editor / OS noise
+.idea
+.vscode
+.DS_Store
+Thumbs.db
