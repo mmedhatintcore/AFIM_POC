@@ -17,7 +17,7 @@ final class ServiceControllerTest extends TestCase
         $response = $this->getJson('/api/v1/services');
 
         $response->assertOk()->assertJsonCount(4, 'data')
-            ->assertJsonPath('data.0.key', 'portfolio')
+            ->assertJsonPath('data.0.key', 'funds')
             ->assertJsonStructure(['data' => [['id', 'key', 'slug', 'name', 'description', 'body', 'icon', 'sort']]]);
     }
 

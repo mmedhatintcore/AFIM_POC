@@ -1,27 +1,28 @@
 /**
- * Decorative AUM growth chart — deterministic SVG generated on the server,
- * animated purely with CSS (draw-in line, popping milestone dots, halo).
- * Ported from the reference page's `renderHeroChart`.
+ * AUM growth chart — deterministic SVG generated on the server, animated
+ * purely with CSS (draw-in line, popping milestone dots, halo). Points come
+ * from the `hero` section's `extra.chart_milestones` (year + AUM value),
+ * which admins can add to or edit from the CMS — the shape here just draws
+ * whatever markers it's given.
  */
+
+export type HeroChartMilestone = { year: string; value: string };
 
 const W = 540;
 const H = 440;
 const TOP = 66;
 const BASE = 406;
 const PAD_X = 38;
-const VALUES = [0.1, 0.16, 0.24, 0.3, 0.4, 0.52, 0.64, 0.74, 0.86, 1.0];
-const MILESTONES = [
-  { i: 0, year: "1994" },
-  { i: 3, year: "2008" },
-  { i: 6, year: "2018" },
-  { i: 9, year: "2025" },
-];
 
-function buildPoints(): number[][] {
-  const n = VALUES.length;
-  return VALUES.map((v, i) => [
-    Math.round(PAD_X + (i * (W - PAD_X * 2)) / (n - 1)),
-    Math.round(BASE - v * (BASE - TOP)),
+function buildPoints(values: number[]): number[][] {
+  const n = values.length;
+  const min = Math.min(...values, 0);
+  const max = Math.max(...values);
+  const span = max - min || 1;
+
+  return values.map((v, i) => [
+    Math.round(n > 1 ? PAD_X + (i * (W - PAD_X * 2)) / (n - 1) : W / 2),
+    Math.round(BASE - ((v - min) / span) * (BASE - TOP)),
   ]);
 }
 
@@ -41,8 +42,35 @@ function smoothPath(points: number[][]): string {
   return d;
 }
 
-export function HeroChart({ unit }: { unit: string }) {
-  const points = buildPoints();
+export function HeroChart({
+  unit,
+  milestones,
+}: {
+  unit: string;
+  milestones: HeroChartMilestone[];
+}) {
+  if (milestones.length === 0) return null;
+
+  const values = milestones.map((m) => Number.parseFloat(m.value) || 0);
+  const latest = milestones[milestones.length - 1];
+
+  if (milestones.length === 1) {
+    return (
+      <div
+        className="relative mx-auto grid w-full max-w-[420px] place-items-center rounded-card-xl border border-border bg-surface px-8 py-14 shadow-elev-2"
+        data-testid="hero-chart"
+      >
+        <span className="tnum text-[2.4rem] font-extrabold leading-none text-accent">
+          {latest.value}
+        </span>
+        <span className="mt-1 text-[0.8rem] font-semibold text-soft">
+          {unit} · {latest.year}
+        </span>
+      </div>
+    );
+  }
+
+  const points = buildPoints(values);
   const n = points.length;
   const line = smoothPath(points);
   const area = `${line} L${points[n - 1][0]},${H} L${points[0][0]},${H} Z`;
@@ -79,24 +107,24 @@ export function HeroChart({ unit }: { unit: string }) {
             />
           );
         })}
-        {MILESTONES.map((m) => (
+        {points.map((p, i) => (
           <line
-            key={`v${m.i}`}
-            x1={points[m.i][0]}
+            key={`v${i}`}
+            x1={p[0]}
             y1={TOP}
-            x2={points[m.i][0]}
+            x2={p[0]}
             y2={BASE}
             className="hc-vline"
           />
         ))}
         <path d={area} className="hc-area" fill="url(#hcArea)" />
         <path d={line} className="hc-line" pathLength={1} fill="none" />
-        {MILESTONES.map((m) => {
-          const p = points[m.i];
-          const now = m.i === n - 1;
-          const delay = (0.4 + (m.i / (n - 1)) * 2).toFixed(2);
+        {milestones.map((m, i) => {
+          const p = points[i];
+          const now = i === n - 1;
+          const delay = (0.4 + (i / (n - 1)) * 2).toFixed(2);
           return (
-            <g key={`d${m.i}`}>
+            <g key={`d${i}`}>
               {now ? <circle cx={p[0]} cy={p[1]} r={6} className="hc-halo" /> : null}
               <circle
                 cx={p[0]}
@@ -105,6 +133,15 @@ export function HeroChart({ unit }: { unit: string }) {
                 className={now ? "hc-dot now" : "hc-dot"}
                 style={{ animationDelay: `${delay}s` }}
               />
+              <text
+                x={p[0]}
+                y={p[1] - 14}
+                textAnchor="middle"
+                className="hc-value"
+                style={{ animationDelay: `${delay}s` }}
+              >
+                {m.value}
+              </text>
               <text x={p[0]} y={H - 10} textAnchor="middle" className="hc-yr">
                 {m.year}
               </text>
@@ -112,9 +149,12 @@ export function HeroChart({ unit }: { unit: string }) {
           );
         })}
       </svg>
-      <div className="hc-chip absolute start-[4%] top-[5%] flex flex-col gap-0.5 rounded-[14px] border border-border bg-surface px-4 py-3 shadow-elev-2">
-        <span className="tnum text-[1.7rem] font-extrabold leading-none text-accent">
-          93
+      <div className="hc-chip absolute end-[4%] top-[5%] flex flex-col items-end gap-0.5 rounded-[14px] border border-border bg-surface px-4 py-3 shadow-elev-2">
+        <span className="text-[0.65rem] font-semibold uppercase tracking-widest text-muted">
+          {latest.year}
+        </span>
+        <span className="tnum text-[1.5rem] font-extrabold leading-none text-accent">
+          {latest.value}
         </span>
         <span className="text-[0.7rem] font-semibold text-soft">{unit}</span>
       </div>

@@ -53,13 +53,10 @@ final class SectionResourceTest extends TestCase
         $this->assertSame('Updated hero title', $hero->getTranslation('title', 'en'));
         $this->assertSame('أول شركة إدارة أصول في مصر.', $hero->getTranslation('title', 'ar'));
 
-        $items = array_values($hero->items);
-        $this->assertCount(3, $items);
-        $this->assertSame('Dahab Gold', $items[0]['title']['en']);
-        $this->assertSame('+0.88%', $items[0]['value']);
-        $this->assertSame('up', $items[0]['trend']);
-        $this->assertSame('142.83', $items[1]['value']);
-        $this->assertArrayNotHasKey('text', $items[0]);
+        $milestones = array_values($hero->extra['chart_milestones']);
+        $this->assertCount(4, $milestones);
+        $this->assertSame('1994', $milestones[0]['year']);
+        $this->assertSame('93', $milestones[3]['value']);
 
         $this->assertSame('Asset Management • Egypt • Since 1994', $hero->extra['eyebrow']['en']);
         $this->assertSame('#finder', $hero->cta['href']);
@@ -87,7 +84,7 @@ final class SectionResourceTest extends TestCase
         $this->assertSame('Protect capital', $items[0]['title']['en']);
         $this->assertSame('الحفاظ على رأس المال', $items[0]['title']['ar']);
         $this->assertSame('shield', $items[0]['icon']);
-        $this->assertSame('/funds', $items[0]['href']);
+        $this->assertSame('/funds?group=mm,imm,mixed', $items[0]['href']);
         $this->assertSame('Explore funds →', $items[0]['link_label']['en']);
     }
 
@@ -131,14 +128,9 @@ final class SectionResourceTest extends TestCase
 
         $figures->refresh();
         $items = array_values($figures->items);
-        $this->assertCount(4, $items);
+        $this->assertCount(3, $items);
         $this->assertSame('95', $items[0]['value']);
         $this->assertTrue((bool) ($items[0]['hero'] ?? false));
         $this->assertSame('EGP bn', $items[0]['unit']['en']);
-
-        $marketShare = collect($items)->firstWhere('value', '21.3');
-        $this->assertNotNull($marketShare);
-        $this->assertSame('%', $marketShare['suffix']);
-        $this->assertEquals(1, $marketShare['decimals']);
     }
 }

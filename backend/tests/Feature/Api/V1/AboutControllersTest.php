@@ -40,7 +40,7 @@ final class AboutControllersTest extends TestCase
     {
         $response = $this->withHeaders(['Accept-Language' => 'ar'])->getJson('/api/v1/committees');
 
-        $response->assertOk()->assertJsonCount(3, 'data')
+        $response->assertOk()->assertJsonCount(4, 'data')
             ->assertJsonPath('data.0.name', 'لجنة المراجعة');
 
         $this->assertIsString($response->json('data.0.responsibilities.0'));

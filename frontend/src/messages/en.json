@@ -68,6 +68,7 @@
     "pricesCarouselAria": "Fund prices",
     "pricesPrev": "Previous funds",
     "pricesNext": "Next funds",
+    "asOf": "As of {date}",
     "servicesEmpty": "Our services are being updated — check back soon.",
     "fundsEmpty": "Fund prices are being updated — check back soon.",
     "stepsCta": "Find your service",
@@ -132,6 +133,7 @@
     "boardIntro": "The Board of Directors sets strategy and oversees governance.",
     "committeesIntro": "Standing committees support the Board's oversight role.",
     "leadershipIntro": "The executive team running day-to-day investment and operations.",
+    "membersLabel": "Members",
     "empty": "This section is being updated — please check back soon."
   },
   "Services": {
@@ -248,7 +250,7 @@
         },
         "capital": {
           "label": "Raise capital for my company",
-          "desc": "Market access & underwriting"
+          "desc": "We'll match you with the closest fit"
         }
       }
     },
@@ -282,10 +284,6 @@
         "name": "Liquidity Management",
         "desc": "Optimal deployment of corporate cash: analysing financial statements, mapping cash-flow cycles, and selecting the right instruments for return and access."
       },
-      "underwriting": {
-        "name": "Promotion & Underwriting",
-        "desc": "Helping companies — especially SMEs — reach economic scale and access capital through primary and secondary market offerings."
-      },
       "subscription": {
         "name": "Subscription & Redemption",
         "desc": "Receiving and executing purchase and redemption orders for mutual fund certificates, with clear settlement and reporting."
@@ -308,7 +306,7 @@
     },
     "services": {
       "title": "Our services — AFIM",
-      "description": "Portfolio management, liquidity management, promotion & underwriting, and subscription & redemption — AFIM's licensed lines of business."
+      "description": "Fund management, portfolio management, liquidity management, and subscription & redemption — AFIM's licensed lines of business."
     },
     "about": {
       "title": "About AFIM — Egypt's first asset manager",

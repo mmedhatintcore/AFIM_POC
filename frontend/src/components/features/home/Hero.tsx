@@ -2,10 +2,9 @@ import { getTranslations } from "next-intl/server";
 import { CtaLink } from "@/components/misc/CtaLink";
 import { buttonVariants } from "@/components/ui/Button";
 import type { Locale } from "@/i18n/routing";
-import { cn } from "@/lib/utils/cn";
 import { extraString } from "@/lib/utils/sections";
 import type { Section } from "@/types/api";
-import { HeroChart } from "./HeroChart";
+import { HeroChart, type HeroChartMilestone } from "./HeroChart";
 
 export async function Hero({
   locale,
@@ -22,8 +21,11 @@ export async function Hero({
   const lead = section?.body ?? t("heroLead");
   const primaryLabel = section?.cta?.label ?? t("heroPrimaryCta");
   const secondaryLabel = section?.cta?.secondary_label ?? t("heroSecondaryCta");
-  const pulseItems = (section?.items ?? []).filter((item) => item.title);
-  const liveLabel = extraString(section, "live_label") ?? t("liveNav");
+  const chartUnit = extraString(section, "chart_unit") ?? t("heroChartUnit");
+  const chartMilestones = (
+    (section?.extra?.chart_milestones as HeroChartMilestone[] | undefined) ??
+    []
+  ).filter((m) => m?.year && m?.value);
 
   return (
     <section
@@ -58,38 +60,10 @@ export async function Hero({
             {secondaryLabel}
           </CtaLink>
         </div>
-
-        {pulseItems.length > 0 ? (
-          <div className="mt-9 hidden flex-wrap items-center gap-x-6 gap-y-4 border-t border-hairline pt-6 lg:flex">
-            <span className="inline-flex items-center gap-2 text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-accent">
-              <span className="pulse-dot" aria-hidden="true" />
-              {liveLabel}
-            </span>
-            {pulseItems.map((item, index) => (
-              <span
-                key={index}
-                className="inline-flex items-center gap-2 text-[0.82rem] text-soft"
-              >
-                <b className="font-semibold text-foreground">{item.title}</b>
-                <i
-                  dir="ltr"
-                  className={cn(
-                    "tnum not-italic",
-                    item.trend === "up" && "text-up",
-                    item.trend === "down" && "text-down",
-                    !item.trend && "text-muted",
-                  )}
-                >
-                  {item.value}
-                </i>
-              </span>
-            ))}
-          </div>
-        ) : null}
       </div>
 
       <div className="relative z-1 hidden lg:block">
-        <HeroChart unit={t("heroChartUnit")} />
+        <HeroChart unit={chartUnit} milestones={chartMilestones} />
       </div>
     </section>
   );

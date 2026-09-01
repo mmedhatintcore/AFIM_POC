@@ -41,7 +41,7 @@ class SectionForm
 
     // Which keys use which structured blocks.
     private const TEXT_KEYS = ['announcement', 'hero', 'advisor', 'trust', 'goals', 'prices_intro', 'services_intro', 'why', 'steps', 'cta', 'about_brief', 'news_intro', 'faqs_intro', 'survey_intro'];
-    private const ITEM_KEYS = ['ticker', 'hero', 'advisor', 'trust', 'goals', 'why', 'figures', 'steps', 'about_brief', 'footer'];
+    private const ITEM_KEYS = ['ticker', 'advisor', 'trust', 'goals', 'why', 'figures', 'steps', 'about_brief', 'footer'];
     private const CTA_KEYS = ['announcement', 'hero', 'advisor', 'steps', 'cta'];
     private const CTA_SECONDARY_KEYS = ['hero', 'advisor', 'cta'];
 
@@ -101,7 +101,6 @@ class SectionForm
                 Repeater::make('items')
                     ->label(fn (Get $get) => match ($get('key')) {
                         'ticker' => 'Ticker highlights',
-                        'hero' => 'Live-NAV chips',
                         'advisor' => 'Feature chips',
                         'trust' => 'Partner names',
                         'goals' => 'Goal cards',
@@ -126,11 +125,11 @@ class SectionForm
                             ->options(self::ICON_OPTIONS)
                             ->visible($rowKeyIs('advisor', 'goals', 'about_brief')),
 
-                        // Title EN/AR — hero chips, goals, why, steps, about cards
+                        // Title EN/AR — goals, why, steps, about cards
                         TextInput::make('title.en')->label('Title (English)')
-                            ->visible($rowKeyIs('hero', 'goals', 'why', 'steps', 'about_brief')),
+                            ->visible($rowKeyIs('goals', 'why', 'steps', 'about_brief')),
                         TextInput::make('title.ar')->label('Title (Arabic)')
-                            ->visible($rowKeyIs('hero', 'goals', 'why', 'steps', 'about_brief')),
+                            ->visible($rowKeyIs('goals', 'why', 'steps', 'about_brief')),
 
                         // Text EN/AR — most sections
                         Textarea::make('text.en')->label('Text (English)')->rows(2)
@@ -138,16 +137,11 @@ class SectionForm
                         Textarea::make('text.ar')->label('Text (Arabic)')->rows(2)
                             ->visible($rowKeyIs('ticker', 'trust', 'advisor', 'goals', 'why', 'steps', 'about_brief', 'footer')),
 
-                        // Hero chip value / figures number (plain text, Latin digits)
+                        // Figures number (plain text, Latin digits)
                         TextInput::make('value')
-                            ->label(fn (Get $get) => $get('../../key') === 'hero' ? 'Value' : 'Number')
-                            ->helperText(fn (Get $get) => $get('../../key') === 'hero' ? 'e.g. +0.88% or 142.83' : 'Digits only, e.g. 93 or 21.3')
-                            ->visible($rowKeyIs('hero', 'figures')),
-                        Select::make('trend')
-                            ->label('Direction')
-                            ->options(['up' => '▲ Up (green)', 'down' => '▼ Down (red)'])
-                            ->nullable()
-                            ->visible($rowKeyIs('hero')),
+                            ->label('Number')
+                            ->helperText('Digits only, e.g. 93 or 21.3')
+                            ->visible($rowKeyIs('figures')),
                         TextInput::make('suffix')->label('Suffix')
                             ->helperText('e.g. + or %')
                             ->visible($rowKeyIs('figures')),
@@ -195,6 +189,21 @@ class SectionForm
                     ->columnSpanFull()
                     ->visible($keyIs('advisor')),
 
+                // ============ Hero growth-chart year markers ============
+                Repeater::make('extra.chart_milestones')
+                    ->label('Growth-chart year markers')
+                    ->helperText('Shown left-to-right on the hero illustration, in the order below. Add a row for a new year at any time.')
+                    ->schema([
+                        TextInput::make('year')->label('Year')->required(),
+                        TextInput::make('value')->label('AUM (EGP bn)')
+                            ->helperText('Digits only, e.g. 93 or 15.5')
+                            ->required(),
+                    ])
+                    ->columns(2)
+                    ->columnSpanFull()
+                    ->reorderable()
+                    ->visible($keyIs('hero')),
+
                 // ============ Per-section extras (explicit fields, no JSON) ============
                 Fieldset::make('More settings')
                     ->columns(2)
@@ -202,9 +211,10 @@ class SectionForm
                     ->visible($keyIs('hero', 'advisor', 'prices_intro', 'why', 'figures', 'about_brief', 'footer', 'survey_intro'))
                     ->schema([
                         ...self::pair('extra.eyebrow', 'Eyebrow line', $keyIs('hero')),
-                        ...self::pair('extra.live_label', '“Live” label', $keyIs('hero', 'prices_intro')),
+                        ...self::pair('extra.chart_unit', 'Growth-chart unit label', $keyIs('hero')),
+                        ...self::pair('extra.live_label', '“Live” label', $keyIs('prices_intro')),
                         ...self::pair('extra.note', 'Small note under the buttons', $keyIs('advisor', 'survey_intro')),
-                        ...self::pair('extra.disclaimer', 'Disclaimer line', $keyIs('prices_intro')),
+                        ...self::pair('extra.disclaimer', 'Disclaimer line (a live "As of <month/year>" is prefixed automatically)', $keyIs('prices_intro')),
                         ...self::pair('extra.kicker', 'Kicker (small label above the title)', $keyIs('why', 'figures')),
                         ...self::pair('extra.board_note', 'Board tab note', $keyIs('about_brief')),
                         ...self::pair('extra.committees_note', 'Committees tab note', $keyIs('about_brief')),

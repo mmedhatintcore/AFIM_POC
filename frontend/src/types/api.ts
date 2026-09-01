@@ -105,6 +105,7 @@ export type NewsItem = {
   source: string;
   title: string;
   excerpt: string;
+  image_url: string | null;
   published_at: string;
 };
 
@@ -147,11 +148,20 @@ export type TeamMember = {
   group: TeamGroup;
   name: string;
   role: string;
+  bio: string | null;
+  photo_url: string | null;
+};
+
+export type CommitteeMember = {
+  name: string;
+  role: string;
 };
 
 export type Committee = {
   id: number;
   name: string;
+  mission: string | null;
+  members: CommitteeMember[];
   responsibilities: string[];
 };
 

@@ -36,11 +36,6 @@ class SectionSeeder extends Seeder
                     'en' => 'AFIM manages institutional and individual wealth across a full range of investment solutions — from money-market and fixed-income strategies to equities, Sharia-compliant and gold — with assets under management exceeding EGP 93 billion.',
                     'ar' => 'تدير شركة الأهلي لإدارة الاستثمارات المالية ثروات المؤسسات والأفراد عبر مجموعة كاملة من الحلول الاستثمارية — من أدوات أسواق النقد والدخل الثابت إلى الأسهم والحلول المتوافقة مع الشريعة والذهب — بأصول مُدارة تتجاوز ٩٣ مليار جنيه.',
                 ],
-                'items' => [
-                    ['title' => ['en' => 'Dahab Gold', 'ar' => 'دهب للذهب'], 'value' => '+0.88%', 'trend' => 'up'],
-                    ['title' => ['en' => 'Money Market', 'ar' => 'النقدي'], 'value' => '142.83', 'trend' => null],
-                    ['title' => ['en' => 'NBE Equity', 'ar' => 'الأهلي للأسهم'], 'value' => '-0.34%', 'trend' => 'down'],
-                ],
                 'cta' => [
                     'label' => ['en' => 'Find your service', 'ar' => 'اعثر على خدمتك'],
                     'href' => '#finder',
@@ -49,7 +44,18 @@ class SectionSeeder extends Seeder
                 ],
                 'extra' => [
                     'eyebrow' => ['en' => 'Asset Management • Egypt • Since 1994', 'ar' => 'إدارة الأصول • مصر • منذ ١٩٩٤'],
-                    'live_label' => ['en' => 'Live NAV', 'ar' => 'صافي القيمة مباشر'],
+                    'chart_unit' => ['en' => 'EGP bn AUM', 'ar' => 'مليار جنيه أصول'],
+                    // Growth-chart year markers shown on the hero illustration. Admins
+                    // can add more years here. NOTE: only 1994 (founding) and 2025
+                    // (EGP 93bn, the figure already published elsewhere on the site)
+                    // are real — 2008 and 2018 are illustrative placeholders pending
+                    // the client's real historical AUM-by-year figures.
+                    'chart_milestones' => [
+                        ['year' => '1994', 'value' => '1'],
+                        ['year' => '2008', 'value' => '15'],
+                        ['year' => '2018', 'value' => '40'],
+                        ['year' => '2025', 'value' => '93'],
+                    ],
                 ],
             ],
             [
@@ -82,13 +88,10 @@ class SectionSeeder extends Seeder
             [
                 'key' => 'trust',
                 'title' => [
-                    'en' => 'In partnership with leading institutions · Regulated by the FRA',
-                    'ar' => 'بالشراكة مع مؤسسات رائدة · مرخّصة من الهيئة العامة للرقابة المالية',
+                    'en' => 'Regulated by the Financial Regulatory Authority (FRA)',
+                    'ar' => 'مرخّصة من الهيئة العامة للرقابة المالية',
                 ],
                 'items' => [
-                    ['text' => ['en' => 'National Bank of Egypt', 'ar' => 'البنك الأهلي المصري']],
-                    ['text' => ['en' => 'Misr Life Insurance', 'ar' => 'مصر لتأمينات الحياة']],
-                    ['text' => ['en' => 'Evolve', 'ar' => 'إيفولف']],
                     ['text' => ['en' => 'FRA', 'ar' => 'الرقابة المالية']],
                 ],
             ],
@@ -102,21 +105,21 @@ class SectionSeeder extends Seeder
                         'title' => ['en' => 'Preserve capital', 'ar' => 'الحفاظ على رأس المال'],
                         'text' => ['en' => 'Low-risk money-market and fixed-income funds that stay liquid.', 'ar' => 'صناديق نقدية ودخل ثابت منخفضة المخاطر مع سهولة الوصول.'],
                         'link_label' => ['en' => 'Explore funds →', 'ar' => 'استعرض الصناديق ←'],
-                        'href' => '/funds',
+                        'href' => '/funds?group=mm,imm,mixed',
                     ],
                     [
                         'icon' => 'sprout',
                         'title' => ['en' => 'Grow over time', 'ar' => 'نمِّ ثروتك'],
                         'text' => ['en' => 'Balanced and equity funds for long-term growth.', 'ar' => 'صناديق متوازنة وأسهم لنمو طويل الأجل.'],
                         'link_label' => ['en' => 'Explore funds →', 'ar' => 'استعرض الصناديق ←'],
-                        'href' => '/funds',
+                        'href' => '/funds?group=balanced,equity',
                     ],
                     [
                         'icon' => 'crescent',
                         'title' => ['en' => 'Sharia-compliant', 'ar' => 'متوافق مع الشريعة'],
                         'text' => ['en' => 'A Sharia-compliant fund and the Dahab gold fund.', 'ar' => 'صندوق متوافق مع الشريعة وصندوق دهب للذهب.'],
                         'link_label' => ['en' => 'Explore funds →', 'ar' => 'استعرض الصناديق ←'],
-                        'href' => '/funds',
+                        'href' => '/funds?group=imm,iequity,metals',
                     ],
                     [
                         'icon' => 'bank',
@@ -136,9 +139,11 @@ class SectionSeeder extends Seeder
                 ],
                 'extra' => [
                     'live_label' => ['en' => 'Live demo', 'ar' => 'عرض مباشر'],
+                    // No hardcoded month/year here — the frontend prefixes this
+                    // with a live "As of <current month/year>" so it never goes stale.
                     'disclaimer' => [
-                        'en' => 'Indicative NAV per certificate (EGP) — as of Jun 2026. Illustrative figures.',
-                        'ar' => 'صافي قيمة الأصول الاسترشادي لكل وثيقة (بالجنيه) — حتى يونيو ٢٠٢٦. أرقام توضيحية.',
+                        'en' => 'Indicative NAV per certificate (EGP). Illustrative figures.',
+                        'ar' => 'صافي قيمة الأصول الاسترشادي لكل وثيقة (بالجنيه). أرقام توضيحية.',
                     ],
                 ],
             ],
@@ -161,7 +166,6 @@ class SectionSeeder extends Seeder
                     ['title' => ['en' => 'Fully integrated risk management', 'ar' => 'إدارة متكاملة للمخاطر'], 'text' => ['en' => 'Risk is managed at every step, never bolted on at the end.', 'ar' => 'تُدار المخاطر في كل خطوة، لا كإضافة لاحقة.']],
                     ['title' => ['en' => 'Research driven investing', 'ar' => 'استثمار قائم على البحث'], 'text' => ['en' => 'Diligent analysis behind every allocation decision.', 'ar' => 'تحليل دقيق وراء كل قرار لتوزيع الأصول.']],
                     ['title' => ['en' => 'A collaborative team', 'ar' => 'فريق متعاون'], 'text' => ['en' => 'One investment team working for your best interest.', 'ar' => 'فريق استثمار واحد يعمل لمصلحتك.']],
-                    ['title' => ['en' => 'Market leadership', 'ar' => 'ريادة سوقية'], 'text' => ['en' => "A 21.3% share of Egypt's asset-management market.", 'ar' => 'حصة ٢١٫٣٪ من سوق إدارة الأصول في مصر.']],
                 ],
                 'extra' => ['kicker' => ['en' => 'Why AFIM', 'ar' => 'لماذا الأهلي']],
             ],
@@ -170,7 +174,6 @@ class SectionSeeder extends Seeder
                 'items' => [
                     ['value' => '93', 'unit' => ['en' => 'EGP bn', 'ar' => 'مليار جنيه'], 'label' => ['en' => 'Assets under management, December 2025.', 'ar' => 'إجمالي الأصول المُدارة، ديسمبر ٢٠٢٥.'], 'hero' => true],
                     ['value' => '31', 'suffix' => '+', 'label' => ['en' => 'Years managing assets', 'ar' => 'عاماً في إدارة الأصول']],
-                    ['value' => '21.3', 'suffix' => '%', 'decimals' => 1, 'label' => ['en' => 'Market share in asset management', 'ar' => 'الحصة السوقية في إدارة الأصول']],
                     ['value' => '7', 'suffix' => '+', 'label' => ['en' => 'Funds & institutional portfolios', 'ar' => 'صناديق ومحافظ مؤسسية']],
                 ],
                 'extra' => ['kicker' => ['en' => 'AFIM by the numbers', 'ar' => 'الشركة في أرقام']],
@@ -181,7 +184,7 @@ class SectionSeeder extends Seeder
                 'items' => [
                     ['title' => ['en' => 'Find your fit', 'ar' => 'اعرف ما يناسبك'], 'text' => ['en' => 'Answer three quick questions, or browse the funds by goal.', 'ar' => 'أجب عن ثلاثة أسئلة سريعة، أو تصفّح الصناديق حسب هدفك.']],
                     ['title' => ['en' => 'Subscribe via NBE', 'ar' => 'اكتتب عبر البنك الأهلي'], 'text' => ['en' => 'Subscribe to your chosen fund through NBE branches nationwide.', 'ar' => 'اكتتب في الصندوق الذي تختاره عبر فروع البنك الأهلي في كل مكان.']],
-                    ['title' => ['en' => 'Track your NAV', 'ar' => 'تابع صافي قيمة أصولك'], 'text' => ['en' => 'Follow daily net asset value and yields, redeem on your cycle.', 'ar' => 'تابع صافي القيمة والعوائد يومياً، واسترد وفق دورتك.']],
+                    ['title' => ['en' => 'Track your investment', 'ar' => 'تابع استثمارك'], 'text' => ['en' => 'Follow daily net asset value and yields, redeem on your cycle.', 'ar' => 'تابع صافي القيمة والعوائد يومياً، واسترد وفق دورتك.']],
                 ],
                 'cta' => ['label' => ['en' => 'Find your service', 'ar' => 'اعثر على خدمتك'], 'href' => '#finder'],
             ],
@@ -189,14 +192,14 @@ class SectionSeeder extends Seeder
                 'key' => 'cta',
                 'title' => ['en' => 'Ready to put your capital to work?', 'ar' => 'هل أنت مستعد لتنمية ثروتك؟'],
                 'body' => [
-                    'en' => 'Find the AFIM product that fits your goals, or talk to our team. We reply within 24 hours.',
-                    'ar' => 'اعثر على منتج الأهلي المناسب لأهدافك، أو تحدّث مع فريقنا. نرد خلال ٢٤ ساعة.',
+                    'en' => 'Find the AFIM product that fits your goals, or take our quick investment survey.',
+                    'ar' => 'اعثر على منتج الأهلي المناسب لأهدافك، أو جرّب استبيان الاستثمار السريع.',
                 ],
                 'cta' => [
                     'label' => ['en' => 'Find your service', 'ar' => 'اعثر على خدمتك'],
                     'href' => '#finder',
-                    'secondary_label' => ['en' => 'Talk to our team', 'ar' => 'تحدّث مع فريقنا'],
-                    'secondary_href' => '/contact',
+                    'secondary_label' => ['en' => 'Take the investment survey', 'ar' => 'جرّب استبيان الاستثمار'],
+                    'secondary_href' => '/survey',
                 ],
             ],
             [

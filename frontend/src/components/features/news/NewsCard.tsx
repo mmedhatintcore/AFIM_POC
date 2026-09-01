@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
@@ -25,6 +26,17 @@ export async function NewsCard({
       className="group relative flex flex-col gap-3.5 rounded-card border border-border bg-surface p-7 shadow-elev-1 transition-all duration-300 ease-out-soft hover:-translate-y-1.5 hover:border-accent/50 hover:shadow-elev-2"
       data-testid={`news-card-${item.slug}`}
     >
+      {item.image_url ? (
+        <div className="-mx-7 -mt-7 mb-1 overflow-hidden rounded-t-card">
+          <Image
+            src={item.image_url}
+            alt=""
+            width={480}
+            height={240}
+            className="h-40 w-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+        </div>
+      ) : null}
       <div className="flex items-center gap-2.5 text-[0.72rem] tracking-wide text-muted">
         <span
           className={cn(

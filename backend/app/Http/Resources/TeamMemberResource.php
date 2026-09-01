@@ -15,6 +15,8 @@ final class TeamMemberResource extends JsonResource
             'group' => $this->group,
             'name' => $this->getTranslation('name', $locale),
             'role' => $this->getTranslation('role', $locale),
+            'bio' => $this->getTranslation('bio', $locale),
+            'photo_url' => $this->photoUrl(),
         ];
     }
 }

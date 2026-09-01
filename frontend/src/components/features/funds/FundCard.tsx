@@ -43,11 +43,13 @@ export async function FundCard({
         <span className="text-[0.68rem] uppercase leading-tight tracking-wide text-muted">
           {fund.category_label}
         </span>
-        <RiskBadge
-          level={fund.risk_level}
-          label={fund.risk_label}
-          className="ms-auto"
-        />
+        {detailed || fund.risk_level !== 0 ? (
+          <RiskBadge
+            level={fund.risk_level}
+            label={fund.risk_label}
+            className="ms-auto"
+          />
+        ) : null}
       </div>
 
       <h3 className="mb-3 min-h-[2.7em] text-[1.04rem] font-bold leading-snug">

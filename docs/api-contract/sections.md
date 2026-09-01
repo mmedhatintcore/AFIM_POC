@@ -26,11 +26,11 @@ All of `title`, `subtitle`, `body` and every `title`/`text`/`label` inside
 | --- | --- | --- | --- | --- |
 | `announcement` | body = banner text | — | `{label, href}` = "Read more" link | — |
 | `ticker` | — | `{text}` highlight chips | — | — |
-| `hero` | title, subtitle (accent line), body = lead | live-NAV pulse chips `{title, value, trend: "up"\|"down"\|null}` | primary + secondary | `{eyebrow}` |
+| `hero` | title, subtitle (accent line), body = lead | — | primary + secondary | `{eyebrow, chart_unit, chart_milestones: [{year, value}]}` |
 | `advisor` | title (may contain `<span class=\"accent\">`), body = lead | chips `{icon, text}` | primary ("Find my fund") + secondary | `{note, preview: {...}}` |
 | `trust` | title = strip label | `{text}` partner names | — | — |
-| `goals` | title, subtitle | `{icon, title, text, link_label, href}` | — | — |
-| `prices_intro` | title, subtitle | — | — | `{live_label, disclaimer}` |
+| `goals` | title, subtitle | `{icon, title, text, link_label, href}` — `href` may be `/funds?group=a,b` (comma-separated, deep-links to more than one fund group) | — | — |
+| `prices_intro` | title, subtitle | — | — | `{live_label, disclaimer}` — frontend prefixes `disclaimer` with a live "As of \<month/year\>" computed at request time, so it's never hardcoded/stale |
 | `services_intro` | title, subtitle | — | — | — |
 | `why` | title, body | `{title, text}` numbered features | — | `{kicker}` |
 | `figures` | — | `{value, suffix, label, decimals}` stat rows; first item is the hero stat with `unit` | — | `{kicker}` |
@@ -41,3 +41,8 @@ All of `title`, `subtitle`, `body` and every `title`/`text`/`label` inside
 | `news_intro` | title, subtitle | — | — | — |
 | `faqs_intro` | title, subtitle | — | — | — |
 | `survey_intro` | title, subtitle/body | — | — | `{note}` |
+
+`hero.extra.chart_milestones` drives the year markers on the hero growth
+illustration (admin-editable list, in display order — no fixed count).
+`hero` no longer carries `items` (the "Live NAV" chip strip shown below the
+hero CTAs was removed).

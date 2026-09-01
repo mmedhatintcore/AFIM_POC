@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import { NewsCard } from "@/components/features/news/NewsCard";
@@ -130,6 +131,16 @@ export default async function NewsArticlePage({ params }: Props) {
         <h1 className="mb-6 text-3xl font-extrabold leading-tight sm:text-4xl rtl:leading-snug">
           {article.title}
         </h1>
+        {article.image_url ? (
+          <Image
+            src={article.image_url}
+            alt=""
+            width={960}
+            height={480}
+            priority
+            className="mb-8 h-auto w-full rounded-card-xl object-cover"
+          />
+        ) : null}
         <div className="space-y-5">
           {paragraphs.map((paragraph, index) => (
             <p

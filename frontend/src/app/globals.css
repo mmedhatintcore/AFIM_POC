@@ -331,6 +331,14 @@ html[dir="rtl"] body {
     font-size: 14px;
     font-variant-numeric: tabular-nums;
   }
+  .hc-value {
+    fill: var(--foreground);
+    font-size: 15px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    opacity: 0;
+    animation: hc-fade 0.5s ease forwards;
+  }
   .hc-chip {
     animation: hc-fade 0.8s ease 1.7s forwards;
     opacity: 0;
@@ -396,6 +404,7 @@ html[dir="rtl"] body {
   }
   .hc-area,
   .hc-dot,
+  .hc-value,
   .hc-chip {
     opacity: 1;
   }

@@ -11,13 +11,13 @@ class Committee extends Model
 {
     use HasTranslations;
 
-    public array $translatable = ['name'];
+    public array $translatable = ['name', 'mission'];
 
-    protected $fillable = ['name', 'responsibilities', 'sort'];
+    protected $fillable = ['name', 'mission', 'responsibilities', 'members', 'sort'];
 
     protected function casts(): array
     {
-        return ['responsibilities' => 'array', 'sort' => 'integer'];
+        return ['responsibilities' => 'array', 'members' => 'array', 'sort' => 'integer'];
     }
 
     #[Scope]

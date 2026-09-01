@@ -1,7 +1,7 @@
 # Services
 
-Licensed lines of business (Portfolio Management, Liquidity Management,
-Promotion & Underwriting, Subscription & Redemption).
+Licensed lines of business (Fund Management, Portfolio Management, Liquidity
+Management, Subscription & Redemption).
 
 ## `GET /api/v1/services`
 
@@ -10,12 +10,12 @@ Promotion & Underwriting, Subscription & Redemption).
   "data": [
     {
       "id": 1,
-      "key": "portfolio",
-      "slug": "portfolio-management",
-      "name": "Portfolio Management",
-      "description": "Tailored discretionary mandates…",
+      "key": "funds",
+      "slug": "fund-management",
+      "name": "Fund Management",
+      "description": "A diversified family of licensed mutual funds…",
       "body": "…long form for the detail page…",
-      "icon": "portfolio",
+      "icon": "fundmanagement",
       "sort": 1
     }
   ]

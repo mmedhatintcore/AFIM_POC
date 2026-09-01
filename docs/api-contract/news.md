@@ -16,6 +16,7 @@ Query params: `filters[type]=press|media|social`, `search=…`, `page`, `per_pag
       "source": "AFIM Press Release",
       "title": "AUM surpasses EGP 93 billion",
       "excerpt": "Assets under management exceeded EGP 93bn…",
+      "image_url": null,
       "published_at": "2025-12-15T00:00:00.000000Z"
     }
   ],
@@ -24,7 +25,11 @@ Query params: `filters[type]=press|media|social`, `search=…`, `page`, `per_pag
 }
 ```
 
+`image_url` (nullable, absolute URL on the `public` disk —
+`{APP_URL}/storage/news/…`) is an optional thumbnail, uploaded in Filament.
+`null` when no image was uploaded.
+
 ## `GET /api/v1/news/{slug}`
 
 Adds `body` (full localized article text) and `related` (up to 3 posts of the
-same type, list shape). 404 when unknown or unpublished.
+same type, list shape, including `image_url`). 404 when unknown or unpublished.

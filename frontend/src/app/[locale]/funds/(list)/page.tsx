@@ -14,6 +14,8 @@ import type { Fund, Section } from "@/types/api";
 
 type Props = {
   params: Promise<{ locale: string }>;
+  // `group` may hold one key (`mm`) or several, comma-separated (`mm,imm`),
+  // so a single "goal" card can deep-link to more than one fund group.
   searchParams: Promise<{ group?: string }>;
 };
 
@@ -53,11 +55,15 @@ export default async function FundsPage({ params, searchParams }: Props) {
       categories.push({ key: fund.group_key, label: fund.category_label });
     }
   }
-  const active = categories.some((category) => category.key === group)
-    ? group
-    : undefined;
+  const requestedGroups = (group ?? "")
+    .split(",")
+    .map((key) => key.trim())
+    .filter(Boolean);
+  const activeGroups = categories
+    .map((category) => category.key)
+    .filter((key) => requestedGroups.includes(key));
   const visible = (funds ?? []).filter(
-    (fund) => !active || fund.group_key === active,
+    (fund) => activeGroups.length === 0 || activeGroups.includes(fund.group_key),
   );
 
   const chipClass = (selected: boolean) =>
@@ -83,23 +89,27 @@ export default async function FundsPage({ params, searchParams }: Props) {
         >
           <Link
             href="/funds"
-            className={chipClass(!active)}
+            className={chipClass(activeGroups.length === 0)}
             data-testid="fund-filter-all"
-            aria-current={!active ? "page" : undefined}
+            aria-current={activeGroups.length === 0 ? "page" : undefined}
           >
             {t("all")}
           </Link>
-          {categories.map((category) => (
-            <Link
-              key={category.key}
-              href={`/funds?group=${category.key}`}
-              className={chipClass(active === category.key)}
-              data-testid={`fund-filter-${category.key}`}
-              aria-current={active === category.key ? "page" : undefined}
-            >
-              {category.label}
-            </Link>
-          ))}
+          {categories.map((category) => {
+            const selected =
+              activeGroups.length === 1 && activeGroups[0] === category.key;
+            return (
+              <Link
+                key={category.key}
+                href={`/funds?group=${category.key}`}
+                className={chipClass(selected)}
+                data-testid={`fund-filter-${category.key}`}
+                aria-current={selected ? "page" : undefined}
+              >
+                {category.label}
+              </Link>
+            );
+          })}
         </nav>
       ) : null}
 

@@ -68,22 +68,52 @@ class AboutSeeder extends Seeder
     {
         $committees = [
             ['sort' => 1, 'name' => ['en' => 'Audit Committee', 'ar' => 'لجنة المراجعة'],
+                'mission' => ['en' => 'Oversees the integrity of financial reporting, internal controls, and the internal and external audit functions.', 'ar' => 'الإشراف على سلامة التقارير المالية والرقابة الداخلية ووظيفتي المراجعة الداخلية والخارجية.'],
+                'members' => [
+                    ['name' => ['en' => 'Independent Director', 'ar' => 'عضو مستقل'], 'role' => ['en' => 'Chair', 'ar' => 'رئيس اللجنة']],
+                    ['name' => ['en' => 'Non-Executive Director', 'ar' => 'عضو غير تنفيذي'], 'role' => ['en' => 'Member', 'ar' => 'عضو']],
+                    ['name' => ['en' => 'Independent Director', 'ar' => 'عضو مستقل'], 'role' => ['en' => 'Member', 'ar' => 'عضو']],
+                ],
                 'responsibilities' => [
                     ['en' => 'Reviews financial reporting integrity', 'ar' => 'مراجعة سلامة التقارير المالية'],
                     ['en' => 'Oversees internal & external audit', 'ar' => 'الإشراف على المراجعة الداخلية والخارجية'],
                     ['en' => 'Monitors internal-control effectiveness', 'ar' => 'متابعة فاعلية الرقابة الداخلية'],
                 ]],
             ['sort' => 2, 'name' => ['en' => 'Risk Committee', 'ar' => 'لجنة المخاطر'],
+                'mission' => ['en' => 'Defines the risk appetite framework and monitors market, credit, liquidity, and operational risk across the firm.', 'ar' => 'وضع إطار قابلية تحمّل المخاطر ومتابعة مخاطر السوق والائتمان والسيولة والمخاطر التشغيلية على مستوى الشركة.'],
+                'members' => [
+                    ['name' => ['en' => 'Non-Executive Director', 'ar' => 'عضو غير تنفيذي'], 'role' => ['en' => 'Chair', 'ar' => 'رئيس اللجنة']],
+                    ['name' => ['en' => 'Independent Director', 'ar' => 'عضو مستقل'], 'role' => ['en' => 'Member', 'ar' => 'عضو']],
+                    ['name' => ['en' => 'Head of Risk', 'ar' => 'رئيس إدارة المخاطر'], 'role' => ['en' => 'Member (Executive)', 'ar' => 'عضو (تنفيذي)']],
+                ],
                 'responsibilities' => [
                     ['en' => 'Sets the risk appetite framework', 'ar' => 'وضع إطار قابلية تحمّل المخاطر'],
                     ['en' => 'Monitors market, credit & liquidity risk', 'ar' => 'متابعة مخاطر السوق والائتمان والسيولة'],
                     ['en' => 'Reviews risk policies and limits', 'ar' => 'مراجعة سياسات وحدود المخاطر'],
                 ]],
             ['sort' => 3, 'name' => ['en' => 'Investment Committee', 'ar' => 'لجنة الاستثمار'],
+                'mission' => ['en' => 'Sets asset-allocation strategy and oversees fund and portfolio investment decisions and performance.', 'ar' => 'اعتماد استراتيجية توزيع الأصول والإشراف على قرارات وأداء الصناديق والمحافظ الاستثمارية.'],
+                'members' => [
+                    ['name' => ['en' => 'Managing Director & CIO', 'ar' => 'العضو المنتدب ورئيس الاستثمار'], 'role' => ['en' => 'Chair', 'ar' => 'رئيس اللجنة']],
+                    ['name' => ['en' => 'Head of Asset Management', 'ar' => 'رئيس إدارة الأصول'], 'role' => ['en' => 'Member', 'ar' => 'عضو']],
+                    ['name' => ['en' => 'Head of Research', 'ar' => 'رئيس البحوث'], 'role' => ['en' => 'Member', 'ar' => 'عضو']],
+                ],
                 'responsibilities' => [
                     ['en' => 'Approves asset-allocation strategy', 'ar' => 'اعتماد استراتيجية توزيع الأصول'],
                     ['en' => 'Reviews fund & portfolio performance', 'ar' => 'مراجعة أداء الصناديق والمحافظ'],
                     ['en' => 'Oversees the investment process', 'ar' => 'الإشراف على العملية الاستثمارية'],
+                ]],
+            ['sort' => 4, 'name' => ['en' => 'Governance Committee', 'ar' => 'لجنة الحوكمة'],
+                'mission' => ['en' => 'Oversees corporate governance practices, board effectiveness, nominations, and compliance with regulatory governance requirements.', 'ar' => 'الإشراف على ممارسات الحوكمة وفاعلية مجلس الإدارة والترشيحات والالتزام بمتطلبات الحوكمة التنظيمية.'],
+                'members' => [
+                    ['name' => ['en' => 'Non-Executive Director', 'ar' => 'عضو غير تنفيذي'], 'role' => ['en' => 'Chair', 'ar' => 'رئيس اللجنة']],
+                    ['name' => ['en' => 'Independent Director', 'ar' => 'عضو مستقل'], 'role' => ['en' => 'Member', 'ar' => 'عضو']],
+                    ['name' => ['en' => 'Independent Director', 'ar' => 'عضو مستقل'], 'role' => ['en' => 'Member', 'ar' => 'عضو']],
+                ],
+                'responsibilities' => [
+                    ['en' => 'Oversees board composition & nominations', 'ar' => 'الإشراف على تشكيل المجلس والترشيحات'],
+                    ['en' => 'Reviews corporate governance policies', 'ar' => 'مراجعة سياسات الحوكمة المؤسسية'],
+                    ['en' => 'Monitors regulatory compliance on governance', 'ar' => 'متابعة الالتزام التنظيمي بمتطلبات الحوكمة'],
                 ]],
         ];
 

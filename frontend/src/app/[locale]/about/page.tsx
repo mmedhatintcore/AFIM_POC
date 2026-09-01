@@ -167,7 +167,7 @@ export default async function AboutPage({ params }: Props) {
         <p className="mx-auto mb-9 max-w-xl text-center text-[0.96rem] text-soft">
           {t("committeesIntro")}
         </p>
-        <div className="grid gap-5 md:grid-cols-3">
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {committees.map((committee) => (
             <div
               key={committee.id}
@@ -181,16 +181,31 @@ export default async function AboutPage({ params }: Props) {
                 />
                 {committee.name}
               </h3>
-              <ul>
-                {committee.responsibilities.map((line, index) => (
-                  <li
-                    key={index}
-                    className="border-b border-hairline py-2 text-[0.86rem] font-light leading-normal text-soft last:border-b-0 rtl:font-normal"
-                  >
-                    {line}
-                  </li>
-                ))}
-              </ul>
+              {committee.mission ? (
+                <p className="mb-4 text-[0.86rem] font-light leading-relaxed text-soft rtl:font-normal rtl:leading-loose">
+                  {committee.mission}
+                </p>
+              ) : null}
+              {committee.members.length > 0 ? (
+                <div className="mb-4">
+                  <div className="mb-2 text-[0.7rem] font-semibold uppercase tracking-widest text-muted">
+                    {t("membersLabel")}
+                  </div>
+                  <ul>
+                    {committee.members.map((member, index) => (
+                      <li
+                        key={index}
+                        className="flex items-baseline justify-between gap-3 border-b border-hairline py-2 text-[0.86rem] last:border-b-0"
+                      >
+                        <span className="font-medium">{member.name}</span>
+                        <span className="text-[0.78rem] text-accent">
+                          {member.role}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ) : null}
             </div>
           ))}
         </div>

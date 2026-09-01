@@ -14,6 +14,8 @@ final class CommitteeResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->getTranslation('name', $locale),
+            'mission' => $this->getTranslation('mission', $locale),
+            'members' => LocalizesNested::localize($this->members, $locale) ?? [],
             'responsibilities' => LocalizesNested::localize($this->responsibilities, $locale) ?? [],
         ];
     }

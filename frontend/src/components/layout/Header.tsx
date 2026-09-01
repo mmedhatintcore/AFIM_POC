@@ -12,7 +12,6 @@ import { LocaleSwitcher } from "./LocaleSwitcher";
 import { ThemeToggle } from "./ThemeToggle";
 
 const NAV = [
-  { key: "home", href: "/" },
   { key: "funds", href: "/funds" },
   { key: "services", href: "/services" },
   { key: "about", href: "/about" },

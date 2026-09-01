@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\TeamMembers\Schemas;
 
 use App\Filament\Support\Bilingual;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -22,9 +23,17 @@ class TeamMemberForm
                     ->default(0),
                 Toggle::make('is_published')
                     ->default(true),
+                FileUpload::make('photo_path')
+                    ->label('Photo')
+                    ->disk('public')
+                    ->directory('team')
+                    ->image()
+                    ->imageEditor()
+                    ->helperText('Optional. Falls back to initials if left empty.'),
                 Bilingual::tabs([
                     ['name' => 'name', 'label' => 'Name', 'required' => true],
                     ['name' => 'role', 'label' => 'Role', 'required' => true],
+                    ['name' => 'bio', 'label' => 'Bio', 'type' => 'textarea', 'rows' => 4],
                 ]),
             ]);
     }

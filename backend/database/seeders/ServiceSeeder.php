@@ -11,10 +11,25 @@ class ServiceSeeder extends Seeder
     {
         $services = [
             [
+                'key' => 'funds',
+                'slug' => 'fund-management',
+                'icon' => 'fundmanagement',
+                'sort' => 1,
+                'name' => ['en' => 'Fund Management', 'ar' => 'إدارة الصناديق'],
+                'description' => [
+                    'en' => 'A diversified family of licensed mutual funds — money market, fixed income, balanced, equity, Sharia-compliant and gold — professionally managed since 1994.',
+                    'ar' => 'مجموعة متنوعة من صناديق الاستثمار المرخّصة — النقدية والدخل الثابت والمتوازنة والأسهم والمتوافقة مع الشريعة والذهب — تُدار باحترافية منذ عام ١٩٩٤.',
+                ],
+                'body' => [
+                    'en' => "Fund Management is AFIM's core business: establishing and managing a diversified family of mutual funds across money-market, fixed-income, balanced, equity, Sharia-compliant and gold strategies. Every fund is run by one collaborative investment team with fully integrated risk management and research-driven analysis, and priced on a regular cycle with clear, published NAVs.",
+                    'ar' => 'تُعد إدارة الصناديق النشاط الأساسي للشركة: إنشاء وإدارة مجموعة متنوعة من صناديق الاستثمار عبر استراتيجيات أسواق النقد والدخل الثابت والصناديق المتوازنة والأسهم والصناديق المتوافقة مع الشريعة والذهب. يُدار كل صندوق بواسطة فريق استثمار واحد متعاون مع إدارة متكاملة للمخاطر وتحليل قائم على البحث، ويُسعَّر بشكل دوري منتظم مع صافي قيمة أصول واضح ومنشور.',
+                ],
+            ],
+            [
                 'key' => 'portfolio',
                 'slug' => 'portfolio-management',
                 'icon' => 'portfolio',
-                'sort' => 1,
+                'sort' => 2,
                 'name' => ['en' => 'Portfolio Management', 'ar' => 'إدارة المحافظ'],
                 'description' => [
                     'en' => 'Tailored discretionary mandates for institutions and high net worth clients, spanning asset classes and bespoke investment strategies.',
@@ -29,7 +44,7 @@ class ServiceSeeder extends Seeder
                 'key' => 'liquidity',
                 'slug' => 'liquidity-management',
                 'icon' => 'liquidity',
-                'sort' => 2,
+                'sort' => 3,
                 'name' => ['en' => 'Liquidity Management', 'ar' => 'إدارة السيولة'],
                 'description' => [
                     'en' => 'Optimal deployment of corporate cash: analysing financial statements, mapping cash flow cycles, and selecting the right instruments for return and access.',
@@ -38,21 +53,6 @@ class ServiceSeeder extends Seeder
                 'body' => [
                     'en' => "Liquidity Management puts corporate cash to work without sacrificing access. We analyse your financial statements, map your cash-flow cycle, and select the right mix of money-market and fixed-income instruments so idle balances earn a return while staying available exactly when your business needs them.",
                     'ar' => 'تُوظّف خدمة إدارة السيولة النقد المؤسسي دون التضحية بسهولة الوصول إليه. نحلل قوائمك المالية ونرسم دورة تدفقاتك النقدية ونختار المزيج المناسب من أدوات أسواق النقد والدخل الثابت، لتحقق أرصدتك الخاملة عائداً مع بقائها متاحة تماماً وقت حاجة نشاطك إليها.',
-                ],
-            ],
-            [
-                'key' => 'underwriting',
-                'slug' => 'promotion-underwriting',
-                'icon' => 'underwriting',
-                'sort' => 3,
-                'name' => ['en' => 'Promotion & Underwriting', 'ar' => 'الترويج وتغطية الاكتتاب'],
-                'description' => [
-                    'en' => 'Helping companies — especially SMEs — reach economic scale and access capital through primary and secondary market offerings.',
-                    'ar' => 'مساعدة الشركات — وخاصة الصغيرة والمتوسطة — على بلوغ الحجم الاقتصادي والوصول لرأس المال عبر السوقين الأولي والثانوي.',
-                ],
-                'body' => [
-                    'en' => 'Promotion & Underwriting helps companies — especially small and medium enterprises — reach economic scale and access capital. We structure, promote and underwrite offerings in the primary and secondary markets, guiding issuers through pricing, regulatory requirements and investor outreach from first mandate to closing.',
-                    'ar' => 'تساعد خدمة الترويج وتغطية الاكتتاب الشركات — وخاصة الصغيرة والمتوسطة — على بلوغ الحجم الاقتصادي والوصول لرأس المال. نُهيكل الطروحات ونروّج لها ونغطي الاكتتاب فيها في السوقين الأولي والثانوي، ونرافق المُصدرين عبر التسعير والمتطلبات الرقابية والتواصل مع المستثمرين من التكليف الأول حتى الإغلاق.',
                 ],
             ],
             [
@@ -75,5 +75,8 @@ class ServiceSeeder extends Seeder
         foreach ($services as $service) {
             Service::updateOrCreate(['key' => $service['key']], $service);
         }
+
+        // Promotion & Underwriting was dropped from the services lineup.
+        Service::where('key', 'underwriting')->delete();
     }
 }

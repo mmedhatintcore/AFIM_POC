@@ -6,6 +6,18 @@ import { cn } from "@/lib/utils/cn";
  */
 function Glyph({ name }: { name?: string | null }) {
   switch (name) {
+    case "fundmanagement":
+      return (
+        <svg viewBox="0 0 32 32" className="size-8" aria-hidden="true">
+          <rect x="5" y="9" width="22" height="16" rx="2" fill="#fff" />
+          <path
+            d="M5 13h22"
+            stroke="var(--orange)"
+            strokeWidth="2"
+          />
+          <circle cx="16" cy="19" r="3.4" fill="var(--orange)" />
+        </svg>
+      );
     case "portfolio":
       return (
         <svg viewBox="0 0 32 32" className="size-8" aria-hidden="true">

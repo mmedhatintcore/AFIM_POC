@@ -4,6 +4,7 @@ namespace App\Filament\Resources\NewsPosts\Schemas;
 
 use App\Filament\Support\Bilingual;
 use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -27,6 +28,13 @@ class NewsPostForm
                 DateTimePicker::make('published_at'),
                 Toggle::make('is_published')
                     ->default(true),
+                FileUpload::make('image_path')
+                    ->label('Image')
+                    ->disk('public')
+                    ->directory('news')
+                    ->image()
+                    ->imageEditor()
+                    ->helperText('Optional thumbnail shown on the news feed and article page.'),
                 Bilingual::tabs([
                     ['name' => 'title', 'label' => 'Title', 'required' => true],
                     ['name' => 'excerpt', 'label' => 'Excerpt', 'type' => 'textarea', 'rows' => 3, 'required' => true],

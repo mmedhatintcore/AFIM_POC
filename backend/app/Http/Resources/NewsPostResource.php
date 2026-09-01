@@ -18,6 +18,7 @@ final class NewsPostResource extends JsonResource
             'source' => $this->source,
             'title' => $this->getTranslation('title', $locale),
             'excerpt' => $this->getTranslation('excerpt', $locale),
+            'image_url' => $this->imageUrl(),
             'published_at' => $this->published_at?->toIso8601String(),
         ];
     }

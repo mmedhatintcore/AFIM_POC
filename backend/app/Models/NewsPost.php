@@ -15,11 +15,16 @@ class NewsPost extends Model
 
     public array $translatable = ['title', 'excerpt', 'body'];
 
-    protected $fillable = ['slug', 'type', 'source', 'title', 'excerpt', 'body', 'published_at', 'is_published'];
+    protected $fillable = ['slug', 'type', 'source', 'title', 'excerpt', 'body', 'image_path', 'published_at', 'is_published'];
 
     protected function casts(): array
     {
         return ['published_at' => 'datetime', 'is_published' => 'boolean'];
+    }
+
+    public function imageUrl(): ?string
+    {
+        return $this->image_path ? Storage::disk('public')->url($this->image_path) : null;
     }
 
     #[Scope]

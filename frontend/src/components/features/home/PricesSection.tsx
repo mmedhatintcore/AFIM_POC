@@ -5,6 +5,7 @@ import { EmptyState } from "@/components/ui/EmptyState";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import type { Locale } from "@/i18n/routing";
 import { extraString } from "@/lib/utils/sections";
+import { formatDate } from "@/lib/utils/format";
 import type { Fund, Section } from "@/types/api";
 import { PricesCarousel } from "./PricesCarousel";
 
@@ -22,7 +23,14 @@ export async function PricesSection({
   const tf = await getTranslations({ locale, namespace: "Funds" });
 
   const liveLabel = extraString(section, "live_label");
-  const disclaimer = extraString(section, "disclaimer");
+  const disclaimerText = extraString(section, "disclaimer");
+  const asOf = formatDate(new Date().toISOString(), locale, {
+    year: "numeric",
+    month: "long",
+  });
+  const disclaimer = disclaimerText
+    ? `${t("asOf", { date: asOf })} · ${disclaimerText}`
+    : null;
 
   return (
     <section className="px-[6vw] pb-6 pt-12" id="prices" data-testid="home-prices">

@@ -45,14 +45,15 @@ export const FINDER_QUESTIONS: FinderQuestion[] = [
 ];
 
 export type FinderResultKey =
-  | "underwriting"
   | "subscription"
   | "liquidity"
   | "portfolio"
   | "funds";
 
 export function recommend(answers: string[]): FinderResultKey {
-  if (answers[0] === "raise" || answers[1] === "capital") return "underwriting";
+  // AFIM no longer offers Promotion & Underwriting — a company seeking
+  // capital-raising is closest served today by Portfolio Management.
+  if (answers[0] === "raise" || answers[1] === "capital") return "portfolio";
   if (answers[2] === "exec") return "subscription";
   if (answers[0] === "inst" || answers[2] === "managed") {
     return answers[1] === "preserve" ? "liquidity" : "portfolio";

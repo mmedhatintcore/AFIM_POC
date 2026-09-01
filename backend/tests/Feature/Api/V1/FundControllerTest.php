@@ -25,7 +25,7 @@ final class FundControllerTest extends TestCase
     {
         $response = $this->getJson('/api/v1/funds?filters[is_featured]=1');
 
-        $response->assertOk()->assertJsonCount(6, 'data');
+        $response->assertOk()->assertJsonCount(10, 'data');
         $this->assertTrue(collect($response->json('data'))->every(fn ($fund) => $fund['is_featured']));
     }
 
