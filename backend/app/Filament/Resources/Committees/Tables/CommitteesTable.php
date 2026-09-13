@@ -14,6 +14,13 @@ class CommitteesTable
     {
         return $table
             ->columns([
+                TextColumn::make('name')
+                    ->label('Name (EN)')
+                    ->getStateUsing(fn ($record) => $record->getTranslation('name', 'en'))
+                    ->searchable(),
+                TextColumn::make('name_ar')
+                    ->label('Name (AR)')
+                    ->getStateUsing(fn ($record) => $record->getTranslation('name', 'ar')),
                 TextColumn::make('sort')
                     ->numeric()
                     ->sortable(),
