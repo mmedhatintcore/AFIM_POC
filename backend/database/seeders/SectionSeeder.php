@@ -134,16 +134,16 @@ class SectionSeeder extends Seeder
                 'key' => 'prices_intro',
                 'title' => ['en' => 'Prices & yields', 'ar' => 'الأسعار والعوائد'],
                 'subtitle' => [
-                    'en' => "Compare AFIM's fund products at a glance — price, daily move and one-year yield. Swipe or let it scroll.",
-                    'ar' => 'قارن منتجات صناديق الشركة في لمحة — السعر والتغير اليومي والعائد السنوي. مرّر أو دعه ينساب.',
+                    'en' => "Compare AFIM's fund products at a glance — price, daily move and YTD. Swipe or let it scroll.",
+                    'ar' => 'قارن منتجات صناديق الشركة في لمحة — السعر والتغير اليومي والعائد منذ بداية العام. مرّر أو دعه ينساب.',
                 ],
                 'extra' => [
                     'live_label' => ['en' => 'Live demo', 'ar' => 'عرض مباشر'],
                     // No hardcoded month/year here — the frontend prefixes this
                     // with a live "As of <current month/year>" so it never goes stale.
                     'disclaimer' => [
-                        'en' => 'Indicative NAV per certificate (EGP). Illustrative figures.',
-                        'ar' => 'صافي قيمة الأصول الاسترشادي لكل وثيقة (بالجنيه). أرقام توضيحية.',
+                        'en' => 'Indicative price per certificate (EGP). Illustrative figures.',
+                        'ar' => 'السعر الاسترشادي لكل وثيقة (بالجنيه). أرقام توضيحية.',
                     ],
                 ],
             ],
@@ -183,7 +183,7 @@ class SectionSeeder extends Seeder
                 'title' => ['en' => 'How to start', 'ar' => 'كيف تبدأ'],
                 'items' => [
                     ['title' => ['en' => 'Find your fit', 'ar' => 'اعرف ما يناسبك'], 'text' => ['en' => 'Answer three quick questions, or browse the funds by goal.', 'ar' => 'أجب عن ثلاثة أسئلة سريعة، أو تصفّح الصناديق حسب هدفك.']],
-                    ['title' => ['en' => 'Subscribe via NBE', 'ar' => 'اكتتب عبر البنك الأهلي'], 'text' => ['en' => 'Subscribe to your chosen fund through NBE branches nationwide.', 'ar' => 'اكتتب في الصندوق الذي تختاره عبر فروع البنك الأهلي في كل مكان.']],
+                    ['title' => ['en' => 'Subscribe', 'ar' => 'اكتتب'], 'text' => ['en' => 'Subscribe to your chosen fund through NBE branches nationwide.', 'ar' => 'اكتتب في الصندوق الذي تختاره عبر فروع البنك الأهلي في كل مكان.']],
                     ['title' => ['en' => 'Track your investment', 'ar' => 'تابع استثمارك'], 'text' => ['en' => 'Follow daily net asset value and yields, redeem on your cycle.', 'ar' => 'تابع صافي القيمة والعوائد يومياً، واسترد وفق دورتك.']],
                 ],
                 'cta' => ['label' => ['en' => 'Find your service', 'ar' => 'اعثر على خدمتك'], 'href' => '#finder'],
