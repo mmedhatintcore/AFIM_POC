@@ -51,6 +51,20 @@ class SectionForm
         'bank' => 'Bank (institutions)', 'eye' => 'Eye (vision)', 'scales' => 'Scales (values)',
     ];
 
+    // Keep in sync with `socialIcon()` in frontend/src/components/layout/Footer.tsx.
+    private const SOCIAL_PLATFORM_OPTIONS = [
+        'facebook' => 'Facebook',
+        'x' => 'X (Twitter)',
+        'instagram' => 'Instagram',
+        'linkedin' => 'LinkedIn',
+        'youtube' => 'YouTube',
+        'tiktok' => 'TikTok',
+        'whatsapp' => 'WhatsApp',
+        'telegram' => 'Telegram',
+        'snapchat' => 'Snapchat',
+        'other' => 'Other',
+    ];
+
     public static function configure(Schema $schema): Schema
     {
         $keyIs = fn (string ...$keys) => fn (Get $get): bool => in_array($get('key'), $keys, true);
@@ -172,7 +186,13 @@ class SectionForm
                         Select::make('group')
                             ->label('Column')
                             ->options(['office' => 'Head office', 'social' => 'Follow AFIM'])
+                            ->live()
                             ->visible($rowKeyIs('footer')),
+                        Select::make('platform')
+                            ->label('Social platform')
+                            ->options(self::SOCIAL_PLATFORM_OPTIONS)
+                            ->helperText('Picks the icon shown on the website automatically.')
+                            ->visible(fn (Get $get): bool => $get('../../key') === 'footer' && $get('group') === 'social'),
                         TextInput::make('href')->label('Link (social only)')
                             ->helperText('Full URL, e.g. https://facebook.com/AFIM1994')
                             ->visible($rowKeyIs('footer')),
@@ -224,6 +244,12 @@ class SectionForm
                         ...self::pair('extra.follow_title', '“Follow AFIM” column title', $keyIs('footer')),
                         TextInput::make('extra.phone')->label('Phone')->visible($keyIs('footer')),
                         TextInput::make('extra.email')->label('Email')->visible($keyIs('footer')),
+                        TextInput::make('extra.office_maps_url')
+                            ->label('Head office Google Maps link')
+                            ->url()
+                            ->helperText('Paste the full Google Maps link for the office (Share → Copy link on the map pin). The office address on the website links here; left empty, it falls back to a Google Maps search built from the address text.')
+                            ->columnSpanFull()
+                            ->visible($keyIs('footer')),
                         ...self::pair('extra.reply_note', '“We reply within 24 hours” note', $keyIs('footer')),
                         ...self::pair('extra.copyright', 'Copyright / bottom line', $keyIs('footer'), textarea: true),
                         ...self::pair('extra.result_title', 'Survey result heading', $keyIs('survey_intro')),
