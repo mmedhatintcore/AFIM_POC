@@ -18,6 +18,7 @@ class FundCategoryForm
                     ->disabledOn('edit')
                     ->helperText('Scoring key used by the survey — do not change after creation.'),
                 Select::make('fund_group')
+                    ->label('Show funds from')
                     ->options([
                         'mm' => 'Money Market',
                         'imm' => 'Islamic Money Market',
@@ -27,7 +28,8 @@ class FundCategoryForm
                         'equity' => 'Equity',
                         'iequity' => 'Islamic Equity',
                     ])
-                    ->required(),
+                    ->required()
+                    ->helperText('Not another category — this picks which published funds appear as "matching funds" when the survey recommends this result. Several results can point at the same group (e.g. both money-market results here still show the same money-market funds).'),
                 Select::make('risk_level')
                     ->options([0 => 'Low', 1 => 'Medium', 2 => 'High'])
                     ->required(),

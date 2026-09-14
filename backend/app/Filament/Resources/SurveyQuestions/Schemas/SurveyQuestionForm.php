@@ -52,7 +52,7 @@ class SurveyQuestionForm
                         KeyValue::make('votes')
                             ->keyLabel('Category key')
                             ->valueLabel('Votes')
-                            ->helperText('Category keys: mm_acc, mm_dist, imm, mixed, balanced, metals, equity, iequity.')
+                            ->helperText('Optional. How many points picking this answer adds toward each Fund Category\'s score. After all questions are answered, the category with the highest total is recommended to the visitor. Category key here must match a Fund Category\'s "Key" field exactly (e.g. mm_acc, mm_dist, imm, mixed, balanced, metals, equity, iequity) — not its "Show funds from" field. Leave empty if this answer shouldn\'t sway the result.')
                             ->columnSpanFull(),
                     ])
                     ->columns(2)
