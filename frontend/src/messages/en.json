@@ -47,7 +47,7 @@
     "heroLead": "AFIM manages institutional and individual wealth across a full range of investment solutions — from money-market and fixed-income strategies to equities, Sharia-compliant and gold.",
     "heroPrimaryCta": "Find your service",
     "heroSecondaryCta": "Our services",
-    "liveNav": "Live NAV",
+    "liveNav": "Live price",
     "heroChartUnit": "EGP bn under management",
     "tickerAria": "Highlights ticker",
     "announcementAria": "Announcement",
@@ -75,7 +75,7 @@
     "isThisForMe": "Is this for me?"
   },
   "FundCard": {
-    "yield1y": "1-year yield",
+    "yield1y": "YTD",
     "today": "today",
     "currency": "EGP",
     "view": "View fund",
@@ -84,7 +84,7 @@
   },
   "Funds": {
     "title": "Prices & yields",
-    "subtitle": "Compare AFIM's fund products at a glance — price, daily move and one-year yield.",
+    "subtitle": "Compare AFIM's fund products at a glance — price, daily move and YTD.",
     "all": "All",
     "filterAria": "Filter by category",
     "howToSubscribe": "How to subscribe",
@@ -95,7 +95,7 @@
     "backToFunds": "All funds",
     "aboutFund": "About the fund",
     "dailyChange": "Daily change",
-    "navPerCertificate": "NAV per certificate"
+    "navPerCertificate": "Price per certificate"
   },
   "News": {
     "title": "News Feed",
@@ -302,7 +302,7 @@
     },
     "funds": {
       "title": "Funds, prices & yields — AFIM",
-      "description": "Compare AFIM fund products at a glance — NAV price, daily move, one-year yield and how to subscribe via NBE branches or directly through AFIM."
+      "description": "Compare AFIM fund products at a glance — price, daily move, YTD and how to subscribe via NBE branches or directly through AFIM."
     },
     "services": {
       "title": "Our services — AFIM",

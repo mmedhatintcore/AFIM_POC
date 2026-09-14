@@ -39,7 +39,7 @@ class FundsTable
                     ->numeric()
                     ->color(fn ($state) => $state === null ? null : ((float) $state >= 0 ? 'success' : 'danger')),
                 TextColumn::make('yield_1y')
-                    ->label('1Y %')
+                    ->label('YTD %')
                     ->numeric(),
                 IconColumn::make('is_featured')
                     ->boolean()

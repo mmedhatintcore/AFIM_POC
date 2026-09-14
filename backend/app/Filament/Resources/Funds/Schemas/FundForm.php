@@ -52,7 +52,7 @@ class FundForm
                     ->label('Daily change (%)')
                     ->numeric(),
                 TextInput::make('yield_1y')
-                    ->label('1-year yield (%)')
+                    ->label('YTD (%)')
                     ->numeric(),
                 TagsInput::make('spark')
                     ->label('Sparkline points')

@@ -22,6 +22,7 @@ export type SectionItem = {
   unit?: string | null;
   hero?: boolean;
   group?: string | null;
+  platform?: string | null;
 };
 
 export type SectionCta = {
