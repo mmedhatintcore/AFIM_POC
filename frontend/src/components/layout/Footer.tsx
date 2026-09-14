@@ -247,33 +247,30 @@ export async function Footer({
           <h4 className="mb-4 text-[0.8rem] font-bold uppercase tracking-widest text-accent">
             {extraString(section, "follow_title") ?? t("followTitle")}
           </h4>
-          <ul className="space-y-2">
+          <div className="flex items-center gap-3">
             {socialLinks.map((link, index) => {
               const Icon = socialIcon(link.platform, link.href);
               return (
-                <li key={index}>
-                  <a
-                    href={link.href ?? "#"}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-[0.87rem] font-light text-soft transition-colors hover:text-foreground rtl:font-normal"
-                  >
-                    <Icon className="size-4 shrink-0" aria-hidden="true" />
-                    <span>{link.text}</span>
-                  </a>
-                </li>
+                <a
+                  key={index}
+                  href={link.href ?? "#"}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={link.text ?? undefined}
+                  className="inline-flex size-9 items-center justify-center rounded-full border border-hairline text-soft transition-colors hover:border-accent hover:text-accent"
+                >
+                  <Icon className="size-4" aria-hidden="true" />
+                </a>
               );
             })}
-            <li>
-              <Link
-                href="/contact"
-                data-testid="footer-contact"
-                className="text-[0.87rem] font-semibold text-accent transition-colors hover:text-accent-dark"
-              >
-                {t("contactLink")}
-              </Link>
-            </li>
-          </ul>
+          </div>
+          <Link
+            href="/contact"
+            data-testid="footer-contact"
+            className="mt-4 inline-block text-[0.87rem] font-semibold text-accent transition-colors hover:text-accent-dark"
+          >
+            {t("contactLink")}
+          </Link>
         </div>
       </div>
 
