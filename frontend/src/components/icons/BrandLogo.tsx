@@ -1,8 +1,8 @@
 import Image from "next/image";
 import { cn } from "@/lib/utils/cn";
 
-const LOGO_WIDTH = 2616;
-const LOGO_HEIGHT = 506;
+const LOGO_WIDTH = 2677;
+const LOGO_HEIGHT = 593;
 
 /**
  * The full AFIM lockup (EN + AR names + ACH shield). Renders the navy
