@@ -10,7 +10,7 @@ matching **production** change must be recorded here in the same slice.
       `FRONTEND_URL=https://afim.com.eg` (CORS allow-list).
 - [ ] **Database**: run `php artisan migrate` (additive only) + `php artisan db:seed`
       once for initial CMS content (sections, services, funds, categories, news,
-      FAQs, timeline, team, committees, survey questions).
+      FAQs, timeline, team, committees, survey questions, finder questions).
 - [ ] **Admin user**: `php artisan db:seed --class=AdminUserSeeder` then rotate the
       seeded password (`admin@afim.com.eg`) immediately.
 - [ ] **Filament panel**: served at `/admin` — restrict by IP/VPN if required.
