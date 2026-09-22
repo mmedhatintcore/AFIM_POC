@@ -13,24 +13,16 @@ function Avatar({
   member: TeamMember;
   size: number;
 }) {
-  if (member.photo_url) {
-    return (
-      <Image
-        src={member.photo_url}
-        alt={member.name}
-        width={size}
-        height={size}
-        className="mx-auto mb-4 rounded-full object-cover"
-        style={{ width: size, height: size }}
-      />
-    );
-  }
+  if (!member.photo_url) return null;
 
   return (
-    <div
-      className="mx-auto mb-4 rounded-full bg-border/50"
+    <Image
+      src={member.photo_url}
+      alt={member.name}
+      width={size}
+      height={size}
+      className="mx-auto mb-4 rounded-full object-cover"
       style={{ width: size, height: size }}
-      aria-hidden="true"
     />
   );
 }
