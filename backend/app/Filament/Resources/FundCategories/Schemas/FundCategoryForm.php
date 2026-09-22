@@ -14,6 +14,7 @@ class FundCategoryForm
         return $schema
             ->components([
                 TextInput::make('key')
+                    ->label('Scoring Key')
                     ->required()
                     ->disabledOn('edit')
                     ->helperText('Scoring key used by the survey — do not change after creation.'),
