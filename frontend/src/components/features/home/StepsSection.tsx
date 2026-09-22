@@ -20,7 +20,7 @@ export async function StepsSection({
   return (
     <section className="px-[6vw] py-14" data-testid="home-steps">
       <Reveal>
-        <SectionHeader title={section.title} center logo />
+        <SectionHeader title={section.title} center />
       </Reveal>
       <Reveal>
         <div className="mx-auto grid max-w-4xl gap-8 md:grid-cols-3 md:gap-6">

@@ -1,21 +1,21 @@
+import Image from "next/image";
 import type { ReactNode } from "react";
-import { BrandLogo } from "@/components/icons/BrandLogo";
 import { cn } from "@/lib/utils/cn";
 
-/** Editorial section header with the AFIM 3-bar motif (or the full brand logo). */
+const MARK_WIDTH = 296;
+const MARK_HEIGHT = 320;
+
+/** Editorial section header with the AFIM mark. */
 export function SectionHeader({
   title,
   subtitle,
   center = false,
-  logo = false,
   children,
   className,
 }: {
   title: ReactNode;
   subtitle?: ReactNode;
   center?: boolean;
-  /** Show the real AFIM logo, sized to match the header, instead of the generic 3-bar motif. */
-  logo?: boolean;
   children?: ReactNode;
   className?: string;
 }) {
@@ -28,15 +28,22 @@ export function SectionHeader({
       )}
     >
       <div className={cn(center && "flex flex-col items-center")}>
-        {logo ? (
-          <BrandLogo alt="" className="mb-4 h-8 sm:h-9" />
-        ) : (
-          <div className="sec-bars" aria-hidden="true">
-            <i />
-            <i />
-            <i />
-          </div>
-        )}
+        <span className="mb-4 block h-9" aria-hidden="true">
+          <Image
+            src="/logo-mark.png"
+            alt=""
+            width={MARK_WIDTH}
+            height={MARK_HEIGHT}
+            className="block h-full w-auto dark:hidden"
+          />
+          <Image
+            src="/logo-mark-dark.png"
+            alt=""
+            width={MARK_WIDTH}
+            height={MARK_HEIGHT}
+            className="hidden h-full w-auto dark:block"
+          />
+        </span>
         <h2 className="text-3xl font-extrabold leading-tight sm:text-4xl">
           {title}
         </h2>
