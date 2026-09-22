@@ -218,61 +218,6 @@
     "seeFunds": "See prices & yields",
     "startOver": "Start over",
     "closeAria": "Close finder",
-    "q1": {
-      "title": "What best describes you?",
-      "options": {
-        "ind": {
-          "label": "An individual investor",
-          "desc": "Saving or growing personal wealth"
-        },
-        "inst": {
-          "label": "A company / institution",
-          "desc": "Managing corporate funds"
-        },
-        "raise": {
-          "label": "A growing business seeking capital",
-          "desc": "Raising funds or going to market"
-        }
-      }
-    },
-    "q2": {
-      "title": "What's your main goal?",
-      "options": {
-        "preserve": {
-          "label": "Preserve capital & stay liquid",
-          "desc": "Low risk, easy access"
-        },
-        "grow": {
-          "label": "Grow wealth over time",
-          "desc": "Accept some risk for return"
-        },
-        "islamic": {
-          "label": "Sharia-compliant investing",
-          "desc": "Faith-aligned options"
-        },
-        "capital": {
-          "label": "Raise capital for my company",
-          "desc": "We'll match you with the closest fit"
-        }
-      }
-    },
-    "q3": {
-      "title": "How hands-on do you want to be?",
-      "options": {
-        "managed": {
-          "label": "Let AFIM manage it fully",
-          "desc": "Discretionary management"
-        },
-        "pooled": {
-          "label": "Pooled fund with others",
-          "desc": "Diversified, accessible"
-        },
-        "exec": {
-          "label": "Just need transactions executed",
-          "desc": "Subscribe / redeem orders"
-        }
-      }
-    },
     "results": {
       "funds": {
         "name": "AFIM Mutual Funds",

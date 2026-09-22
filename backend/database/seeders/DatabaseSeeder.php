@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             FaqSeeder::class,
             AboutSeeder::class,
             SurveySeeder::class,
+            FinderSeeder::class,
         ]);
     }
 }

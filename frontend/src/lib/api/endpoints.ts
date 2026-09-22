@@ -15,5 +15,6 @@ export const endpoints = {
   committees: "/v1/committees",
   surveyQuestions: "/v1/survey/questions",
   surveySubmissions: "/v1/survey/submissions",
+  finderQuestions: "/v1/finder/questions",
   contactMessages: "/v1/contact-messages",
 } as const;

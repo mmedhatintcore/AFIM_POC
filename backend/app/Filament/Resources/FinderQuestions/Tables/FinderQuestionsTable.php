@@ -1,0 +1,32 @@
+<?php
+
+namespace App\Filament\Resources\FinderQuestions\Tables;
+
+use Filament\Actions\EditAction;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Table;
+
+class FinderQuestionsTable
+{
+    public static function configure(Table $table): Table
+    {
+        return $table
+            ->columns([
+                TextColumn::make('question')
+                    ->label('Question')
+                    ->getStateUsing(fn ($record) => $record->getTranslation('question', 'en'))
+                    ->searchable()
+                    ->wrap(),
+                TextColumn::make('key')
+                    ->label('Slot'),
+                TextColumn::make('sort')
+                    ->label('Order')
+                    ->numeric()
+                    ->sortable(),
+            ])
+            ->defaultSort('sort')
+            ->recordActions([
+                EditAction::make(),
+            ]);
+    }
+}

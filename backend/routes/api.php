@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\V1\CommitteeController;
 use App\Http\Controllers\Api\V1\ContactMessageController;
 use App\Http\Controllers\Api\V1\FaqController;
+use App\Http\Controllers\Api\V1\FinderController;
 use App\Http\Controllers\Api\V1\FundCategoryController;
 use App\Http\Controllers\Api\V1\FundController;
 use App\Http\Controllers\Api\V1\NewsController;
@@ -37,6 +38,9 @@ Route::prefix('v1')->middleware('set.locale')->group(function () {
     // Investment survey
     Route::get('/survey/questions', [SurveyController::class, 'questions']);
     Route::post('/survey/submissions', [SurveyController::class, 'submit'])->middleware('throttle:survey');
+
+    // "Find your service" finder
+    Route::get('/finder/questions', [FinderController::class, 'questions']);
 
     // Contact
     Route::post('/contact-messages', [ContactMessageController::class, 'store'])->middleware('throttle:contact');

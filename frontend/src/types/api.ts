@@ -187,6 +187,22 @@ export type SurveyQuestion = {
   options: SurveyOption[];
 };
 
+/* ===== Finder ("Find your service") ===== */
+
+export type FinderApiOption = {
+  tag: string;
+  icon: string | null;
+  label: string;
+  description: string | null;
+};
+
+export type FinderApiQuestion = {
+  id: number;
+  key: string;
+  question: string;
+  options: FinderApiOption[];
+};
+
 export type SurveyAnswer = {
   question_id: number;
   option_index: number;

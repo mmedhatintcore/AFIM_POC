@@ -5,11 +5,13 @@ namespace App\Providers;
 use App\Repositories\AboutRepository;
 use App\Repositories\ContactMessageRepository;
 use App\Repositories\FaqRepository;
+use App\Repositories\FinderRepository;
 use App\Repositories\FundCategoryRepository;
 use App\Repositories\FundRepository;
 use App\Repositories\Interfaces\AboutRepositoryInterface;
 use App\Repositories\Interfaces\ContactMessageRepositoryInterface;
 use App\Repositories\Interfaces\FaqRepositoryInterface;
+use App\Repositories\Interfaces\FinderRepositoryInterface;
 use App\Repositories\Interfaces\FundCategoryRepositoryInterface;
 use App\Repositories\Interfaces\FundRepositoryInterface;
 use App\Repositories\Interfaces\NewsRepositoryInterface;
@@ -35,5 +37,6 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(AboutRepositoryInterface::class, AboutRepository::class);
         $this->app->bind(SurveyRepositoryInterface::class, SurveyRepository::class);
         $this->app->bind(ContactMessageRepositoryInterface::class, ContactMessageRepository::class);
+        $this->app->bind(FinderRepositoryInterface::class, FinderRepository::class);
     }
 }

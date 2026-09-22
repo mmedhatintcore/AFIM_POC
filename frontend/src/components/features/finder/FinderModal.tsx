@@ -8,32 +8,39 @@ import { IconKey } from "@/components/icons/IconKey";
 import { ServiceIcon } from "@/components/icons/ServiceIcon";
 import { buttonVariants } from "@/components/ui/Button";
 import { Link } from "@/i18n/navigation";
-import {
-  FINDER_QUESTIONS,
-  recommend,
-  type FinderResultKey,
-} from "@/lib/constants/finder";
+import { recommend, type FinderResultKey } from "@/lib/constants/finder";
 import { useUIStore } from "@/stores/ui";
-import type { Service } from "@/types/api";
+import type { FinderApiQuestion, Service } from "@/types/api";
 
 /**
  * "Find your service" — a 3-question client wizard in a modal. Opened from
  * the header CTA, FAQ chips, footer and CMS `#finder` CTAs (via the UI store).
  * The dialog unmounts on close, so every open starts with fresh state.
+ * Questions/options are admin-managed — fetched server-side and passed in.
  */
-export function FinderModal({ services }: { services: Service[] | null }) {
+export function FinderModal({
+  services,
+  questions,
+}: {
+  services: Service[] | null;
+  questions: FinderApiQuestion[] | null;
+}) {
   const open = useUIStore((state) => state.finderOpen);
   const close = useUIStore((state) => state.closeFinder);
 
-  if (!open) return null;
-  return <FinderDialog services={services} onClose={close} />;
+  if (!open || !questions || questions.length === 0) return null;
+  return (
+    <FinderDialog services={services} questions={questions} onClose={close} />
+  );
 }
 
 function FinderDialog({
   services,
+  questions,
   onClose,
 }: {
   services: Service[] | null;
+  questions: FinderApiQuestion[];
   onClose: () => void;
 }) {
   const t = useTranslations("Finder");
@@ -54,7 +61,7 @@ function FinderDialog({
     };
   }, [onClose]);
 
-  const total = FINDER_QUESTIONS.length;
+  const total = questions.length;
   const finished = step >= total;
   const progress = finished ? 100 : Math.max((step / total) * 100, 5);
 
@@ -130,7 +137,7 @@ function FinderDialog({
           />
         ) : (
           <FinderStep
-            step={step}
+            question={questions[step]}
             onPick={pick}
             onBack={() => setStep((current) => Math.max(0, current - 1))}
             canGoBack={step > 0}
@@ -142,22 +149,21 @@ function FinderDialog({
 }
 
 function FinderStep({
-  step,
+  question,
   onPick,
   onBack,
   canGoBack,
 }: {
-  step: number;
+  question: FinderApiQuestion;
   onPick: (tag: string) => void;
   onBack: () => void;
   canGoBack: boolean;
 }) {
   const t = useTranslations("Finder");
-  const question = FINDER_QUESTIONS[step];
 
   return (
     <div className="fade-view">
-      <h3 className="text-xl font-bold">{t(`${question.id}.title`)}</h3>
+      <h3 className="text-xl font-bold">{question.question}</h3>
       <p className="mb-6 mt-2 text-sm font-light text-soft rtl:font-normal">
         {t("pickClosest")}
       </p>
@@ -173,11 +179,13 @@ function FinderStep({
             <IconKey name={option.icon} className="size-6 shrink-0 text-accent" />
             <span>
               <span className="block text-[0.93rem] font-semibold">
-                {t(`${question.id}.options.${option.tag}.label`)}
+                {option.label}
               </span>
-              <span className="mt-0.5 block text-[0.78rem] font-light text-soft rtl:font-normal">
-                {t(`${question.id}.options.${option.tag}.desc`)}
-              </span>
+              {option.description ? (
+                <span className="mt-0.5 block text-[0.78rem] font-light text-soft rtl:font-normal">
+                  {option.description}
+                </span>
+              ) : null}
             </span>
           </button>
         ))}

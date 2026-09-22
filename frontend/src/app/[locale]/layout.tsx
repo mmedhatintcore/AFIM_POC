@@ -10,7 +10,7 @@ import { isRtl, routing } from "@/i18n/routing";
 import { endpoints } from "@/lib/api/endpoints";
 import { fetchData } from "@/lib/api/server";
 import { siteUrl } from "@/lib/utils/urls";
-import type { Section, Service } from "@/types/api";
+import type { FinderApiQuestion, Section, Service } from "@/types/api";
 import "../globals.css";
 
 const sora = Sora({
@@ -53,12 +53,14 @@ export default async function LocaleLayout({
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) notFound();
 
-  const [messages, common, footerSection, services] = await Promise.all([
-    getMessages({ locale }),
-    getTranslations({ locale, namespace: "Common" }),
-    fetchData<Section>(locale, endpoints.section("footer")),
-    fetchData<Service[]>(locale, endpoints.services),
-  ]);
+  const [messages, common, footerSection, services, finderQuestions] =
+    await Promise.all([
+      getMessages({ locale }),
+      getTranslations({ locale, namespace: "Common" }),
+      fetchData<Section>(locale, endpoints.section("footer")),
+      fetchData<Service[]>(locale, endpoints.services),
+      fetchData<FinderApiQuestion[]>(locale, endpoints.finderQuestions),
+    ]);
 
   return (
     <html
@@ -81,7 +83,7 @@ export default async function LocaleLayout({
             {children}
           </main>
           <Footer locale={locale} section={footerSection} services={services} />
-          <FinderModal services={services} />
+          <FinderModal services={services} questions={finderQuestions} />
         </NextIntlClientProvider>
       </body>
     </html>
