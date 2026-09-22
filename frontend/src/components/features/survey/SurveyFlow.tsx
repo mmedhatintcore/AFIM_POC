@@ -12,13 +12,14 @@ import { RiskBadge } from "@/components/ui/RiskBadge";
 import { Link } from "@/i18n/navigation";
 import { api } from "@/lib/api/client";
 import { endpoints } from "@/lib/api/endpoints";
+import { ApiError } from "@/lib/api/errors";
 import { cn } from "@/lib/utils/cn";
 import type {
   ApiEnvelope,
 } from "@/lib/api/envelope";
 import type { SurveyQuestion, SurveyResult } from "@/types/api";
 
-type Status = "answering" | "submitting" | "error" | "done";
+type Status = "answering" | "submitting" | "error" | "outdated" | "done";
 
 /** The investment survey: one question per screen → server-scored result. */
 export function SurveyFlow({ questions }: { questions: SurveyQuestion[] }) {
@@ -52,8 +53,16 @@ export function SurveyFlow({ questions }: { questions: SurveyQuestion[] }) {
       );
       setResult(response.data.data);
       setStatus("done");
-    } catch {
-      setStatus("error");
+    } catch (error) {
+      // A 422 here means the answers no longer match the live question set
+      // (e.g. an admin edited/reordered questions while this page was open)
+      // — retrying with the same stale payload would just fail again, so
+      // this needs a distinct message telling the visitor to reload.
+      if (error instanceof ApiError && error.status === 422) {
+        setStatus("outdated");
+      } else {
+        setStatus("error");
+      }
     }
   };
 
@@ -80,6 +89,23 @@ export function SurveyFlow({ questions }: { questions: SurveyQuestion[] }) {
       >
         <LoaderCircle className="size-8 animate-spin text-accent" aria-hidden="true" />
         <p className="text-sm text-soft">{t("submitting")}</p>
+      </div>
+    );
+  }
+
+  if (status === "outdated") {
+    return (
+      <div
+        className="flex flex-col items-center gap-5 py-16 text-center"
+        data-testid="survey-outdated"
+      >
+        <p className="max-w-sm text-sm text-down">{t("outdated")}</p>
+        <Button
+          onClick={() => window.location.reload()}
+          data-testid="survey-reload"
+        >
+          {t("reload")}
+        </Button>
       </div>
     );
   }

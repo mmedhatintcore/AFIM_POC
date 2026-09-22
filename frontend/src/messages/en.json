@@ -204,6 +204,8 @@
     "islamicChip": "Sharia-compliant ✓",
     "disclaimer": "This guidance is indicative and educational — it is not investment advice. Fund terms and conditions apply.",
     "error": "We couldn't submit your answers. Please try again.",
+    "outdated": "This survey was just updated, so your answers no longer match. Please reload the page and retake it — it only takes a minute.",
+    "reload": "Reload survey",
     "empty": "The survey is unavailable right now — please try again later."
   },
   "Finder": {
