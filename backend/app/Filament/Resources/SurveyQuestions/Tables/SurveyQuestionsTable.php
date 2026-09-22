@@ -15,7 +15,9 @@ class SurveyQuestionsTable
     {
         return $table
             ->columns([
-                TextColumn::make('key')
+                TextColumn::make('phase')
+                    ->label('Phase')
+                    ->getStateUsing(fn ($record) => $record->getTranslation('phase', 'en'))
                     ->searchable(),
                 TextColumn::make('layout')
                     ->searchable(),
