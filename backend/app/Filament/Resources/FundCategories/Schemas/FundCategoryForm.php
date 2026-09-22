@@ -18,7 +18,7 @@ class FundCategoryForm
                     ->disabledOn('edit')
                     ->helperText('Scoring key used by the survey — do not change after creation.'),
                 Select::make('fund_group')
-                    ->label('Show funds from')
+                    ->label('Matching fund category')
                     ->options([
                         'mm' => 'Money Market',
                         'imm' => 'Islamic Money Market',
