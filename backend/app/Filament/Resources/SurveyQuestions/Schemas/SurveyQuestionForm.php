@@ -8,6 +8,7 @@ use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
 class SurveyQuestionForm
@@ -41,41 +42,54 @@ class SurveyQuestionForm
                     ['name' => 'phase', 'label' => 'Phase label', 'required' => true],
                     ['name' => 'question', 'label' => 'Question', 'required' => true],
                 ]),
-                Repeater::make('options')
+                Section::make('Answer options & scoring')
+                    ->description(
+                        "How the match is picked: every fund category starts each survey at 0 points. ".
+                        "Each answer below can add \"Category votes\" to one or more categories — pick a bigger number ".
+                        "for a stronger match. Once the visitor finishes all questions, whichever category has the ".
+                        "highest total is recommended to them; the next-highest category (from a different fund group) ".
+                        "is shown as \"also worth a look\". Answering \"Yes\" on the Islamic investment question narrows ".
+                        "the result to Sharia-compliant categories only — otherwise only conventional ones are considered. ".
+                        "Leave \"Category votes\" empty on an option that's purely informational (e.g. age, income) and ".
+                        "shouldn't sway the result.",
+                    )
                     ->schema([
-                        TextInput::make('icon')
-                            ->helperText('Icon key, e.g. shield, payout, scales, launch, crescent, check…'),
-                        TextInput::make('label.en')->label('Label (English)')->required(),
-                        TextInput::make('label.ar')->label('Label (Arabic)')->required(),
-                        TextInput::make('description.en')->label('Description (English)'),
-                        TextInput::make('description.ar')->label('Description (Arabic)'),
-                        Repeater::make('votes')
-                            ->label('Category votes')
+                        Repeater::make('options')
+                            ->hiddenLabel()
                             ->schema([
-                                Select::make('category_key')
-                                    ->label('Fund category')
-                                    ->options(fn () => FundCategory::query()
-                                        ->ordered()
-                                        ->get()
-                                        ->mapWithKeys(fn (FundCategory $category) => [
-                                            $category->key => sprintf('%s — %s', $category->key, $category->getTranslation('name', 'en')),
-                                        ]))
-                                    ->searchable()
-                                    ->required(),
-                                TextInput::make('points')
-                                    ->label('Votes')
-                                    ->numeric()
-                                    ->default(0)
-                                    ->required(),
+                                TextInput::make('icon')
+                                    ->helperText('Icon key, e.g. shield, payout, scales, launch, crescent, check…'),
+                                TextInput::make('label.en')->label('Label (English)')->required(),
+                                TextInput::make('label.ar')->label('Label (Arabic)')->required(),
+                                TextInput::make('description.en')->label('Description (English)'),
+                                TextInput::make('description.ar')->label('Description (Arabic)'),
+                                Repeater::make('votes')
+                                    ->label('Category votes')
+                                    ->schema([
+                                        Select::make('category_key')
+                                            ->label('Fund category')
+                                            ->options(fn () => FundCategory::query()
+                                                ->ordered()
+                                                ->get()
+                                                ->mapWithKeys(fn (FundCategory $category) => [
+                                                    $category->key => sprintf('%s — %s', $category->key, $category->getTranslation('name', 'en')),
+                                                ]))
+                                            ->searchable()
+                                            ->required(),
+                                        TextInput::make('points')
+                                            ->label('Votes')
+                                            ->numeric()
+                                            ->default(0)
+                                            ->required(),
+                                    ])
+                                    ->columns(2)
+                                    ->addActionLabel('Add category vote')
+                                    ->default([])
+                                    ->columnSpanFull(),
                             ])
                             ->columns(2)
-                            ->addActionLabel('Add category vote')
-                            ->default([])
-                            ->helperText('Optional. How many points picking this answer adds toward each Fund Category\'s score. After all questions are answered, the category with the highest total is recommended to the visitor. Leave empty if this answer shouldn\'t sway the result.')
                             ->columnSpanFull(),
-                    ])
-                    ->columns(2)
-                    ->columnSpanFull(),
+                    ]),
             ]);
     }
 

@@ -13,7 +13,7 @@ import { Link } from "@/i18n/navigation";
 import { endpoints } from "@/lib/api/endpoints";
 import { fetchData } from "@/lib/api/server";
 import { cn } from "@/lib/utils/cn";
-import { signedChange } from "@/lib/utils/format";
+import { formatDate, signedChange } from "@/lib/utils/format";
 import { assertLocale } from "@/lib/utils/locale";
 import { absoluteUrl, languageAlternates, siteUrl } from "@/lib/utils/urls";
 import type { Fund } from "@/types/api";
@@ -165,7 +165,9 @@ export default async function FundDetailPage({ params }: Props) {
                   <span dir="ltr">
                     {change.up ? "▲" : "▼"} {change.signed}%
                   </span>{" "}
-                  <span className="font-normal text-muted">{tc("today")}</span>
+                  <span className="font-normal text-muted">
+                    {formatDate(new Date().toISOString(), locale)}
+                  </span>
                 </div>
               ) : null}
               <div className="mt-6 border-t border-hairline pt-5">

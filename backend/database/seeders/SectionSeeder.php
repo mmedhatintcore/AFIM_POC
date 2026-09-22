@@ -260,8 +260,8 @@ class SectionSeeder extends Seeder
                 'key' => 'survey_intro',
                 'title' => ['en' => 'Need help in investment?', 'ar' => 'هل تحتاج مساعدة في الاستثمار؟'],
                 'subtitle' => [
-                    'en' => '13 quick taps — about two minutes to your match.',
-                    'ar' => '١٣ نقرة سريعة — دقيقتان تفصلانك عن ترشيحك.',
+                    'en' => 'A few quick taps — about two minutes to your match.',
+                    'ar' => 'بضع نقرات سريعة — دقيقتان تفصلانك عن ترشيحك.',
                 ],
                 'extra' => [
                     'note' => [

@@ -156,6 +156,7 @@ export type TeamMember = {
 export type CommitteeMember = {
   name: string;
   role: string;
+  bio: string | null;
 };
 
 export type Committee = {

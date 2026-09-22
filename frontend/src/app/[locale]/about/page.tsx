@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { AboutTabs } from "@/components/features/about/AboutTabs";
+import { CommitteeCard } from "@/components/features/about/CommitteeCard";
 import { PersonCard } from "@/components/features/about/PersonCard";
 import Image from "next/image";
 import { IconKey } from "@/components/icons/IconKey";
@@ -70,8 +71,8 @@ export default async function AboutPage({ params }: Props) {
             src="/logo-white.png"
             alt=""
             aria-hidden="true"
-            width={2616}
-            height={506}
+            width={2677}
+            height={593}
             sizes="384px"
             className="w-full max-w-sm drop-shadow-xl"
           />
@@ -169,44 +170,7 @@ export default async function AboutPage({ params }: Props) {
         </p>
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {committees.map((committee) => (
-            <div
-              key={committee.id}
-              className="rounded-card border border-border bg-surface p-7 shadow-elev-1 transition-all duration-300 ease-out-soft hover:-translate-y-1.5 hover:border-accent/40 hover:shadow-elev-2"
-              data-testid={`committee-${committee.id}`}
-            >
-              <h3 className="mb-4 flex items-center gap-2.5 text-[1.08rem] font-bold">
-                <span
-                  className="h-6 w-2.5 shrink-0 rounded-sm bg-accent"
-                  aria-hidden="true"
-                />
-                {committee.name}
-              </h3>
-              {committee.mission ? (
-                <p className="mb-4 text-[0.86rem] font-light leading-relaxed text-soft rtl:font-normal rtl:leading-loose">
-                  {committee.mission}
-                </p>
-              ) : null}
-              {committee.members.length > 0 ? (
-                <div className="mb-4">
-                  <div className="mb-2 text-[0.7rem] font-semibold uppercase tracking-widest text-muted">
-                    {t("membersLabel")}
-                  </div>
-                  <ul>
-                    {committee.members.map((member, index) => (
-                      <li
-                        key={index}
-                        className="flex items-baseline justify-between gap-3 border-b border-hairline py-2 text-[0.86rem] last:border-b-0"
-                      >
-                        <span className="font-medium">{member.name}</span>
-                        <span className="text-[0.78rem] text-accent">
-                          {member.role}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ) : null}
-            </div>
+            <CommitteeCard key={committee.id} committee={committee} />
           ))}
         </div>
       </div>

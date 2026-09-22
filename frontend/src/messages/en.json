@@ -76,7 +76,6 @@
   },
   "FundCard": {
     "yield1y": "YTD",
-    "today": "today",
     "currency": "EGP",
     "view": "View fund",
     "noPricing": "Pricing published soon",
@@ -134,6 +133,7 @@
     "committeesIntro": "Standing committees support the Board's oversight role.",
     "leadershipIntro": "The executive team running day-to-day investment and operations.",
     "membersLabel": "Members",
+    "responsibilitiesLabel": "Responsibilities",
     "empty": "This section is being updated — please check back soon."
   },
   "Services": {

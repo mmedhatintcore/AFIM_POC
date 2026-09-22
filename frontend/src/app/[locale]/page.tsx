@@ -10,7 +10,6 @@ import { PricesSection } from "@/components/features/home/PricesSection";
 import { ServicesGrid } from "@/components/features/home/ServicesGrid";
 import { StepsSection } from "@/components/features/home/StepsSection";
 import { Ticker } from "@/components/features/home/Ticker";
-import { TrustStrip } from "@/components/features/home/TrustStrip";
 import { WhySection } from "@/components/features/home/WhySection";
 import { JsonLd } from "@/components/misc/JsonLd";
 import { endpoints } from "@/lib/api/endpoints";
@@ -101,7 +100,6 @@ export default async function HomePage({ params }: Props) {
 
       <Hero locale={locale} section={map["hero"] ?? null} />
       <AdvisorSection locale={locale} section={map["advisor"] ?? null} />
-      <TrustStrip section={map["trust"] ?? null} />
       <GoalsGrid section={map["goals"] ?? null} />
       <PricesSection
         locale={locale}

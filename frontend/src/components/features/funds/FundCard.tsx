@@ -5,7 +5,7 @@ import { Sparkline } from "@/components/ui/Sparkline";
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 import { cn } from "@/lib/utils/cn";
-import { signedChange } from "@/lib/utils/format";
+import { formatDate, signedChange } from "@/lib/utils/format";
 import type { Fund } from "@/types/api";
 import { ChannelBadge } from "./ChannelBadge";
 import { PlatformsList } from "./PlatformsList";
@@ -29,6 +29,7 @@ export async function FundCard({
   const tf = await getTranslations({ locale, namespace: "Funds" });
 
   const change = fund.daily_change ? signedChange(fund.daily_change) : null;
+  const today = formatDate(new Date().toISOString(), locale);
 
   return (
     <article
@@ -80,7 +81,7 @@ export async function FundCard({
               <span dir="ltr">
                 {change.up ? "▲" : "▼"} {change.signed}%
               </span>{" "}
-              <span className="font-normal text-muted">{t("today")}</span>
+              <span className="font-normal text-muted">{today}</span>
             </div>
           ) : null}
           <div className="mt-4 flex items-end justify-between gap-4 border-t border-hairline pt-4">

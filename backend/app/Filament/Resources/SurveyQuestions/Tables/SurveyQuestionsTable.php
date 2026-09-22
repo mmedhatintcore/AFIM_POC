@@ -15,13 +15,24 @@ class SurveyQuestionsTable
     {
         return $table
             ->columns([
+                TextColumn::make('question')
+                    ->label('Question')
+                    ->getStateUsing(fn ($record) => $record->getTranslation('question', 'en'))
+                    ->searchable()
+                    ->wrap(),
                 TextColumn::make('phase')
                     ->label('Phase')
                     ->getStateUsing(fn ($record) => $record->getTranslation('phase', 'en'))
+                    ->badge()
+                    ->searchable(),
+                TextColumn::make('key')
+                    ->label('Scoring key')
+                    ->placeholder('— profile only —')
                     ->searchable(),
                 TextColumn::make('layout')
                     ->searchable(),
                 TextColumn::make('sort')
+                    ->label('Order')
                     ->numeric()
                     ->sortable(),
                 IconColumn::make('is_active')

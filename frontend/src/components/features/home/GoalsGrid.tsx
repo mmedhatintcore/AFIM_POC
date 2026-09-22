@@ -14,6 +14,7 @@ export function GoalsGrid({ section }: { section: Section | null }) {
         <SectionHeader
           title={section.title}
           subtitle={section.subtitle ?? undefined}
+          logo
         />
       </Reveal>
       <Reveal>
