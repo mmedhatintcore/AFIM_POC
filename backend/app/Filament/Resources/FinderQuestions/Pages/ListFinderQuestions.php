@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\FinderQuestions\Pages;
 
 use App\Filament\Resources\FinderQuestions\FinderQuestionResource;
+use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 
 class ListFinderQuestions extends ListRecords
@@ -11,8 +12,8 @@ class ListFinderQuestions extends ListRecords
 
     protected function getHeaderActions(): array
     {
-        // No CreateAction — this is a fixed 3-question wizard; only the
-        // wording/icons of the existing questions are meant to be edited.
-        return [];
+        return [
+            CreateAction::make(),
+        ];
     }
 }

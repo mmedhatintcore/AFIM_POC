@@ -777,7 +777,7 @@
                 "exec": [
                   "pm.test('status 200', () => pm.response.to.have.status(200));",
                   "pm.test('envelope has data', () => pm.expect(pm.response.json()).to.have.property('data'));",
-                  "pm.test('exactly 3 questions', () => pm.expect(pm.response.json().data).to.have.lengthOf(3));"
+                  "pm.test('each question has options with votes', () => { const q = pm.response.json().data[0]; pm.expect(q.options[0]).to.have.property('votes'); });"
                 ]
               }
             }

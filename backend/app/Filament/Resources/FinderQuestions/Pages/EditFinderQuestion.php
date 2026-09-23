@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\FinderQuestions\Pages;
 
 use App\Filament\Resources\FinderQuestions\FinderQuestionResource;
+use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
 
 class EditFinderQuestion extends EditRecord
@@ -11,7 +12,8 @@ class EditFinderQuestion extends EditRecord
 
     protected function getHeaderActions(): array
     {
-        // No DeleteAction — removing a question would break the 3-step wizard.
-        return [];
+        return [
+            DeleteAction::make(),
+        ];
     }
 }

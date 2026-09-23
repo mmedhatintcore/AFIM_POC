@@ -2,6 +2,9 @@
 
 namespace App\Filament\Resources\FinderQuestions\Tables;
 
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -18,15 +21,23 @@ class FinderQuestionsTable
                     ->searchable()
                     ->wrap(),
                 TextColumn::make('key')
-                    ->label('Slot'),
+                    ->label('Internal label')
+                    ->placeholder('—'),
                 TextColumn::make('sort')
                     ->label('Order')
                     ->numeric()
                     ->sortable(),
             ])
             ->defaultSort('sort')
+            ->reorderable('sort')
             ->recordActions([
                 EditAction::make(),
+                DeleteAction::make(),
+            ])
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
+                ]),
             ]);
     }
 }

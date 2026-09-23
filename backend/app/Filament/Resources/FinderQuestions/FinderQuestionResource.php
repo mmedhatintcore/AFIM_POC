@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\FinderQuestions;
 
+use App\Filament\Resources\FinderQuestions\Pages\CreateFinderQuestion;
 use App\Filament\Resources\FinderQuestions\Pages\EditFinderQuestion;
 use App\Filament\Resources\FinderQuestions\Pages\ListFinderQuestions;
 use App\Filament\Resources\FinderQuestions\Schemas\FinderQuestionForm;
@@ -39,6 +40,7 @@ class FinderQuestionResource extends Resource
     {
         return [
             'index' => ListFinderQuestions::route('/'),
+            'create' => CreateFinderQuestion::route('/create'),
             'edit' => EditFinderQuestion::route('/{record}/edit'),
         ];
     }

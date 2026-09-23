@@ -8,9 +8,9 @@ import { IconKey } from "@/components/icons/IconKey";
 import { ServiceIcon } from "@/components/icons/ServiceIcon";
 import { buttonVariants } from "@/components/ui/Button";
 import { Link } from "@/i18n/navigation";
-import { recommend, type FinderResultKey } from "@/lib/constants/finder";
+import { recommend } from "@/lib/constants/finder";
 import { useUIStore } from "@/stores/ui";
-import type { FinderApiQuestion, Service } from "@/types/api";
+import type { FinderApiQuestion, FinderResultKey, Service } from "@/types/api";
 
 /**
  * "Find your service" — a 3-question client wizard in a modal. Opened from
@@ -45,7 +45,7 @@ function FinderDialog({
 }) {
   const t = useTranslations("Finder");
   const [step, setStep] = useState(0);
-  const [answers, setAnswers] = useState<string[]>([]);
+  const [answers, setAnswers] = useState<Record<number, number>>({});
   const closeButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
@@ -65,18 +65,15 @@ function FinderDialog({
   const finished = step >= total;
   const progress = finished ? 100 : Math.max((step / total) * 100, 5);
 
-  const pick = (tag: string) => {
-    setAnswers((previous) => {
-      const next = [...previous];
-      next[step] = tag;
-      return next;
-    });
+  const pick = (optionIndex: number) => {
+    const questionId = questions[step].id;
+    setAnswers((previous) => ({ ...previous, [questionId]: optionIndex }));
     setStep((current) => current + 1);
   };
 
   const restart = () => {
     setStep(0);
-    setAnswers([]);
+    setAnswers({});
   };
 
   return (
@@ -130,7 +127,7 @@ function FinderDialog({
 
         {finished ? (
           <FinderResult
-            resultKey={recommend(answers)}
+            resultKey={recommend(questions, answers)}
             services={services}
             onRestart={restart}
             onClose={onClose}
@@ -155,7 +152,7 @@ function FinderStep({
   canGoBack,
 }: {
   question: FinderApiQuestion;
-  onPick: (tag: string) => void;
+  onPick: (optionIndex: number) => void;
   onBack: () => void;
   canGoBack: boolean;
 }) {
@@ -170,10 +167,10 @@ function FinderStep({
       <div className="flex flex-col gap-3">
         {question.options.map((option) => (
           <button
-            key={option.tag}
+            key={option.index}
             type="button"
-            onClick={() => onPick(option.tag)}
-            data-testid={`finder-option-${option.tag}`}
+            onClick={() => onPick(option.index)}
+            data-testid={`finder-option-${option.index}`}
             className="flex items-center gap-4 rounded-[14px] border border-border bg-surface p-4 text-start transition-all duration-300 ease-out-soft hover:translate-x-1 hover:border-accent hover:shadow-elev-1 rtl:hover:-translate-x-1"
           >
             <IconKey name={option.icon} className="size-6 shrink-0 text-accent" />

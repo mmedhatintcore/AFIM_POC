@@ -189,16 +189,23 @@ export type SurveyQuestion = {
 
 /* ===== Finder ("Find your service") ===== */
 
+export type FinderResultKey =
+  | "subscription"
+  | "liquidity"
+  | "portfolio"
+  | "funds";
+
 export type FinderApiOption = {
-  tag: string;
+  index: number;
   icon: string | null;
   label: string;
   description: string | null;
+  votes: Record<FinderResultKey, number>;
 };
 
 export type FinderApiQuestion = {
   id: number;
-  key: string;
+  key: string | null;
   question: string;
   options: FinderApiOption[];
 };
