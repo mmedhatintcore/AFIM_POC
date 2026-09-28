@@ -7,7 +7,9 @@ matching **production** change must be recorded here in the same slice.
 
 - [ ] **Env vars**: `APP_NAME=AFIM`, `APP_ENV=production`, `APP_KEY` (generate),
       `APP_URL=https://api.afim.com.eg`, `DB_*` (MySQL 8 / utf8mb4),
-      `FRONTEND_URL=https://afim.com.eg` (CORS allow-list).
+      `FRONTEND_URL=https://afim.com.eg` (CORS allow-list; optional comma-separated
+      list — `config/cors.php` also always allows `afim.intcore.dev`, `afim.com.eg`
+      and `www.afim.com.eg`, so the site works even if this is left unset).
 - [ ] **Database**: run `php artisan migrate` (additive only) + `php artisan db:seed`
       once for initial CMS content (sections, services, funds, categories, news,
       FAQs, timeline, team, committees, survey questions, finder questions).

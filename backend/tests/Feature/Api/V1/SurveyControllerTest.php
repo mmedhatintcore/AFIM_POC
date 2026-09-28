@@ -25,6 +25,28 @@ final class SurveyControllerTest extends TestCase
         $this->assertArrayNotHasKey('admin_note', $response->json('data.1'));
     }
 
+    public function test_survey_submission_preflight_allows_the_production_website(): void
+    {
+        $response = $this->call('OPTIONS', '/api/v1/survey/submissions', [], [], [], [
+            'HTTP_ORIGIN' => 'https://afim.intcore.dev',
+            'HTTP_ACCESS_CONTROL_REQUEST_METHOD' => 'POST',
+            'HTTP_ACCESS_CONTROL_REQUEST_HEADERS' => 'content-type,accept-language',
+        ]);
+
+        $response->assertNoContent();
+        $this->assertSame('https://afim.intcore.dev', $response->headers->get('Access-Control-Allow-Origin'));
+    }
+
+    public function test_unknown_origins_are_not_allowed(): void
+    {
+        $response = $this->call('OPTIONS', '/api/v1/survey/submissions', [], [], [], [
+            'HTTP_ORIGIN' => 'https://evil.example',
+            'HTTP_ACCESS_CONTROL_REQUEST_METHOD' => 'POST',
+        ]);
+
+        $this->assertNotSame('https://evil.example', $response->headers->get('Access-Control-Allow-Origin'));
+    }
+
     private function answersFor(callable $pick): array
     {
         return SurveyQuestion::query()->active()->ordered()->get()
