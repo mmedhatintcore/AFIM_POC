@@ -14,8 +14,7 @@
   --pos: #1f9d57;
   --neg: #e0533d;
   --warn: oklch(0.74 0.14 75);
-  /* fund card: icon disc + 1M return (red = gain, blue = loss) */
-  --yellow: #fde84a;
+  /* fund card 1M return (red = gain, blue = loss) */
   --gain: #d93a2b;
   --loss: #3b5bdb;
   --accent-on: oklch(0.2 0.05 50);

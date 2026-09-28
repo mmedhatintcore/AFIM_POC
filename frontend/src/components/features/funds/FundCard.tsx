@@ -10,9 +10,9 @@ import { ChannelBadge } from "./ChannelBadge";
 import { PlatformsList } from "./PlatformsList";
 
 /**
- * Fund card — rank, icon disc, uppercase name, 1-month return (red when
- * up, blue when down) and NAV + inception date. `detailed` (/funds) adds
- * the risk badge and the how-to-subscribe channel + platforms.
+ * Fund card — a large rank numeral, the fund logo, category + risk, the name,
+ * a tinted 1-month-return panel (red up / blue down) and a NAV / inception
+ * strip. `detailed` (/funds) adds the how-to-subscribe channel + platforms.
  */
 export async function FundCard({
   fund,
@@ -23,7 +23,7 @@ export async function FundCard({
 }: {
   fund: Fund;
   locale: Locale;
-  /** 1-based position shown top-left; omitted when the card isn't ranked. */
+  /** 1-based position shown as the big numeral; omitted when not ranked. */
   rank?: number;
   detailed?: boolean;
   className?: string;
@@ -34,6 +34,7 @@ export async function FundCard({
   const returnValue =
     fund.return_1m !== null ? Number.parseFloat(fund.return_1m) : Number.NaN;
   const hasReturn = !Number.isNaN(returnValue);
+  const isGain = hasReturn && returnValue >= 0;
   const navValue =
     fund.nav_price !== null ? Number.parseFloat(fund.nav_price) : Number.NaN;
   const hasNav = !Number.isNaN(navValue);
@@ -41,28 +42,39 @@ export async function FundCard({
   return (
     <article
       className={cn(
-        "group relative flex flex-col overflow-hidden rounded-[2rem] border border-border bg-surface p-7 shadow-elev-1 transition-all duration-300 ease-out-soft hover:-translate-y-2 hover:border-accent/50 hover:shadow-elev-3",
+        "group relative flex flex-col overflow-hidden rounded-card-lg border border-border bg-surface p-6 shadow-elev-1 transition-all duration-300 ease-out-soft hover:-translate-y-2 hover:border-accent/50 hover:shadow-elev-3",
         className,
       )}
       data-testid={`fund-card-${fund.slug}`}
     >
-      <div className="flex items-center justify-between gap-3">
+      {rank !== undefined ? (
         <span
-          className="tnum text-lg font-medium leading-none"
+          className="tnum pointer-events-none absolute -top-2 end-5 select-none text-[5.5rem] font-black leading-none text-foreground/[0.07] transition-colors duration-300 group-hover:text-accent/25"
           data-testid={`fund-rank-${fund.slug}`}
         >
-          {rank ?? ""}
+          {String(rank).padStart(2, "0")}
         </span>
-        {detailed || fund.risk_level !== 0 ? (
-          <RiskBadge level={fund.risk_level} label={fund.risk_label} />
-        ) : null}
+      ) : null}
+
+      <div className="relative flex items-center gap-3">
+        <span className="grid size-[60px] shrink-0 place-items-center rounded-2xl border border-border bg-white shadow-elev-1 transition-colors duration-300 group-hover:border-accent/60">
+          <FundIllustration name={fund.illustration} className="size-9" />
+        </span>
+        <div className="min-w-0">
+          <span className="block text-[0.68rem] uppercase leading-tight tracking-wide text-muted">
+            {fund.category_label}
+          </span>
+          {detailed || fund.risk_level !== 0 ? (
+            <RiskBadge
+              level={fund.risk_level}
+              label={fund.risk_label}
+              className="mt-1.5"
+            />
+          ) : null}
+        </div>
       </div>
 
-      <span className="mt-4 grid size-[74px] shrink-0 place-items-center rounded-full bg-yellow">
-        <FundIllustration name={fund.illustration} className="size-10" />
-      </span>
-
-      <h3 className="mt-5 min-h-[4.2em] text-[1.35rem] font-semibold uppercase leading-tight">
+      <h3 className="relative mt-5 min-h-[3.6em] text-[1.2rem] font-bold uppercase leading-snug">
         <Link
           href={`/funds/${fund.slug}`}
           className="after:absolute after:inset-0"
@@ -72,52 +84,68 @@ export async function FundCard({
         </Link>
       </h3>
 
-      <div className="mt-6 text-end">
-        <div className="text-[0.8rem] text-muted">{t("return1m")}</div>
+      <div
+        className={cn(
+          "relative mt-5 rounded-2xl px-4 py-3",
+          !hasReturn ? "bg-hairline" : isGain ? "bg-gain/10" : "bg-loss/10",
+        )}
+      >
+        <div className="text-[0.72rem] text-muted">{t("return1m")}</div>
         <div
           className={cn(
-            "tnum mt-1 text-[2.6rem] font-light leading-none",
-            !hasReturn
-              ? "text-muted"
-              : returnValue >= 0
-                ? "text-gain"
-                : "text-loss",
+            "tnum mt-0.5 flex items-center gap-2 text-[2.2rem] font-extrabold leading-none",
+            !hasReturn ? "text-muted" : isGain ? "text-gain" : "text-loss",
           )}
           dir="ltr"
           data-testid={`fund-return-${fund.slug}`}
         >
-          {hasReturn
-            ? `${formatNumber(returnValue, locale, {
+          {hasReturn ? (
+            <>
+              <span className="text-base" aria-hidden="true">
+                {isGain ? "▲" : "▼"}
+              </span>
+              {`${formatNumber(returnValue, locale, {
                 minimumFractionDigits: 1,
                 maximumFractionDigits: 2,
-              })}%`
-            : "—"}
+              })}%`}
+            </>
+          ) : (
+            "—"
+          )}
         </div>
       </div>
 
-      <div className="mt-5 flex items-end justify-between gap-4">
-        <div className="text-[0.95rem] leading-tight">
-          <div className="font-medium">{t("nav")}</div>
-          <div className="mt-0.5 text-muted">{t("inceptionDate")}</div>
-        </div>
-        <div className="text-end leading-tight">
-          {hasNav ? (
-            <div dir="ltr">
-              <span className="tnum text-[1.05rem] font-medium">
-                {formatNumber(navValue, locale, {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2,
-                })}
-              </span>{" "}
-              <span className="text-[0.8rem] font-medium">
-                {fund.currency || t("currency")}
+      <dl className="relative mt-5 grid grid-cols-2 gap-4 border-t border-dashed border-border pt-4">
+        <div>
+          <dt className="text-[0.68rem] uppercase tracking-wider text-muted">
+            {t("nav")}
+          </dt>
+          <dd className="mt-1 text-[1rem] font-semibold leading-tight" dir="ltr">
+            {hasNav ? (
+              <>
+                <span className="tnum">
+                  {formatNumber(navValue, locale, {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}
+                </span>{" "}
+                <span className="text-[0.75rem] font-medium text-muted">
+                  {fund.currency || t("currency")}
+                </span>
+              </>
+            ) : (
+              <span className="text-[0.85rem] font-normal text-muted">
+                {t("noPricing")}
               </span>
-            </div>
-          ) : (
-            <div className="text-[0.85rem] text-muted">{t("noPricing")}</div>
-          )}
-          <div
-            className="tnum mt-0.5 text-[0.95rem] text-muted"
+            )}
+          </dd>
+        </div>
+        <div>
+          <dt className="text-[0.68rem] uppercase tracking-wider text-muted">
+            {t("inceptionDate")}
+          </dt>
+          <dd
+            className="tnum mt-1 text-[1rem] font-semibold leading-tight"
             data-testid={`fund-inception-${fund.slug}`}
           >
             {fund.inception_date
@@ -128,12 +156,12 @@ export async function FundCard({
                   timeZone: "UTC",
                 })
               : "—"}
-          </div>
+          </dd>
         </div>
-      </div>
+      </dl>
 
       {detailed ? (
-        <div className="relative z-1 mt-6 border-t border-hairline pt-4">
+        <div className="relative z-1 mt-5 border-t border-hairline pt-4">
           <div className="mb-1.5 text-[0.68rem] uppercase tracking-widest text-muted">
             {tf("howToSubscribe")}
           </div>
@@ -150,6 +178,11 @@ export async function FundCard({
           />
         </div>
       ) : null}
+
+      <span
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-1 origin-start scale-x-0 bg-gradient-to-r from-accent to-accent-dark transition-transform duration-500 ease-out-soft group-hover:scale-x-100 rtl:origin-right"
+        aria-hidden="true"
+      />
     </article>
   );
 }
