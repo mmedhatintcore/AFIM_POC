@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Funds\Schemas;
 
 use App\Filament\Support\Bilingual;
 use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\TextInput;
@@ -46,8 +47,23 @@ class FundForm
                         'gold' => 'Gold',
                     ]),
                 TextInput::make('nav_price')
-                    ->label('NAV price (EGP)')
+                    ->label('NAV price')
+                    ->helperText('Shown on the fund card next to the currency.')
                     ->numeric(),
+                TextInput::make('currency')
+                    ->label('NAV currency')
+                    ->default('EGP')
+                    ->maxLength(8)
+                    ->required()
+                    ->helperText('Currency code shown beside the NAV, e.g. EGP.'),
+                TextInput::make('return_1m')
+                    ->label('1-month return (%)')
+                    ->numeric()
+                    ->helperText('Shown on the card as "*1M (Month) Return". Positive shows red, negative blue.'),
+                DatePicker::make('inception_date')
+                    ->label('Inception date')
+                    ->native(false)
+                    ->helperText('Shown under the NAV on the fund card.'),
                 TextInput::make('daily_change')
                     ->label('Daily change (%)')
                     ->numeric(),
@@ -77,8 +93,10 @@ class FundForm
                 Toggle::make('is_published')
                     ->default(true),
                 TextInput::make('sort')
+                    ->label('Order / rank')
                     ->numeric()
-                    ->default(0),
+                    ->default(0)
+                    ->helperText('Rank number shown on the fund card (lower = first).'),
                 Bilingual::tabs([
                     ['name' => 'name', 'label' => 'Name', 'required' => true],
                     ['name' => 'category_label', 'label' => 'Category label'],

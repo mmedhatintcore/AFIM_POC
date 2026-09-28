@@ -15,6 +15,17 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // The test suite runs on in-memory SQLite, which has no SHOW INDEX /
+        // MODIFY — use the schema builder's native change() there.
+        if (DB::getDriverName() !== 'mysql') {
+            Schema::table('finder_questions', function ($table) {
+                $table->dropUnique(['key']);
+                $table->string('key')->nullable()->change();
+            });
+
+            return;
+        }
+
         $hasUniqueIndex = collect(DB::select('SHOW INDEX FROM finder_questions'))
             ->contains('Key_name', 'finder_questions_key_unique');
 
@@ -29,6 +40,15 @@ return new class extends Migration
 
     public function down(): void
     {
+        if (DB::getDriverName() !== 'mysql') {
+            Schema::table('finder_questions', function ($table) {
+                $table->string('key')->nullable(false)->change();
+                $table->unique('key');
+            });
+
+            return;
+        }
+
         DB::statement('ALTER TABLE finder_questions MODIFY `key` VARCHAR(255) NOT NULL');
 
         Schema::table('finder_questions', function ($table) {

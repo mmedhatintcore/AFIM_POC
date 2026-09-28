@@ -58,12 +58,17 @@ export async function PricesSection({
           prevLabel={t("pricesPrev")}
           nextLabel={t("pricesNext")}
         >
-          {funds.map((fund) => (
+          {funds.map((fund, index) => (
             <div
               key={fund.id}
               className="w-[84vw] flex-none snap-start sm:w-[300px]"
             >
-              <FundCard fund={fund} locale={locale} className="h-full" />
+              <FundCard
+                fund={fund}
+                locale={locale}
+                rank={index + 1}
+                className="h-full"
+              />
             </div>
           ))}
         </PricesCarousel>

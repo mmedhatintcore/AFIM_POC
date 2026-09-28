@@ -77,6 +77,9 @@
   "FundCard": {
     "yield1y": "YTD",
     "currency": "EGP",
+    "return1m": "*1M (Month) Return",
+    "nav": "NAV",
+    "inceptionDate": "Inception Date",
     "view": "View fund",
     "noPricing": "Pricing published soon",
     "riskAria": "Risk level"

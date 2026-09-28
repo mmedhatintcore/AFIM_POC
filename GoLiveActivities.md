@@ -11,6 +11,11 @@ matching **production** change must be recorded here in the same slice.
 - [ ] **Database**: run `php artisan migrate` (additive only) + `php artisan db:seed`
       once for initial CMS content (sections, services, funds, categories, news,
       FAQs, timeline, team, committees, survey questions, finder questions).
+      The `2026_09_28_120000_add_card_fields_to_funds_table` migration adds
+      `currency`, `return_1m` and `inception_date` to `funds` (additive; nullable /
+      defaulted). After deploy, feed each fund's **1-month return** and
+      **inception date** in Admin → Funds — the website fund cards show "—" until
+      they are entered (the seeder deliberately does not invent return figures).
 - [ ] **Admin user**: `php artisan db:seed --class=AdminUserSeeder` then rotate the
       seeded password (`admin@afim.com.eg`) immediately.
 - [ ] **Filament panel**: served at `/admin` — restrict by IP/VPN if required.

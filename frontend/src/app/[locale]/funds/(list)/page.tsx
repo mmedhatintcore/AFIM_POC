@@ -115,8 +115,14 @@ export default async function FundsPage({ params, searchParams }: Props) {
 
       {visible.length > 0 ? (
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {visible.map((fund) => (
-            <FundCard key={fund.id} fund={fund} locale={locale} detailed />
+          {visible.map((fund, index) => (
+            <FundCard
+              key={fund.id}
+              fund={fund}
+              locale={locale}
+              rank={index + 1}
+              detailed
+            />
           ))}
         </div>
       ) : (

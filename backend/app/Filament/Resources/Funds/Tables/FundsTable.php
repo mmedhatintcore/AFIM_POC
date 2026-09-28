@@ -38,6 +38,14 @@ class FundsTable
                     ->label('Δ %')
                     ->numeric()
                     ->color(fn ($state) => $state === null ? null : ((float) $state >= 0 ? 'success' : 'danger')),
+                TextColumn::make('return_1m')
+                    ->label('1M %')
+                    ->numeric()
+                    ->color(fn ($state) => $state === null ? null : ((float) $state >= 0 ? 'danger' : 'info')),
+                TextColumn::make('inception_date')
+                    ->label('Inception')
+                    ->date()
+                    ->toggleable(),
                 TextColumn::make('yield_1y')
                     ->label('YTD %')
                     ->numeric(),

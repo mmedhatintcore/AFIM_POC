@@ -72,8 +72,11 @@ export type Fund = {
   risk_level: RiskLevel;
   risk_label: string;
   nav_price: string | null;
+  currency: string;
   daily_change: string | null;
   yield_1y: string | null;
+  return_1m: string | null;
+  inception_date: string | null;
   spark: number[] | null;
   illustration: string;
   order_channel: OrderChannel;

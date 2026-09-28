@@ -28,6 +28,9 @@
   --color-up: var(--pos);
   --color-down: var(--neg);
   --color-warn: var(--warn);
+  --color-yellow: var(--yellow);
+  --color-gain: var(--gain);
+  --color-loss: var(--loss);
 
   /* type */
   --font-sans: var(--font-app);

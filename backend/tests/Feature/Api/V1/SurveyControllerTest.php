@@ -17,7 +17,7 @@ final class SurveyControllerTest extends TestCase
     {
         $response = $this->getJson('/api/v1/survey/questions');
 
-        $response->assertOk()->assertJsonCount(13, 'data')
+        $response->assertOk()->assertJsonCount(10, 'data')
             ->assertJsonStructure(['data' => [['id', 'key', 'phase', 'question', 'layout', 'options' => [['index', 'icon', 'label', 'description']]]]]);
 
         $this->assertArrayNotHasKey('votes', $response->json('data.4.options.0'));

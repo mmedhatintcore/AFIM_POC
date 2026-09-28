@@ -13,7 +13,7 @@ import { Link } from "@/i18n/navigation";
 import { endpoints } from "@/lib/api/endpoints";
 import { fetchData } from "@/lib/api/server";
 import { cn } from "@/lib/utils/cn";
-import { formatDate, signedChange } from "@/lib/utils/format";
+import { formatDate, formatNumber, signedChange } from "@/lib/utils/format";
 import { assertLocale } from "@/lib/utils/locale";
 import { absoluteUrl, languageAlternates, siteUrl } from "@/lib/utils/urls";
 import type { Fund } from "@/types/api";
@@ -153,7 +153,9 @@ export default async function FundDetailPage({ params }: Props) {
                 <span className="tnum text-5xl font-extrabold tracking-tight">
                   {fund.nav_price}
                 </span>
-                <span className="text-sm text-muted">{tc("currency")}</span>
+                <span className="text-sm text-muted">
+                  {fund.currency || tc("currency")}
+                </span>
               </div>
               {change ? (
                 <div
@@ -167,6 +169,41 @@ export default async function FundDetailPage({ params }: Props) {
                   </span>{" "}
                   <span className="font-normal text-muted">
                     {formatDate(new Date().toISOString(), locale)}
+                  </span>
+                </div>
+              ) : null}
+              {fund.return_1m !== null ? (
+                <div className="mt-6 border-t border-hairline pt-5">
+                  <div
+                    className={cn(
+                      "tnum text-3xl font-extrabold",
+                      Number.parseFloat(fund.return_1m) >= 0
+                        ? "text-gain"
+                        : "text-loss",
+                    )}
+                    dir="ltr"
+                  >
+                    {formatNumber(Number.parseFloat(fund.return_1m), locale, {
+                      minimumFractionDigits: 1,
+                      maximumFractionDigits: 2,
+                    })}
+                    %
+                  </div>
+                  <div className="mt-1 text-[0.68rem] uppercase tracking-widest text-muted">
+                    {tc("return1m")}
+                  </div>
+                </div>
+              ) : null}
+              {fund.inception_date ? (
+                <div className="mt-4 text-sm text-muted">
+                  {tc("inceptionDate")}:{" "}
+                  <span className="tnum text-foreground" dir="ltr">
+                    {formatDate(fund.inception_date, locale, {
+                      year: "numeric",
+                      month: "short",
+                      day: "numeric",
+                      timeZone: "UTC",
+                    })}
                   </span>
                 </div>
               ) : null}

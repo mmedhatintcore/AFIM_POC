@@ -16,7 +16,7 @@ final class FundControllerTest extends TestCase
         $response = $this->getJson('/api/v1/funds');
 
         $response->assertOk()
-            ->assertJsonStructure(['data' => [['id', 'slug', 'name', 'group_key', 'risk_level', 'risk_label', 'order_channel', 'order_channel_label', 'how_to', 'platforms', 'is_featured']]]);
+            ->assertJsonStructure(['data' => [['id', 'slug', 'name', 'group_key', 'risk_level', 'risk_label', 'order_channel', 'order_channel_label', 'how_to', 'platforms', 'is_featured', 'currency', 'return_1m', 'inception_date']]]);
 
         $this->assertGreaterThanOrEqual(15, count($response->json('data')));
     }
@@ -51,6 +51,20 @@ final class FundControllerTest extends TestCase
             ->assertJsonPath('data.risk_label', 'مخاطر مرتفعة');
 
         $this->assertContains('ثاندر', $response->json('data.platforms'));
+    }
+
+    public function test_show_exposes_card_fields(): void
+    {
+        \App\Models\Fund::where('slug', 'dahab-gold-fund')->update([
+            'return_1m' => -1.5,
+            'inception_date' => '2019-06-23',
+            'currency' => 'EGP',
+        ]);
+
+        $this->getJson('/api/v1/funds/dahab-gold-fund')->assertOk()
+            ->assertJsonPath('data.return_1m', '-1.50')
+            ->assertJsonPath('data.inception_date', '2019-06-23')
+            ->assertJsonPath('data.currency', 'EGP');
     }
 
     public function test_show_returns_404_for_unknown_slug(): void
