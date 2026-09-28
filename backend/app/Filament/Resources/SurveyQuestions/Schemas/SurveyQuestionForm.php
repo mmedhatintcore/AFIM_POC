@@ -6,6 +6,7 @@ use App\Filament\Support\Bilingual;
 use App\Models\FundCategory;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Section;
@@ -34,8 +35,14 @@ class SurveyQuestionForm
                     ->default('cards')
                     ->required(),
                 TextInput::make('sort')
+                    ->label('Order')
                     ->numeric()
                     ->default(0),
+                Textarea::make('admin_note')
+                    ->label('Internal note')
+                    ->rows(2)
+                    ->helperText('For the team only — never shown to visitors. e.g. "Used as part of the client\'s profile; does not affect the recommendation."')
+                    ->columnSpanFull(),
                 Toggle::make('is_active')
                     ->default(true),
                 Bilingual::tabs([
@@ -51,7 +58,7 @@ class SurveyQuestionForm
                         "is shown as \"also worth a look\". Answering \"Yes\" on the Islamic investment question narrows ".
                         "the result to Sharia-compliant categories only — otherwise only conventional ones are considered. ".
                         "Leave \"Category votes\" empty on an option that's purely informational (e.g. age, income) and ".
-                        "shouldn't sway the result.",
+                        "shouldn't sway the result. See the Scoring Matrix page for the whole calculation at a glance.",
                     )
                     ->schema([
                         Repeater::make('options')
@@ -63,6 +70,11 @@ class SurveyQuestionForm
                                 TextInput::make('label.ar')->label('Label (Arabic)')->required(),
                                 TextInput::make('description.en')->label('Description (English)'),
                                 TextInput::make('description.ar')->label('Description (Arabic)'),
+                                Textarea::make('business_meaning')
+                                    ->label('Business meaning (internal)')
+                                    ->rows(2)
+                                    ->helperText('What choosing this answer says about the client — for the team only, never shown to visitors.')
+                                    ->columnSpanFull(),
                                 Repeater::make('votes')
                                     ->label('Category votes')
                                     ->schema([

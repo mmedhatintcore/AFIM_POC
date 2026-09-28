@@ -14,6 +14,8 @@ class SurveySeeder extends Seeder
         $riskProfile = ['en' => 'Risk profile', 'ar' => 'ملف المخاطر'];
         $preferences = ['en' => 'Preferences', 'ar' => 'تفضيلاتك'];
 
+        $unmapped = 'Not mapped to any investment category in the Intcore workbook — informational until category votes are added below.';
+
         $questions = [
             ['sort' => 1, 'key' => 'entity', 'phase' => $aboutYou, 'layout' => 'cards',
                 'question' => ['en' => 'Are you investing as an individual or a company?', 'ar' => 'هل تستثمر كفرد أم كمؤسسة؟'],
@@ -21,7 +23,7 @@ class SurveySeeder extends Seeder
                     ['icon' => 'user', 'label' => ['en' => 'Individual', 'ar' => 'فرد'], 'description' => ['en' => 'Personal savings & wealth', 'ar' => 'مدخرات وثروة شخصية']],
                     ['icon' => 'corp', 'label' => ['en' => 'Corporate', 'ar' => 'شركة / مؤسسة'], 'description' => ['en' => 'Company or institutional funds', 'ar' => 'أموال شركة أو مؤسسة']],
                 ]],
-            ['sort' => 2, 'key' => null, 'phase' => $aboutYou, 'layout' => 'grid',
+            ['sort' => 2, 'key' => null, 'phase' => $aboutYou, 'layout' => 'grid', 'admin_note' => 'Used as part of the client\'s profile. Does not affect the recommendation.',
                 'question' => ['en' => 'Age', 'ar' => 'العمر'],
                 'options' => [
                     ['label' => ['en' => 'Under 21', 'ar' => 'أقل من ٢١']],
@@ -29,7 +31,7 @@ class SurveySeeder extends Seeder
                     ['label' => ['en' => '45 – 60', 'ar' => '٤٥ – ٦٠']],
                     ['label' => ['en' => 'Above 60', 'ar' => 'فوق الـ٦٠']],
                 ]],
-            ['sort' => 3, 'key' => null, 'phase' => $aboutYou, 'layout' => 'grid',
+            ['sort' => 3, 'key' => null, 'phase' => $aboutYou, 'layout' => 'grid', 'admin_note' => 'Used to identify the client\'s financial profile. Does not affect the recommendation.',
                 'question' => ['en' => 'Annual Income', 'ar' => 'الدخل السنوي'],
                 'options' => [
                     ['label' => ['en' => 'Under EGP 250K', 'ar' => 'أقل من ٢٥٠ ألف جنيه']],
@@ -37,7 +39,7 @@ class SurveySeeder extends Seeder
                     ['label' => ['en' => 'EGP 1M – 5M', 'ar' => 'مليون – ٥ ملايين جنيه']],
                     ['label' => ['en' => 'Above EGP 5M', 'ar' => 'أكثر من ٥ ملايين جنيه']],
                 ]],
-            ['sort' => 4, 'key' => null, 'phase' => $aboutYou, 'layout' => 'grid',
+            ['sort' => 4, 'key' => null, 'phase' => $aboutYou, 'layout' => 'grid', 'admin_note' => 'Used to identify the expected investment size. Does not affect the recommendation.',
                 'question' => ['en' => 'Investment Amount', 'ar' => 'قيمة الاستثمار'],
                 'options' => [
                     ['label' => ['en' => 'Under EGP 250K', 'ar' => 'أقل من ٢٥٠ ألف جنيه']],
@@ -48,20 +50,20 @@ class SurveySeeder extends Seeder
             ['sort' => 5, 'key' => 'objective', 'phase' => $goals, 'layout' => 'cards',
                 'question' => ['en' => 'Investment Objective', 'ar' => 'الهدف الاستثماري'],
                 'options' => [
-                    ['icon' => 'shield', 'label' => ['en' => 'Saving', 'ar' => 'الادخار'], 'description' => ['en' => 'Preserve capital, high liquidity, accumulated return', 'ar' => 'حفاظ على رأس المال وسيولة عالية وعائد تراكمي'], 'votes' => ['mm_acc' => 3]],
-                    ['icon' => 'payout', 'label' => ['en' => 'Distribution', 'ar' => 'التوزيعات'], 'description' => ['en' => 'Periodic income paid out to you', 'ar' => 'دخل دوري يُصرف لك'], 'votes' => ['mm_dist' => 3, 'imm' => 2]],
-                    ['icon' => 'scales', 'label' => ['en' => 'Balanced Growth', 'ar' => 'نمو متوازن'], 'description' => ['en' => 'Growth with stability, across assets', 'ar' => 'نمو مع استقرار عبر فئات أصول متعددة'], 'votes' => ['mixed' => 3, 'balanced' => 3, 'metals' => 2]],
-                    ['icon' => 'launch', 'label' => ['en' => 'Aggressive Growth', 'ar' => 'نمو قوي'], 'description' => ['en' => 'Higher volatility for higher long-term returns', 'ar' => 'تقلبات أعلى مقابل عوائد أكبر على المدى الطويل'], 'votes' => ['equity' => 3, 'iequity' => 3]],
+                    ['icon' => 'shield', 'label' => ['en' => 'Saving', 'ar' => 'الادخار'], 'description' => ['en' => 'Preserve capital, high liquidity, accumulated return', 'ar' => 'حفاظ على رأس المال وسيولة عالية وعائد تراكمي'], 'votes' => ['mm_acc' => 3], 'business_meaning' => 'Client seeks capital preservation and high liquidity and accumulated return.'],
+                    ['icon' => 'payout', 'label' => ['en' => 'Distribution', 'ar' => 'التوزيعات'], 'description' => ['en' => 'Periodic income paid out to you', 'ar' => 'دخل دوري يُصرف لك'], 'votes' => ['mm_dist' => 3, 'imm' => 2], 'business_meaning' => 'Client prefers periodic income distribution.'],
+                    ['icon' => 'scales', 'label' => ['en' => 'Balanced Growth', 'ar' => 'نمو متوازن'], 'description' => ['en' => 'Growth with stability, across assets', 'ar' => 'نمو مع استقرار عبر فئات أصول متعددة'], 'votes' => ['mixed' => 3, 'balanced' => 3, 'metals' => 2], 'business_meaning' => 'Client seeks a balance between capital appreciation and stability.'],
+                    ['icon' => 'launch', 'label' => ['en' => 'Aggressive Growth', 'ar' => 'نمو قوي'], 'description' => ['en' => 'Higher volatility for higher long-term returns', 'ar' => 'تقلبات أعلى مقابل عوائد أكبر على المدى الطويل'], 'votes' => ['equity' => 3, 'iequity' => 3], 'business_meaning' => 'Client is willing to accept higher volatility for potentially higher long-term returns.'],
                 ]],
             ['sort' => 6, 'key' => 'duration', 'phase' => $goals, 'layout' => 'grid',
                 'question' => ['en' => 'Investment Duration', 'ar' => 'مدة الاستثمار'],
                 'options' => [
-                    ['label' => ['en' => '< 1 year', 'ar' => 'أقل من سنة'], 'votes' => ['mm_acc' => 3, 'mm_dist' => 3, 'imm' => 3]],
-                    ['label' => ['en' => '1 – 3 years', 'ar' => '١ – ٣ سنوات'], 'votes' => ['mixed' => 3]],
-                    ['label' => ['en' => '3 – 5 years', 'ar' => '٣ – ٥ سنوات'], 'votes' => ['balanced' => 3, 'metals' => 3]],
-                    ['label' => ['en' => 'More than 5 years', 'ar' => 'أكثر من ٥ سنوات'], 'votes' => ['equity' => 3, 'iequity' => 3]],
+                    ['label' => ['en' => '< 1 year', 'ar' => 'أقل من سنة'], 'votes' => ['mm_acc' => 3, 'mm_dist' => 3, 'imm' => 3], 'business_meaning' => 'Short-term investment objective.'],
+                    ['label' => ['en' => '1 – 3 years', 'ar' => '١ – ٣ سنوات'], 'votes' => ['mixed' => 3], 'business_meaning' => 'Medium-term investment objective.'],
+                    ['label' => ['en' => '3 – 5 years', 'ar' => '٣ – ٥ سنوات'], 'votes' => ['balanced' => 3, 'metals' => 3], 'business_meaning' => 'Medium to long-term investment objective.'],
+                    ['label' => ['en' => 'More than 5 years', 'ar' => 'أكثر من ٥ سنوات'], 'votes' => ['equity' => 3, 'iequity' => 3], 'business_meaning' => 'Long-term investment objective.'],
                 ]],
-            ['sort' => 7, 'key' => null, 'phase' => $aboutYou, 'layout' => 'grid',
+            ['sort' => 7, 'key' => null, 'phase' => $aboutYou, 'layout' => 'grid', 'admin_note' => 'Used to assess the client\'s level of investment knowledge. Does not affect the recommendation.',
                 'question' => ['en' => 'Investment Experience', 'ar' => 'الخبرة الاستثمارية'],
                 'options' => [
                     ['label' => ['en' => 'No experience', 'ar' => 'بدون خبرة']],
@@ -72,32 +74,67 @@ class SurveySeeder extends Seeder
             ['sort' => 8, 'key' => 'risk', 'phase' => $riskProfile, 'layout' => 'cards',
                 'question' => ['en' => 'Risk Tolerance', 'ar' => 'تحمّل المخاطر'],
                 'options' => [
-                    ['icon' => 'gaugeHi', 'label' => ['en' => 'High', 'ar' => 'مرتفعة'], 'description' => ['en' => 'Significant swings for long-term capital growth', 'ar' => 'تقلبات كبيرة مقابل نمو رأس المال طويل الأجل'], 'votes' => ['equity' => 3, 'iequity' => 3]],
-                    ['icon' => 'gaugeMd', 'label' => ['en' => 'Medium', 'ar' => 'متوسطة'], 'description' => ['en' => 'Moderate fluctuations in pursuit of higher returns', 'ar' => 'تقلبات معتدلة سعياً لعوائد أعلى'], 'votes' => ['mixed' => 3, 'balanced' => 3, 'metals' => 3]],
-                    ['icon' => 'gaugeLo', 'label' => ['en' => 'Low', 'ar' => 'منخفضة'], 'description' => ['en' => 'Preserve capital with minimal ups and downs', 'ar' => 'الحفاظ على رأس المال بأقل تقلبات'], 'votes' => ['mm_acc' => 3, 'mm_dist' => 3, 'imm' => 3]],
+                    ['icon' => 'gaugeHi', 'label' => ['en' => 'High', 'ar' => 'مرتفعة'], 'description' => ['en' => 'Significant swings for long-term capital growth', 'ar' => 'تقلبات كبيرة مقابل نمو رأس المال طويل الأجل'], 'votes' => ['equity' => 3, 'iequity' => 3], 'business_meaning' => 'Client accepts significant market volatility for long-term capital growth.'],
+                    ['icon' => 'gaugeMd', 'label' => ['en' => 'Medium', 'ar' => 'متوسطة'], 'description' => ['en' => 'Moderate fluctuations in pursuit of higher returns', 'ar' => 'تقلبات معتدلة سعياً لعوائد أعلى'], 'votes' => ['mixed' => 3, 'balanced' => 3, 'metals' => 3], 'business_meaning' => 'Client accepts moderate fluctuations in pursuit of higher returns.'],
+                    ['icon' => 'gaugeLo', 'label' => ['en' => 'Low', 'ar' => 'منخفضة'], 'description' => ['en' => 'Preserve capital with minimal ups and downs', 'ar' => 'الحفاظ على رأس المال بأقل تقلبات'], 'votes' => ['mm_acc' => 3, 'mm_dist' => 3, 'imm' => 3], 'business_meaning' => 'Client prefers preserving capital with minimal volatility.'],
                 ]],
             ['sort' => 9, 'key' => 'islamic', 'phase' => $preferences, 'layout' => 'cards',
                 'question' => ['en' => 'Islamic investment?', 'ar' => 'استثمار إسلامي؟'],
                 'options' => [
-                    ['icon' => 'crescent', 'label' => ['en' => 'Yes', 'ar' => 'نعم'], 'votes' => ['imm' => 2, 'iequity' => 2]],
-                    ['icon' => 'check', 'label' => ['en' => 'No', 'ar' => 'لا']],
+                    ['icon' => 'crescent', 'label' => ['en' => 'Yes', 'ar' => 'نعم'], 'votes' => ['imm' => 2, 'iequity' => 2], 'business_meaning' => 'Client prefers Sharia-compliant investment solutions.'],
+                    ['icon' => 'check', 'label' => ['en' => 'No', 'ar' => 'لا'], 'business_meaning' => 'Client has no specific Sharia preference (conventional products).'],
                 ]],
-            ['sort' => 10, 'key' => 'multi', 'phase' => $preferences, 'layout' => 'cards',
+            // Added in the latest Intcore workbook. The workbook's mapping sheet
+            // defines no related investment category for these, so they are
+            // profile-only until weights are added in the admin.
+            ['sort' => 10, 'key' => null, 'phase' => $riskProfile, 'layout' => 'grid', 'admin_note' => $unmapped,
+                'question' => ['en' => 'Which statement best describes you?', 'ar' => 'أي عبارة تصفك بشكل أفضل؟'],
+                'options' => [
+                    ['label' => ['en' => 'I prefer preserving my capital even if returns are low.', 'ar' => 'أفضّل الحفاظ على رأس مالي حتى لو كانت العوائد منخفضة.']],
+                    ['label' => ['en' => 'I can tolerate moderate fluctuations.', 'ar' => 'أستطيع تحمّل تقلبات معتدلة.']],
+                    ['label' => ['en' => 'I accept temporary losses for higher long-term returns.', 'ar' => 'أقبل خسائر مؤقتة مقابل عوائد أعلى على المدى الطويل.']],
+                    ['label' => ['en' => 'I seek maximum returns despite significant volatility.', 'ar' => 'أسعى لأقصى عائد رغم التقلبات الكبيرة.']],
+                ]],
+            ['sort' => 11, 'key' => null, 'phase' => $riskProfile, 'layout' => 'grid', 'admin_note' => $unmapped,
+                'question' => ['en' => 'What level of annual volatility are you willing to tolerate?', 'ar' => 'ما مستوى التقلب السنوي الذي أنت مستعد لتحمّله؟'],
+                'options' => [
+                    ['label' => ['en' => 'Less than 5%', 'ar' => 'أقل من 5%']],
+                    ['label' => ['en' => '5% – 10%', 'ar' => '5% – 10%']],
+                    ['label' => ['en' => '10% – 20%', 'ar' => '10% – 20%']],
+                    ['label' => ['en' => 'More than 20%', 'ar' => 'أكثر من 20%']],
+                ]],
+            ['sort' => 12, 'key' => null, 'phase' => $goals, 'layout' => 'grid', 'admin_note' => $unmapped,
+                'question' => ['en' => 'Liquidity Needs — how soon may you need access to your money?', 'ar' => 'احتياجات السيولة — متى قد تحتاج إلى الوصول إلى أموالك؟'],
+                'options' => [
+                    ['label' => ['en' => 'Within 3 months', 'ar' => 'خلال 3 أشهر']],
+                    ['label' => ['en' => 'Within 1 year', 'ar' => 'خلال سنة']],
+                    ['label' => ['en' => 'Within 3 years', 'ar' => 'خلال 3 سنوات']],
+                    ['label' => ['en' => 'No expected need', 'ar' => 'لا أتوقع حاجة']],
+                ]],
+            ['sort' => 13, 'key' => 'multi', 'phase' => $preferences, 'layout' => 'cards',
                 'question' => ['en' => 'Multiple Assets?', 'ar' => 'أصول متعددة؟'],
                 'options' => [
-                    ['icon' => 'grid', 'label' => ['en' => 'Yes', 'ar' => 'نعم'], 'votes' => ['balanced' => 2, 'metals' => 2, 'mixed' => 2]],
-                    ['icon' => 'target', 'label' => ['en' => 'No', 'ar' => 'لا']],
+                    ['icon' => 'grid', 'label' => ['en' => 'Yes', 'ar' => 'نعم'], 'votes' => ['balanced' => 2, 'metals' => 2, 'mixed' => 2], 'business_meaning' => 'Client prefers diversification across multiple asset classes.'],
+                    ['icon' => 'target', 'label' => ['en' => 'No', 'ar' => 'لا'], 'business_meaning' => 'Client prefers a focused investment strategy (based on previous answers).'],
                 ]],
         ];
 
         // This is the full, authoritative question set — prune anything left
-        // over from a previous shape (e.g. old filler risk-profile questions)
-        // so the admin list and the live survey never drift apart.
-        $sorts = array_column($questions, 'sort');
-        SurveyQuestion::whereNotIn('sort', $sorts)->delete();
+        // over from a previous shape so the admin list and the live survey
+        // never drift apart. Keyed questions (entity, objective, …) are matched
+        // by key so they keep their row (and old submissions) when re-ordered;
+        // plain profile questions are matched by position.
+        $keep = [];
+        $ordered = collect($questions)->sortBy(fn ($q) => $q['key'] === null ? 1 : 0);
 
-        foreach ($questions as $question) {
-            SurveyQuestion::updateOrCreate(['sort' => $question['sort']], $question);
+        foreach ($ordered as $question) {
+            $match = $question['key'] !== null
+                ? ['key' => $question['key']]
+                : ['sort' => $question['sort'], 'key' => null];
+
+            $keep[] = SurveyQuestion::updateOrCreate($match, $question)->id;
         }
+
+        SurveyQuestion::whereNotIn('id', $keep)->delete();
     }
 }

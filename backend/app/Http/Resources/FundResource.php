@@ -7,6 +7,8 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 final class FundResource extends JsonResource
 {
+    public const ALLOCATION_TYPES = ['tbills', 'bonds', 'deposits', 'ics', 'cash', 'equity', 'other'];
+
     private const RISK_KEYS = [0 => 'risk_low', 1 => 'risk_medium', 2 => 'risk_high'];
 
     public function toArray($request): array
@@ -28,6 +30,33 @@ final class FundResource extends JsonResource
             'return_1m' => $this->return_1m,
             'inception_date' => $this->inception_date?->toDateString(),
             'spark' => $this->spark,
+            'price_date' => $this->price_date?->toDateString(),
+            'performance' => [
+                '1m' => $this->return_1m,
+                'ytd' => $this->yield_1y,
+                '1y' => $this->return_1y,
+                '3y' => $this->return_3y,
+                '5y' => $this->return_5y,
+                'since_inception' => $this->return_since_inception,
+            ],
+            'asset_allocation' => collect($this->asset_allocation ?? [])
+                ->filter(fn ($row) => is_array($row) && isset($row['type'], $row['percent']))
+                ->map(fn (array $row) => [
+                    'type' => $row['type'],
+                    'label' => __('messages.allocation_'.$row['type']),
+                    'percent' => (float) $row['percent'],
+                ])
+                ->values()
+                ->all(),
+            'dividends' => [
+                'ytd' => $this->dividends_ytd,
+                'history' => collect($this->dividends ?? [])
+                    ->filter(fn ($row) => is_array($row) && isset($row['date'], $row['amount']))
+                    ->sortByDesc('date')
+                    ->map(fn (array $row) => ['date' => $row['date'], 'amount' => (float) $row['amount']])
+                    ->values()
+                    ->all(),
+            ],
             'illustration' => $this->illustration,
             'order_channel' => $this->order_channel,
             'order_channel_label' => __('messages.channel_'.$this->order_channel),

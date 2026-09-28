@@ -9,6 +9,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
 class FundForm
@@ -87,6 +88,71 @@ class FundForm
                     ])
                     ->columns(2)
                     ->default([])
+                    ->columnSpanFull(),
+                Section::make('Performance')
+                    ->description('Shown in the fund page performance table. "1 month" and "YTD" are entered above; all values are percentages.')
+                    ->schema([
+                        DatePicker::make('price_date')
+                            ->label('Price date')
+                            ->native(false)
+                            ->helperText('The date the NAV price above refers to.'),
+                        TextInput::make('return_1y')->label('1 year (%)')->numeric(),
+                        TextInput::make('return_3y')->label('3 years (%)')->numeric(),
+                        TextInput::make('return_5y')->label('5 years (%)')->numeric(),
+                        TextInput::make('return_since_inception')->label('Since inception (%)')->numeric(),
+                    ])
+                    ->columns(2)
+                    ->columnSpanFull(),
+                Section::make('Asset allocation')
+                    ->description('Where the fund is invested — one row per asset type. Percentages should add up to about 100.')
+                    ->schema([
+                        Repeater::make('asset_allocation')
+                            ->hiddenLabel()
+                            ->schema([
+                                Select::make('type')
+                                    ->options([
+                                        'tbills' => 'T-Bills',
+                                        'bonds' => 'Bonds',
+                                        'deposits' => 'Deposits',
+                                        'ics' => 'ICS',
+                                        'cash' => 'Cash',
+                                        'equity' => 'Equity',
+                                        'other' => 'Other',
+                                    ])
+                                    ->required(),
+                                TextInput::make('percent')
+                                    ->label('Share (%)')
+                                    ->numeric()
+                                    ->minValue(0)
+                                    ->maxValue(100)
+                                    ->required(),
+                            ])
+                            ->columns(2)
+                            ->addActionLabel('Add asset type')
+                            ->default([]),
+                    ])
+                    ->columnSpanFull(),
+                Section::make('Dividends')
+                    ->schema([
+                        TextInput::make('dividends_ytd')
+                            ->label('Dividends paid this year (per certificate)')
+                            ->numeric(),
+                        Repeater::make('dividends')
+                            ->label('Distribution history')
+                            ->schema([
+                                DatePicker::make('date')
+                                    ->label('Payment month')
+                                    ->native(false)
+                                    ->required(),
+                                TextInput::make('amount')
+                                    ->label('Amount per certificate')
+                                    ->numeric()
+                                    ->required(),
+                            ])
+                            ->columns(2)
+                            ->addActionLabel('Add distribution')
+                            ->default([]),
+                    ])
                     ->columnSpanFull(),
                 Toggle::make('is_featured')
                     ->label('Featured (shown in home prices carousel)'),

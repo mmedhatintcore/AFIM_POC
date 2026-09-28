@@ -24,4 +24,11 @@ return [
     'type_press' => 'بيان',
     'type_media' => 'صحافة',
     'type_social' => 'سوشيال',
+    'allocation_tbills' => 'أذون الخزانة',
+    'allocation_bonds' => 'سندات',
+    'allocation_deposits' => 'ودائع',
+    'allocation_ics' => 'ICS',
+    'allocation_cash' => 'نقدية',
+    'allocation_equity' => 'أسهم',
+    'allocation_other' => 'أخرى',
 ];

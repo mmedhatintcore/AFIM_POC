@@ -24,6 +24,7 @@ class FundSeeder extends Seeder
     {
         $this->seedCategories();
         $this->seedFunds();
+        $this->seedWorkbookDetails();
     }
 
     private function seedCategories(): void
@@ -154,6 +155,66 @@ class FundSeeder extends Seeder
     }
 
     /** @param list<string> $names */
+    /**
+     * Fund-page data supplied in the Intcore workbook (MM + EQUITY sheets:
+     * price, performance table, about text, asset allocation, dividends).
+     * Percentages are stored as whole percents (0.1698 → 16.98). Only empty
+     * fields are filled, so figures an admin has since edited are never
+     * overwritten by a re-seed.
+     */
+    private function seedWorkbookDetails(): void
+    {
+        $details = [
+            'nbe-4' => [
+                'nav_price' => 303.32, 'price_date' => '2026-06-21',
+                'return_1m' => 16.98, 'yield_1y' => 19.32, 'return_1y' => 21.52,
+                'return_3y' => 82.85, 'return_5y' => 127.52, 'return_since_inception' => 536.07,
+                'asset_allocation' => [
+                    ['type' => 'tbills', 'percent' => 96.34],
+                    ['type' => 'cash', 'percent' => 3.12],
+                    ['type' => 'deposits', 'percent' => 1.19],
+                    ['type' => 'ics', 'percent' => 0.70],
+                    ['type' => 'bonds', 'percent' => 0.30],
+                ],
+                'dividends_ytd' => 22.25,
+                'dividends' => [['date' => '2026-05-01', 'amount' => 4.50]],
+                'about' => 'The fund aims to preserve capital while generating returns and maintaining high liquidity through investment in a diversified portfolio of low-risk instruments, including treasury bills, bonds, bank deposits, and other money market funds. It offers daily subscription, purchase, and redemption without fees or restrictions, along with competitive, tax-exempt returns in line with its risk profile. The fund also provides monthly cash distributions based on performance and the Investment Manager’s discretion.',
+            ],
+            'nbe-2' => [
+                'return_1m' => 1.25, 'yield_1y' => 26.35, 'return_1y' => 58.76,
+                'return_3y' => 216.70, 'return_5y' => 498.89, 'return_since_inception' => 400.38,
+                'asset_allocation' => [
+                    ['type' => 'equity', 'percent' => 89.89],
+                    ['type' => 'cash', 'percent' => 7.95],
+                    ['type' => 'ics', 'percent' => 2.64],
+                ],
+                'dividends_ytd' => 0,
+                'dividends' => [['date' => '2025-12-01', 'amount' => 6.00]],
+                'about' => "The fund aims to generate periodic income alongside medium- to long-term capital growth by investing in a diversified portfolio, with a primary focus on equities, complemented by fixed income and money market instruments, in line with the approved investment policy.\nManaged by a specialized investment manager, the fund offers opportunities for income generation and capital appreciation. Investors may also obtain financing against their units in accordance with the policies of the National Bank of Egypt.",
+            ],
+        ];
+
+        foreach ($details as $slug => $data) {
+            $fund = Fund::where('slug', $slug)->first();
+            if ($fund === null) {
+                continue;
+            }
+
+            $about = $data['about'];
+            unset($data['about']);
+
+            foreach ($data as $field => $value) {
+                if ($fund->{$field} === null || $fund->{$field} === []) {
+                    $fund->{$field} = $value;
+                }
+            }
+
+            // The workbook copy is English only — keep whatever Arabic is already there.
+            $fund->setTranslation('description', 'en', $about);
+            $fund->save();
+        }
+    }
+
     private function platforms(array $names): array
     {
         return array_map(fn (string $name) => ['en' => $name, 'ar' => self::PLATFORMS[$name] ?? $name], $names);

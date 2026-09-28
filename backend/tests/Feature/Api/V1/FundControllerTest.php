@@ -67,6 +67,28 @@ final class FundControllerTest extends TestCase
             ->assertJsonPath('data.currency', 'EGP');
     }
 
+    public function test_show_exposes_workbook_detail_data(): void
+    {
+        $response = $this->withHeaders(['Accept-Language' => 'ar'])->getJson('/api/v1/funds/nbe-4');
+
+        $response->assertOk()
+            ->assertJsonPath('data.price_date', '2026-06-21')
+            ->assertJsonPath('data.performance.since_inception', '536.07')
+            ->assertJsonPath('data.performance.ytd', '19.32')
+            ->assertJsonPath('data.asset_allocation.0.type', 'tbills')
+            ->assertJsonPath('data.asset_allocation.0.label', 'أذون الخزانة')
+            ->assertJsonPath('data.dividends.ytd', '22.25')
+            ->assertJsonPath('data.dividends.history.0.amount', 4.5);
+    }
+
+    public function test_funds_without_detail_data_return_empty_structures(): void
+    {
+        $this->getJson('/api/v1/funds/dahab-gold-fund')->assertOk()
+            ->assertJsonPath('data.asset_allocation', [])
+            ->assertJsonPath('data.dividends.history', [])
+            ->assertJsonPath('data.performance.1y', null);
+    }
+
     public function test_show_returns_404_for_unknown_slug(): void
     {
         $this->getJson('/api/v1/funds/unknown')->assertNotFound();

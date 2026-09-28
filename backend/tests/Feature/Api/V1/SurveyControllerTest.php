@@ -17,10 +17,12 @@ final class SurveyControllerTest extends TestCase
     {
         $response = $this->getJson('/api/v1/survey/questions');
 
-        $response->assertOk()->assertJsonCount(10, 'data')
+        $response->assertOk()->assertJsonCount(13, 'data')
             ->assertJsonStructure(['data' => [['id', 'key', 'phase', 'question', 'layout', 'options' => [['index', 'icon', 'label', 'description']]]]]);
 
         $this->assertArrayNotHasKey('votes', $response->json('data.4.options.0'));
+        $this->assertArrayNotHasKey('business_meaning', $response->json('data.4.options.0'));
+        $this->assertArrayNotHasKey('admin_note', $response->json('data.1'));
     }
 
     private function answersFor(callable $pick): array

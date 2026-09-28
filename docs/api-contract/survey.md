@@ -5,7 +5,9 @@ Sheet1). Scoring is **server-side** — the frontend never sees vote weights.
 
 ## `GET /api/v1/survey/questions`
 
-Ordered by `sort`. Only active questions.
+Ordered by `sort`. Only active questions (13 in the current workbook: the five
+scoring questions plus profile-only ones). Internal admin fields (`admin_note`,
+per-option `business_meaning`, vote weights) are never exposed here.
 
 ```json
 {

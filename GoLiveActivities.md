@@ -16,6 +16,15 @@ matching **production** change must be recorded here in the same slice.
       defaulted). After deploy, feed each fund's **1-month return** and
       **inception date** in Admin → Funds — the website fund cards show "—" until
       they are entered (the seeder deliberately does not invent return figures).
+      `2026_09_28_130000_add_detail_fields_to_funds_table` adds `price_date`,
+      `return_1y/3y/5y/since_inception`, `asset_allocation`, `dividends_ytd`,
+      `dividends`; `2026_09_28_140000_add_admin_note_to_survey_questions_table`
+      adds `survey_questions.admin_note`. **Re-run the seeders once after this
+      deploy** (`RUN_SEEDERS=true` for one deploy, or
+      `php artisan db:seed --class=SurveySeeder` and `--class=FundSeeder`) — the
+      survey grows to 13 questions (keyed questions keep their rows) and NBE 4 /
+      NBE 2 receive the workbook's performance, allocation and dividend data.
+      FundSeeder only fills empty fields, so admin edits are not overwritten.
 - [ ] **Admin user**: `php artisan db:seed --class=AdminUserSeeder` then rotate the
       seeded password (`admin@afim.com.eg`) immediately.
 - [ ] **Filament panel**: served at `/admin` — restrict by IP/VPN if required.

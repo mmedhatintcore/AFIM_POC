@@ -97,7 +97,20 @@
     "backToFunds": "All funds",
     "aboutFund": "About the fund",
     "dailyChange": "Daily change",
-    "navPerCertificate": "Price per certificate"
+    "navPerCertificate": "Price per certificate",
+    "priceAsOf": "As of {date}",
+    "performance": "Performance",
+    "perf1m": "1 Month",
+    "perfYtd": "YTD",
+    "perf1y": "1 Year",
+    "perf3y": "3 Years",
+    "perf5y": "5 Years",
+    "perfInception": "Since Inception",
+    "assetAllocation": "Asset allocation",
+    "dividends": "Dividends",
+    "dividendsYtd": "Paid this year",
+    "dividendsHistory": "Distribution history",
+    "perCertificate": "per certificate"
   },
   "News": {
     "title": "News Feed",

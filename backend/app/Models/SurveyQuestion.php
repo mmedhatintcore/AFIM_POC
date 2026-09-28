@@ -13,7 +13,7 @@ class SurveyQuestion extends Model
 
     public array $translatable = ['phase', 'question'];
 
-    protected $fillable = ['key', 'phase', 'question', 'layout', 'options', 'sort', 'is_active'];
+    protected $fillable = ['key', 'phase', 'question', 'layout', 'admin_note', 'options', 'sort', 'is_active'];
 
     protected function casts(): array
     {

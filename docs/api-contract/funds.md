@@ -22,6 +22,18 @@ Query params: `filters[is_featured]=1` (prices slider), `filters[group_key]=mm`,
       "yield_1y": "21.4",
       "return_1m": "1.85",
       "inception_date": "2019-06-23",
+      "price_date": "2026-06-21",
+      "performance": {
+        "1m": "16.98", "ytd": "19.32", "1y": "21.52",
+        "3y": "82.85", "5y": "127.52", "since_inception": "536.07"
+      },
+      "asset_allocation": [
+        { "type": "tbills", "label": "T-Bills", "percent": 96.34 }
+      ],
+      "dividends": {
+        "ytd": "22.25",
+        "history": [{ "date": "2026-05-01", "amount": 4.5 }]
+      },
       "spark": [6, 6.4, 6.9, 7.3, 7.8, 8.3, 8.8, 9.4, 9.9, 10.5],
       "illustration": "moneymarket",
       "order_channel": "afim",
@@ -41,6 +53,12 @@ Query params: `filters[is_featured]=1` (prices slider), `filters[group_key]=mm`,
 - `return_1m`: 1-month return in percent (decimal string, may be negative);
   `inception_date`: `YYYY-MM-DD`. Both feed the fund card and are `null` until
   entered in the admin Funds resource.
+- `price_date`: the date `nav_price` refers to. `performance` values are
+  percentages (decimal strings, may be negative; any may be `null`; `ytd` is
+  the stored `yield_1y`). `asset_allocation[].type` is one of `tbills`, `bonds`,
+  `deposits`, `ics`, `cash`, `equity`, `other` with a localized `label`; the
+  list is empty when not entered. `dividends.history` is newest-first, amounts
+  per certificate in the fund `currency`.
 - Market fields (`nav_price`, `daily_change`, `yield_1y`, `return_1m`, `spark`)
   are `null` for funds without published pricing.
 

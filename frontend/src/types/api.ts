@@ -63,6 +63,17 @@ export type Service = {
 export type RiskLevel = 0 | 1 | 2;
 export type OrderChannel = "nbe" | "afim";
 
+export type FundPerformance = {
+  "1m": string | null;
+  ytd: string | null;
+  "1y": string | null;
+  "3y": string | null;
+  "5y": string | null;
+  since_inception: string | null;
+};
+
+export type FundAllocation = { type: string; label: string; percent: number };
+
 export type Fund = {
   id: number;
   slug: string;
@@ -77,6 +88,10 @@ export type Fund = {
   yield_1y: string | null;
   return_1m: string | null;
   inception_date: string | null;
+  price_date: string | null;
+  performance: FundPerformance;
+  asset_allocation: FundAllocation[];
+  dividends: { ytd: string | null; history: { date: string; amount: number }[] };
   spark: number[] | null;
   illustration: string;
   order_channel: OrderChannel;

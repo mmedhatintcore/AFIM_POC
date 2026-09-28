@@ -97,7 +97,20 @@
     "backToFunds": "كل الصناديق",
     "aboutFund": "عن الصندوق",
     "dailyChange": "التغير اليومي",
-    "navPerCertificate": "السعر لكل وثيقة"
+    "navPerCertificate": "السعر لكل وثيقة",
+    "priceAsOf": "بتاريخ {date}",
+    "performance": "الأداء",
+    "perf1m": "شهر",
+    "perfYtd": "منذ بداية العام",
+    "perf1y": "سنة",
+    "perf3y": "3 سنوات",
+    "perf5y": "5 سنوات",
+    "perfInception": "منذ التأسيس",
+    "assetAllocation": "توزيع الأصول",
+    "dividends": "التوزيعات",
+    "dividendsYtd": "المدفوع هذا العام",
+    "dividendsHistory": "سجل التوزيعات",
+    "perCertificate": "للوثيقة"
   },
   "News": {
     "title": "الأخبار",

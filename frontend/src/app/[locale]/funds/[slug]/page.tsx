@@ -59,6 +59,21 @@ export default async function FundDetailPage({ params }: Props) {
   ]);
 
   const change = fund.daily_change ? signedChange(fund.daily_change) : null;
+  const performanceRows = (
+    [
+      ["1m", t("perf1m")],
+      ["ytd", t("perfYtd")],
+      ["1y", t("perf1y")],
+      ["3y", t("perf3y")],
+      ["5y", t("perf5y")],
+      ["since_inception", t("perfInception")],
+    ] as const
+  ).map(([key, label]) => {
+    const raw = fund.performance[key];
+    const value = raw === null ? null : Number.parseFloat(raw);
+    return { key, label, value: value === null || Number.isNaN(value) ? null : value };
+  });
+  const hasPerformance = performanceRows.some((row) => row.value !== null);
   const relatedFunds = (related ?? [])
     .filter((entry) => entry.slug !== fund.slug)
     .slice(0, 3);
@@ -121,6 +136,113 @@ export default async function FundDetailPage({ params }: Props) {
             </>
           ) : null}
 
+          {hasPerformance ? (
+            <section className="mt-8" data-testid="fund-performance">
+              <h2 className="mb-3 text-sm font-bold uppercase tracking-widest text-muted">
+                {t("performance")}
+              </h2>
+              <div className="overflow-x-auto rounded-card-lg border border-border bg-surface shadow-elev-1">
+                <table className="w-full min-w-[34rem] text-center text-sm">
+                  <thead>
+                    <tr className="border-b border-hairline text-[0.7rem] uppercase tracking-wider text-muted">
+                      {performanceRows.map((row) => (
+                        <th key={row.key} className="px-3 py-3 font-semibold">
+                          {row.label}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr className="tnum text-base font-bold" dir="ltr">
+                      {performanceRows.map((row) => (
+                        <td
+                          key={row.key}
+                          className={cn(
+                            "px-3 py-4",
+                            row.value === null
+                              ? "text-muted"
+                              : row.value >= 0
+                                ? "text-gain"
+                                : "text-loss",
+                          )}
+                        >
+                          {row.value === null
+                            ? "—"
+                            : `${formatNumber(row.value, locale, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}%`}
+                        </td>
+                      ))}
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+          ) : null}
+
+          {fund.asset_allocation.length > 0 ? (
+            <section className="mt-8" data-testid="fund-allocation">
+              <h2 className="mb-3 text-sm font-bold uppercase tracking-widest text-muted">
+                {t("assetAllocation")}
+              </h2>
+              <ul className="space-y-3 rounded-card-lg border border-border bg-surface p-6 shadow-elev-1">
+                {fund.asset_allocation.map((row) => (
+                  <li key={row.type}>
+                    <div className="mb-1 flex justify-between text-sm">
+                      <span>{row.label}</span>
+                      <span className="tnum font-semibold" dir="ltr">
+                        {formatNumber(row.percent, locale, { minimumFractionDigits: 0, maximumFractionDigits: 2 })}%
+                      </span>
+                    </div>
+                    <div className="h-2 overflow-hidden rounded-full bg-hairline">
+                      <div
+                        className="h-full rounded-full bg-accent"
+                        style={{ width: `${Math.min(100, Math.max(0, row.percent))}%` }}
+                      />
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ) : null}
+
+          {fund.dividends.ytd !== null || fund.dividends.history.length > 0 ? (
+            <section className="mt-8" data-testid="fund-dividends">
+              <h2 className="mb-3 text-sm font-bold uppercase tracking-widest text-muted">
+                {t("dividends")}
+              </h2>
+              <div className="rounded-card-lg border border-border bg-surface p-6 shadow-elev-1">
+                {fund.dividends.ytd !== null ? (
+                  <div className="flex items-baseline justify-between border-b border-hairline pb-3 text-sm">
+                    <span className="text-muted">{t("dividendsYtd")}</span>
+                    <span className="tnum font-bold" dir="ltr">
+                      {formatNumber(Number.parseFloat(fund.dividends.ytd), locale, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}{" "}
+                      {fund.currency}
+                    </span>
+                  </div>
+                ) : null}
+                {fund.dividends.history.length > 0 ? (
+                  <>
+                    <div className="mt-3 text-[0.7rem] uppercase tracking-wider text-muted">
+                      {t("dividendsHistory")} · {t("perCertificate")}
+                    </div>
+                    <ul className="mt-2 space-y-2 text-sm">
+                      {fund.dividends.history.map((row) => (
+                        <li key={row.date} className="flex justify-between">
+                          <span>
+                            {formatDate(row.date, locale, { year: "numeric", month: "long", timeZone: "UTC" })}
+                          </span>
+                          <span className="tnum font-semibold" dir="ltr">
+                            {formatNumber(row.amount, locale, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}{" "}
+                            {fund.currency}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                ) : null}
+              </div>
+            </section>
+          ) : null}
+
           <div className="mt-8 rounded-card-lg border border-border bg-surface p-6 shadow-elev-1">
             <h2 className="mb-3 text-sm font-bold uppercase tracking-widest text-muted">
               {t("howToSubscribe")}
@@ -157,6 +279,11 @@ export default async function FundDetailPage({ params }: Props) {
                   {fund.currency || tc("currency")}
                 </span>
               </div>
+              {fund.price_date ? (
+                <div className="mt-1 text-xs text-muted">
+                  {t("priceAsOf", { date: formatDate(fund.price_date, locale, { year: "numeric", month: "short", day: "numeric", timeZone: "UTC" }) })}
+                </div>
+              ) : null}
               {change ? (
                 <div
                   className={cn(

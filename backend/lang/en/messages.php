@@ -24,4 +24,11 @@ return [
     'type_press' => 'Press',
     'type_media' => 'Media',
     'type_social' => 'Social',
+    'allocation_tbills' => 'T-Bills',
+    'allocation_bonds' => 'Bonds',
+    'allocation_deposits' => 'Deposits',
+    'allocation_ics' => 'ICS',
+    'allocation_cash' => 'Cash',
+    'allocation_equity' => 'Equity',
+    'allocation_other' => 'Other',
 ];

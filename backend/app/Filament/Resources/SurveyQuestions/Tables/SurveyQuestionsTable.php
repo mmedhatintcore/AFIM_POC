@@ -14,6 +14,8 @@ class SurveyQuestionsTable
     public static function configure(Table $table): Table
     {
         return $table
+            ->defaultSort('sort')
+            ->reorderable(false)
             ->columns([
                 TextColumn::make('question')
                     ->label('Question')
@@ -25,12 +27,27 @@ class SurveyQuestionsTable
                     ->getStateUsing(fn ($record) => $record->getTranslation('phase', 'en'))
                     ->badge()
                     ->searchable(),
+                IconColumn::make('affects_result')
+                    ->label('Affects result')
+                    ->boolean()
+                    ->getStateUsing(fn ($record) => collect($record->options ?? [])
+                        ->contains(fn ($option) => ! empty($option['votes']))),
+                TextColumn::make('maps_to')
+                    ->label('Related categories')
+                    ->badge()
+                    ->getStateUsing(fn ($record) => collect($record->options ?? [])
+                        ->flatMap(fn ($option) => array_keys($option['votes'] ?? []))
+                        ->unique()
+                        ->values()
+                        ->all())
+                    ->placeholder('—'),
                 TextColumn::make('key')
                     ->label('Scoring key')
                     ->placeholder('— profile only —')
                     ->searchable(),
                 TextColumn::make('layout')
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('sort')
                     ->label('Order')
                     ->numeric()
