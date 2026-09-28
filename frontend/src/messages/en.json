@@ -80,6 +80,7 @@
     "return1m": "*1M (Month) Return",
     "nav": "NAV",
     "inceptionDate": "Inception Date",
+    "asOf": "As of {date}",
     "view": "View fund",
     "noPricing": "Pricing published soon",
     "riskAria": "Risk level"

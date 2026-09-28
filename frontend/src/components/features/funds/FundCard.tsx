@@ -57,8 +57,8 @@ export async function FundCard({
       ) : null}
 
       <div className="relative flex items-center gap-3">
-        <span className="grid size-[60px] shrink-0 place-items-center rounded-2xl border border-border bg-white shadow-elev-1 transition-colors duration-300 group-hover:border-accent/60">
-          <FundIllustration name={fund.illustration} className="size-9" />
+        <span className="grid size-[88px] shrink-0 place-items-center rounded-3xl border border-border bg-white shadow-elev-1 transition-colors duration-300 group-hover:border-accent/60">
+          <FundIllustration name={fund.illustration} className="size-[68px]" />
         </span>
         <div className="min-w-0">
           <span className="block text-[0.68rem] uppercase leading-tight tracking-wide text-muted">
@@ -91,27 +91,44 @@ export async function FundCard({
         )}
       >
         <div className="text-[0.72rem] text-muted">{t("return1m")}</div>
-        <div
-          className={cn(
-            "tnum mt-0.5 flex items-center gap-2 text-[2.2rem] font-extrabold leading-none",
-            !hasReturn ? "text-muted" : isGain ? "text-gain" : "text-loss",
-          )}
-          dir="ltr"
-          data-testid={`fund-return-${fund.slug}`}
-        >
-          {hasReturn ? (
-            <>
-              <span className="text-base" aria-hidden="true">
-                {isGain ? "▲" : "▼"}
-              </span>
-              {`${formatNumber(returnValue, locale, {
-                minimumFractionDigits: 1,
-                maximumFractionDigits: 2,
-              })}%`}
-            </>
-          ) : (
-            "—"
-          )}
+        <div className="mt-0.5 flex flex-wrap items-end justify-between gap-x-2 gap-y-1.5">
+          <div
+            className={cn(
+              "tnum flex items-center gap-2 text-[2.2rem] font-extrabold leading-none",
+              !hasReturn ? "text-muted" : isGain ? "text-gain" : "text-loss",
+            )}
+            dir="ltr"
+            data-testid={`fund-return-${fund.slug}`}
+          >
+            {hasReturn ? (
+              <>
+                <span className="text-base" aria-hidden="true">
+                  {isGain ? "▲" : "▼"}
+                </span>
+                {`${formatNumber(returnValue, locale, {
+                  minimumFractionDigits: 1,
+                  maximumFractionDigits: 2,
+                })}%`}
+              </>
+            ) : (
+              "—"
+            )}
+          </div>
+          {fund.price_date ? (
+            <span
+              className="tnum shrink-0 rounded-full mb-1 bg-surface/70 px-2 py-0.5 text-[0.66rem] font-medium"
+              data-testid={`fund-date-${fund.slug}`}
+            >
+              {t("asOf", {
+                date: formatDate(fund.price_date, locale, {
+                  year: "numeric",
+                  month: "short",
+                  day: "numeric",
+                  timeZone: "UTC",
+                }),
+              })}
+            </span>
+          ) : null}
         </div>
       </div>
 
@@ -120,7 +137,10 @@ export async function FundCard({
           <dt className="text-[0.68rem] uppercase tracking-wider text-muted">
             {t("nav")}
           </dt>
-          <dd className="mt-1 text-[1rem] font-semibold leading-tight" dir="ltr">
+          <dd
+            className="mt-1 text-[1rem] font-semibold leading-tight"
+            dir="ltr"
+          >
             {hasNav ? (
               <>
                 <span className="tnum">

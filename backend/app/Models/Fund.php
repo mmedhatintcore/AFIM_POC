@@ -16,7 +16,7 @@ class Fund extends Model
     protected $fillable = [
         'slug', 'name', 'category_label', 'group_key', 'order_channel', 'platforms',
         'risk_level', 'nav_price', 'currency', 'daily_change', 'yield_1y', 'return_1m', 'return_1y', 'return_3y', 'return_5y',
-        'return_since_inception', 'inception_date', 'price_date', 'asset_allocation',
+        'return_since_inception', 'inception_date', 'price_date', 'price_date_mode', 'asset_allocation',
         'dividends_ytd', 'dividends', 'spark',
         'illustration', 'description', 'is_featured', 'is_published', 'sort',
     ];
@@ -44,6 +44,19 @@ class Fund extends Model
             'is_published' => 'boolean',
             'sort' => 'integer',
         ];
+    }
+
+    /**
+     * The "as of" date shown on the fund card and page: today (Cairo time)
+     * in automatic mode, otherwise the date an admin entered.
+     */
+    public function displayDate(): ?string
+    {
+        if ($this->price_date_mode === 'manual') {
+            return $this->price_date?->toDateString();
+        }
+
+        return now('Africa/Cairo')->toDateString();
     }
 
     #[Scope]

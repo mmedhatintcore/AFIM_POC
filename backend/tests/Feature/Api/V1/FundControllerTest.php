@@ -81,6 +81,24 @@ final class FundControllerTest extends TestCase
             ->assertJsonPath('data.dividends.history.0.amount', 4.5);
     }
 
+    public function test_automatic_card_date_is_today_and_manual_is_the_chosen_date(): void
+    {
+        $this->travelTo(now('Africa/Cairo')->setDate(2026, 9, 28)->setTime(10, 0));
+
+        $this->getJson('/api/v1/funds/dahab-gold-fund')->assertOk()
+            ->assertJsonPath('data.price_date_mode', 'auto')
+            ->assertJsonPath('data.price_date', '2026-09-28');
+
+        \App\Models\Fund::where('slug', 'dahab-gold-fund')->update([
+            'price_date_mode' => 'manual',
+            'price_date' => '2026-01-15',
+        ]);
+
+        $this->getJson('/api/v1/funds/dahab-gold-fund')->assertOk()
+            ->assertJsonPath('data.price_date_mode', 'manual')
+            ->assertJsonPath('data.price_date', '2026-01-15');
+    }
+
     public function test_funds_without_detail_data_return_empty_structures(): void
     {
         $this->getJson('/api/v1/funds/dahab-gold-fund')->assertOk()

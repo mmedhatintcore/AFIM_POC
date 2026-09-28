@@ -30,7 +30,8 @@ final class FundResource extends JsonResource
             'return_1m' => $this->return_1m,
             'inception_date' => $this->inception_date?->toDateString(),
             'spark' => $this->spark,
-            'price_date' => $this->price_date?->toDateString(),
+            'price_date' => $this->displayDate(),
+            'price_date_mode' => $this->price_date_mode,
             'performance' => [
                 '1m' => $this->return_1m,
                 'ytd' => $this->yield_1y,

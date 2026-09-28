@@ -18,7 +18,9 @@ matching **production** change must be recorded here in the same slice.
       they are entered (the seeder deliberately does not invent return figures).
       `2026_09_28_130000_add_detail_fields_to_funds_table` adds `price_date`,
       `return_1y/3y/5y/since_inception`, `asset_allocation`, `dividends_ytd`,
-      `dividends`; `2026_09_28_140000_add_admin_note_to_survey_questions_table`
+      `dividends`; `2026_09_28_150000_add_price_date_mode_to_funds_table` adds
+      `funds.price_date_mode` (`auto` = card shows today's date, `manual` = the
+      admin-entered date; defaults to `auto`); `2026_09_28_140000_add_admin_note_to_survey_questions_table`
       adds `survey_questions.admin_note`. **Re-run the seeders once after this
       deploy** (`RUN_SEEDERS=true` for one deploy, or
       `php artisan db:seed --class=SurveySeeder` and `--class=FundSeeder`) — the

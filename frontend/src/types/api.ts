@@ -89,6 +89,7 @@ export type Fund = {
   return_1m: string | null;
   inception_date: string | null;
   price_date: string | null;
+  price_date_mode: "auto" | "manual";
   performance: FundPerformance;
   asset_allocation: FundAllocation[];
   dividends: { ytd: string | null; history: { date: string; amount: number }[] };

@@ -166,7 +166,7 @@ class FundSeeder extends Seeder
     {
         $details = [
             'nbe-4' => [
-                'nav_price' => 303.32, 'price_date' => '2026-06-21',
+                'nav_price' => 303.32, 'price_date' => '2026-06-21', 'price_date_mode' => 'manual',
                 'return_1m' => 16.98, 'yield_1y' => 19.32, 'return_1y' => 21.52,
                 'return_3y' => 82.85, 'return_5y' => 127.52, 'return_since_inception' => 536.07,
                 'asset_allocation' => [
@@ -203,8 +203,15 @@ class FundSeeder extends Seeder
             $about = $data['about'];
             unset($data['about']);
 
+            $hadDate = $fund->price_date !== null;
+
             foreach ($data as $field => $value) {
-                if ($fund->{$field} === null || $fund->{$field} === []) {
+                // price_date_mode defaults to 'auto', so only switch it to the
+                // workbook's 'manual' when we are the ones supplying the date.
+                $isEmpty = $fund->{$field} === null || $fund->{$field} === []
+                    || ($field === 'price_date_mode' && ! $hadDate);
+
+                if ($isEmpty) {
                     $fund->{$field} = $value;
                 }
             }

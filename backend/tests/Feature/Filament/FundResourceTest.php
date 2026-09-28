@@ -38,6 +38,17 @@ final class FundResourceTest extends TestCase
             ->call('save')
             ->assertHasNoFormErrors();
 
+        Livewire::test(EditFund::class, ['record' => $fund->getKey()])
+            ->fillForm(['price_date_mode' => 'manual', 'price_date' => '2026-03-01'])
+            ->call('save')
+            ->assertHasNoFormErrors();
+        $this->assertSame('2026-03-01', $fund->fresh()->price_date->toDateString());
+
+        Livewire::test(EditFund::class, ['record' => $fund->getKey()])
+            ->fillForm(['price_date_mode' => 'manual', 'price_date' => null])
+            ->call('save')
+            ->assertHasFormErrors(['price_date' => 'required']);
+
         $fund->refresh();
         $this->assertSame('-2.80', $fund->return_1m);
         $this->assertSame('2014-06-19', $fund->inception_date->toDateString());

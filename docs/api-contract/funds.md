@@ -23,6 +23,7 @@ Query params: `filters[is_featured]=1` (prices slider), `filters[group_key]=mm`,
       "return_1m": "1.85",
       "inception_date": "2019-06-23",
       "price_date": "2026-06-21",
+      "price_date_mode": "manual",
       "performance": {
         "1m": "16.98", "ytd": "19.32", "1y": "21.52",
         "3y": "82.85", "5y": "127.52", "since_inception": "536.07"
@@ -53,7 +54,9 @@ Query params: `filters[is_featured]=1` (prices slider), `filters[group_key]=mm`,
 - `return_1m`: 1-month return in percent (decimal string, may be negative);
   `inception_date`: `YYYY-MM-DD`. Both feed the fund card and are `null` until
   entered in the admin Funds resource.
-- `price_date`: the date `nav_price` refers to. `performance` values are
+- `price_date`: the "as of" date shown on the card and page. When
+  `price_date_mode` is `auto` (default) it is today's date in Cairo time and
+  changes daily; when `manual` it is the date an admin entered. `performance` values are
   percentages (decimal strings, may be negative; any may be `null`; `ytd` is
   the stored `yield_1y`). `asset_allocation[].type` is one of `tbills`, `bonds`,
   `deposits`, `ics`, `cash`, `equity`, `other` with a localized `label`; the

@@ -5,11 +5,13 @@ namespace App\Filament\Resources\Funds\Schemas;
 use App\Filament\Support\Bilingual;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
 
 class FundForm
@@ -61,6 +63,21 @@ class FundForm
                     ->label('1-month return (%)')
                     ->numeric()
                     ->helperText('Shown on the card as "*1M (Month) Return". Positive shows red, negative blue.'),
+                Radio::make('price_date_mode')
+                    ->label('Card date')
+                    ->options([
+                        'auto' => 'Automatic — always show today\'s date',
+                        'manual' => 'Specific date — choose the date below',
+                    ])
+                    ->default('auto')
+                    ->required()
+                    ->live()
+                    ->helperText('The "as of" date shown on the fund card and page.'),
+                DatePicker::make('price_date')
+                    ->label('Specific date')
+                    ->native(false)
+                    ->visible(fn (Get $get): bool => $get('price_date_mode') === 'manual')
+                    ->required(fn (Get $get): bool => $get('price_date_mode') === 'manual'),
                 DatePicker::make('inception_date')
                     ->label('Inception date')
                     ->native(false)
@@ -92,10 +109,6 @@ class FundForm
                 Section::make('Performance')
                     ->description('Shown in the fund page performance table. "1 month" and "YTD" are entered above; all values are percentages.')
                     ->schema([
-                        DatePicker::make('price_date')
-                            ->label('Price date')
-                            ->native(false)
-                            ->helperText('The date the NAV price above refers to.'),
                         TextInput::make('return_1y')->label('1 year (%)')->numeric(),
                         TextInput::make('return_3y')->label('3 years (%)')->numeric(),
                         TextInput::make('return_5y')->label('5 years (%)')->numeric(),
