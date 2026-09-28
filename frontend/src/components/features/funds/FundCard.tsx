@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils/cn";
 import { formatDate, formatNumber } from "@/lib/utils/format";
 import type { Fund } from "@/types/api";
 import { ChannelBadge } from "./ChannelBadge";
+import { FundQuickView } from "./FundQuickView";
 import { PlatformsList } from "./PlatformsList";
 
 /**
@@ -75,9 +76,10 @@ export async function FundCard({
       </div>
 
       <h3 className="relative mt-5 min-h-[3.6em] text-[1.2rem] font-bold uppercase leading-snug">
+        {fund.name}
         <Link
           href={`/funds/${fund.slug}`}
-          className="after:absolute after:inset-0"
+          className="sr-only"
           data-testid={`fund-link-${fund.slug}`}
         >
           {fund.name}
@@ -181,7 +183,7 @@ export async function FundCard({
       </dl>
 
       {detailed ? (
-        <div className="relative z-1 mt-5 border-t border-hairline pt-4">
+        <div className="relative z-2 mt-5 border-t border-hairline pt-4">
           <div className="mb-1.5 text-[0.68rem] uppercase tracking-widest text-muted">
             {tf("howToSubscribe")}
           </div>
@@ -198,6 +200,8 @@ export async function FundCard({
           />
         </div>
       ) : null}
+
+      <FundQuickView fund={fund} />
 
       <span
         className="pointer-events-none absolute inset-x-0 bottom-0 h-1 origin-start scale-x-0 bg-gradient-to-r from-accent to-accent-dark transition-transform duration-500 ease-out-soft group-hover:scale-x-100 rtl:origin-right"

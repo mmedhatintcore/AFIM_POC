@@ -74,6 +74,12 @@
     "stepsCta": "اعثر على خدمتك",
     "isThisForMe": "هل تناسبني؟"
   },
+  "FundQuickView": {
+    "open": "عرض تفاصيل {name}",
+    "close": "إغلاق",
+    "exploreMore": "استكشف المزيد",
+    "seeAll": "عرض كل المنتجات"
+  },
   "FundCard": {
     "yield1y": "العائد من بداية العام",
     "currency": "ج.م",

@@ -74,6 +74,12 @@
     "stepsCta": "Find your service",
     "isThisForMe": "Is this for me?"
   },
+  "FundQuickView": {
+    "open": "View details for {name}",
+    "close": "Close",
+    "exploreMore": "Explore more",
+    "seeAll": "See all products"
+  },
   "FundCard": {
     "yield1y": "YTD",
     "currency": "EGP",
